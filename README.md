@@ -37,3 +37,12 @@ The catalogue and date-based dinner planner work without an account, backend, pa
 ## Credits
 
 Recipe photographs and the sample fridge image were generated for this prototype. TensorFlow.js 4.22.0 and tensorflow-models/mobilenet 2.1.1 by Google and TensorFlow authors, and Google MobileNet V2 100/224 classification model, are distributed with their Apache 2.0 licence in assets/scanner/LICENSE.txt. See https://github.com/tensorflow/tfjs-models/tree/master/mobilenet and https://www.kaggle.com/models/google/mobilenet-v2 .
+
+## Install on a phone
+
+1. Extract the download. Upload the contents of the folder containing index.html to the top level of your GitHub repository, including assets, sw.js, install.js and app.webmanifest. Commit to main.
+2. Under Settings → Pages, select Deploy from a branch, main and /(root). Open the live HTTPS address after deployment.
+3. On iPhone, open that address in Safari, tap Share → Add to Home Screen, enable Open as Web App if shown, then tap Add. On Android, use Chrome’s menu → Add to home screen → Install.
+4. Open the home-screen icon while online and allow the first download (roughly 16 MB) to finish. Add a dinner, enable airplane mode, then close and reopen the app from its icon to test offline use.
+
+The app caches its recipes, images and produce scanner on this device. Pantry and meal plans are stored locally. This release uses the existing recipe catalogue.
