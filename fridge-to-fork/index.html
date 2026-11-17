@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en-AU">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#faf9f3" />
+    <title>Fridge to Fork</title>
+    <link rel="icon" href="assets/leaf.svg" />
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="recipes.js"></script>
+    <script defer src="app.js"></script>
+    <script defer src="scanner.js"></script>
+    <script defer src="events.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="wrap top">
+        <a class="brand" href="#recipes"
+          ><img src="assets/leaf.svg" alt="" />Fridge to Fork</a
+        >
+        <nav aria-label="Main navigation">
+          <a href="#recipes">Recipes</a><a href="#pantry">My pantry</a
+          ><a href="#planner">Meal planner</a>
+        </nav>
+        <button class="scan" id="scan"></button>
+      </div>
+    </header>
+    <main class="wrap" id="main"></main>
+    <dialog id="modal"><div id="inside"></div></dialog>
+    <div id="notice" role="status"></div>
+  </body>
+</html>
