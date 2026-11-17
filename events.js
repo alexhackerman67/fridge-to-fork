@@ -1,0 +1,91 @@
+"use strict";
+const actions = {
+  close: () => modal.close(),
+  add: () => foodForm(),
+  edit: (n) => foodForm(n),
+  delete: (n) => {
+    delete state.pantry[n];
+    save();
+    modal.close();
+    render();
+  },
+  recipe: (i) => detail(Number(i)),
+  schedule: (i) => schedule(Number(i)),
+  planned: (k) => detail(state.plan[k], k),
+  cook: (args) => {
+    let [i, day] = args.split(",");
+    let d = dishes[i];
+    if (missing(d).length) return;
+    for (const [n, q] of Object.entries(d.needs)) {
+      state.pantry[n] -= q;
+      if (state.pantry[n] <= 0) delete state.pantry[n];
+    }
+    if (day) delete state.plan[day];
+    save();
+    modal.close();
+    render();
+    toast("Ingredients used · pantry updated");
+  },
+  filter: (f) => {
+    filter = f;
+    recipes();
+  },
+  reset: () => {
+    query = "";
+    filter = "All recipes";
+    recipes();
+  },
+  prev: () => {
+    weekShift--;
+    planner();
+  },
+  next: () => {
+    weekShift++;
+    planner();
+  },
+  choose: (k) =>
+    pop(
+      "Choose dinner",
+      dishes
+        .map(
+          (d, i) =>
+            '<div class="line"><span>' +
+            d.name +
+            "</span>" +
+            ib("Plan " + d.name, "assign:" + k + "," + i, "plus") +
+            "</div>",
+        )
+        .join(""),
+    ),
+  assign: (s) => {
+    const [k, i] = s.split(",");
+    setMeal(k, Number(i));
+  },
+  unplan: (k) => {
+    delete state.plan[k];
+    save();
+    planner();
+  },
+  camera: () => pickPhoto(true),
+  upload: () => pickPhoto(false),
+  sample: demoScan,
+  manualReview: () => {
+    scanToken++;
+    suggestions = [];
+    review("Add the ingredients you can see.");
+  },
+};
+document.addEventListener("click", (e) => {
+  const el = e.target.closest("[data-do]");
+  if (!el) return;
+  const [act, ...args] = el.dataset.do.split(":");
+  if (Object.hasOwn(actions, act)) actions[act](args.join(":"));
+});
+document.addEventListener("change", (e) => {
+  if (e.target.matches("[data-check]")) {
+    state.checked[e.target.dataset.check] = e.target.checked;
+    save();
+  }
+});
+document.querySelector("#scan").onclick = scan;
+render();
