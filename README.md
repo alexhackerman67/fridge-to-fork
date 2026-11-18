@@ -30,13 +30,22 @@ GitHub instructions: https://docs.github.com/en/pages/getting-started-with-githu
 
 ## Scanner and prototype scope
 
-The bundled TensorFlow.js MobileNet model runs on your device when you scan. The app checks the photo and several crops for common produce. Photo data is discarded when you close the scanner. Recognition can miss hidden food, packaging or unfamiliar items. Review ingredient names and supply weights or counts before saving. Saving updates only the listed ingredients and sets their current totals. Existing pantry amounts are offered for review. If a scan fails, add ingredients manually. Oil, seasoning and water in recipe methods are assumed pantry staples.
+The bundled TensorFlow.js MobileNet model runs on your device when you scan. The app checks overlapping shelf regions at two sizes for common produce. In review, Read packet labels runs English OCR on the device and suggests matching pantry ingredients. Its first use needs an internet connection to fetch Tesseract.js and English language data. Photo data is discarded when you close the scanner. Recognition can miss hidden food, packaging or unfamiliar items. Review ingredient names and supply weights or counts before saving. Saving updates only the listed ingredients and sets their current totals. Existing pantry amounts are offered for review. If a scan fails, add ingredients manually. Oil, seasoning and water in recipe methods are assumed pantry staples.
 
 The catalogue and date-based dinner planner work without an account, backend, paid API or installation. Data is local to each browser and site address. A real supermarket checkout is outside this prototype.
 
 ## Credits
 
-Recipe photographs and the sample fridge image were generated for this prototype. TensorFlow.js 4.22.0 and tensorflow-models/mobilenet 2.1.1 by Google and TensorFlow authors, and Google MobileNet V2 100/224 classification model, are distributed with their Apache 2.0 licence in assets/scanner/LICENSE.txt. See https://github.com/tensorflow/tfjs-models/tree/master/mobilenet and https://www.kaggle.com/models/google/mobilenet-v2 .
+The sample fridge image and mascot were generated for this prototype. Recipe photos are from Wikimedia Commons. The local copies are resized and compressed and illustrate similar dishes.
+
+- [Spaghetti con pesto alla genovese.jpg](<https://commons.wikimedia.org/wiki/File:Spaghetti_con_pesto_alla_genovese.jpg>) by Michael Musto. CC BY-SA 4.0 https://creativecommons.org/licenses/by-sa/4.0
+- [SHAKSHUKA & FETA - The Meeting Place 2025-06-28.jpg](<https://commons.wikimedia.org/wiki/File:SHAKSHUKA_%26_FETA_-_The_Meeting_Place_2025-06-28.jpg>) by Andy Li. CC0 http://creativecommons.org/publicdomain/zero/1.0/deed.en
+- [Egg Fried Rice.jpg](<https://commons.wikimedia.org/wiki/File:Egg_Fried_Rice.jpg>) by Gaurav Dhwaj Khadka. CC BY-SA 4.0 https://creativecommons.org/licenses/by-sa/4.0
+- [Piyaz 01.jpg](<https://commons.wikimedia.org/wiki/File:Piyaz_01.jpg>) by Chapultepec. Public domain
+- [Grilled Cheese Surprise with Tomato and Spinach (49164481196).jpg](<https://commons.wikimedia.org/wiki/File:Grilled_Cheese_Surprise_with_Tomato_and_Spinach_(49164481196).jpg>) by Alabama Extension. CC0 http://creativecommons.org/publicdomain/zero/1.0/deed.en
+- [Banana Pancakes Pk021.jpg](<https://commons.wikimedia.org/wiki/File:Banana_Pancakes_Pk021.jpg>) by PallaviKhale. CC BY-SA 4.0 https://creativecommons.org/licenses/by-sa/4.0
+
+ TensorFlow.js 4.22.0 and tensorflow-models/mobilenet 2.1.1 by Google and TensorFlow authors, and Google MobileNet V2 100/224 classification model, are distributed with their Apache 2.0 licence in assets/scanner/LICENSE.txt. See https://github.com/tensorflow/tfjs-models/tree/master/mobilenet and https://www.kaggle.com/models/google/mobilenet-v2 .
 
 ## Install on a phone
 

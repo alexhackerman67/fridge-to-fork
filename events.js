@@ -71,8 +71,7 @@ const actions = {
   sample: demoScan,
   manualReview: () => {
     scanToken++;
-    suggestions = [];
-    review("Add the ingredients you can see.");
+    review("Review the matches so far or add ingredients.");
   },
 };
 document.addEventListener("click", (e) => {

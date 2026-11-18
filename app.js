@@ -120,7 +120,7 @@ function recipes() {
     btn("View recipe " + icon("arrow"), "recipe:0", "primary") +
     '</div><div class="herophoto"><img src="' +
     pic(0) +
-    '" alt="Spaghetti tossed with pesto, spinach and lemon"></div></section><div class="sectiontop"><h2>Recipe finder</h2><label class="search">' +
+    '" alt="Spaghetti coated in basil pesto"></div></section><div class="sectiontop"><h2>Recipe finder</h2><label class="search">' +
     icon("search") +
     '<input type="search" aria-label="Search recipes or ingredients" placeholder="Search recipes" value="' +
     esc(query) +
