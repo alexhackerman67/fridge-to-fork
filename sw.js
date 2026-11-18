@@ -1,5 +1,5 @@
 const prefix = 'fridge-to-fork:' + self.registration.scope + ':';
-const cacheName = prefix + 'mobile-v2';
+const cacheName = prefix + 'mobile-v3';
 const files = [
   './', 'index.html', 'style.css', 'app.js', 'recipes.js', 'scanner.js',
   'events.js', 'install.js', 'app.webmanifest',
@@ -10,7 +10,11 @@ const files = [
   ...[1, 2, 3, 4].map(i => 'assets/scanner/group1-shard' + i + 'of4.bin')
 ];
 self.addEventListener('install', event => {
-  event.waitUntil(caches.open(cacheName).then(cache => cache.addAll(files)));
+  event.waitUntil((async () => {
+    const cache = await caches.open(cacheName);
+    await cache.addAll(files.map(path => new Request(new URL(path, self.registration.scope), {cache: 'reload'})));
+    await self.skipWaiting();
+  })());
 });
 self.addEventListener('activate', event => {
   event.waitUntil((async () => {
