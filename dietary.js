@@ -7,8 +7,8 @@ const allergyIngredients = {
   "Peanut": ["Peanut butter"],
   "Tree nuts": ["Pesto"],
   "Sesame": ["Sesame seeds", "Tahini", "Za’atar"],
-  "Soy": ["Soy sauce", "Miso", "Tofu", "Edamame", "Gochujang"],
-  "Wheat": ["Bread", "Bread roll", "Pita", "Flatbread", "Tortilla", "Pasta", "Spaghetti", "Noodles", "Udon noodles", "Soba noodles", "Couscous", "Bulgur", "Flour", "Self-raising flour", "Soy sauce", "Gochujang", "Gnocchi", "Cornflour"],
+  "Soy": ["Soy sauce", "Sweet soy sauce", "Light soy sauce", "Dark soy sauce", "Miso", "Tofu", "Edamame", "Gochujang"],
+  "Wheat": ["Bread", "Bread roll", "Pita", "Flatbread", "Tortilla", "Pasta", "Spaghetti", "Noodles", "Udon noodles", "Soba noodles", "Couscous", "Bulgur", "Flour", "Self-raising flour", "Soy sauce", "Sweet soy sauce", "Light soy sauce", "Dark soy sauce", "Gochujang", "Gnocchi", "Cornflour"],
   "Fish": ["Salmon", "White fish", "Tuna", "Kimchi"],
   "Crustaceans": ["Prawns", "Kimchi"],
   "Mustard": ["Mustard", "Curry powder"]

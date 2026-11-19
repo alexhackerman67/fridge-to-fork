@@ -41,11 +41,12 @@ function reviewedCounts(views) {
     }
   });
   return [...groups.values()].filter(group => group.whole || group.views.size >= 2).map(({ n, observations, whole }) => {
-    const manual = { n, q: "", hint: "Amount unclear. Enter it manually." };
+    const unit = pantryUnit(n, whole?.unit || observations.find(item => item.unit)?.unit);
+    const manual = { n, unit, q: "", hint: "Amount unclear. Enter it manually." };
     if (observations.some(item => item.visibility === "closed")) {
       return { ...manual, hint: "Closed container. Check inside and enter the amount." };
     }
-    if (!whole || whole.visibility !== "visible" || (foods[n] || "each") !== "each") return manual;
+    if (!whole || whole.visibility !== "visible" || unit !== "each") return manual;
     const visible = observations.filter(item => item.visibility === "visible");
     const low = Math.min(...visible.map(item => item.low));
     const high = Math.max(...visible.map(item => item.high));
@@ -98,7 +99,7 @@ async function scanCrop(img, region, origin, signal) {
   const { items } = await response.json();
   return observationsFrom(items ?? []);
 }
-const scanAliases = { "rice vermicelli noodles": "Rice vermicelli", "rice vermicelli": "Rice vermicelli", "bell pepper": "Capsicum", "bell peppers": "Capsicum", "eggs": "Egg", "chicken eggs": "Egg", "scallions": "Spring onion", "spring onions": "Spring onion", "green onions": "Spring onion", "green onion": "Spring onion", "tomatoes": "Tomato", "yogurt": "Yoghurt", "canned tomatoes": "Tinned tomatoes" };
+const scanAliases = { "bell pepper": "Capsicum", "bell peppers": "Capsicum", "eggs": "Egg", "chicken eggs": "Egg", "scallions": "Spring onion", "spring onions": "Spring onion", "green onions": "Spring onion", "green onion": "Spring onion", "tomatoes": "Tomato", "yogurt": "Yoghurt", "canned tomatoes": "Tinned tomatoes" };
 // Keep preparation and ingredient words. Only ignore packaging, word order and common plurals.
 function scanKey(value) {
   const words = ingredientKey(value.normalize("NFKC")).replace(/^(?:an? )?(?:packet|pack|bag|box|carton|bottle|jar|tin) of /, "")
@@ -112,7 +113,7 @@ function scanName(value) {
   const lookup = clean.toLowerCase();
   const key = scanKey(clean);
   if (Object.hasOwn(scanAliases, lookup)) return canonical(scanAliases[lookup]);
-  if (["rice vermicelli", "noodle rice vermicelli"].includes(key)) return "Rice vermicelli";
+  if (Object.hasOwn(foods, clean)) return clean;
   return [...Object.keys(state.pantry), ...Object.keys(foods)].find(name => scanKey(name) === key) ||
     clean.charAt(0).toUpperCase() + clean.slice(1);
 }
@@ -127,12 +128,12 @@ function observationsFrom(items) {
     if (ingredient && !Object.hasOwn(Object.prototype, name)) {
       const previous = found.get(ingredient);
       if (item.visibility === "closed" || plain === "egg" && name !== plain || previous?.visibility === "closed") {
-        found.set(ingredient, { visibility: "closed" });
+        found.set(ingredient, { visibility: "closed", unit: item.unit });
       } else if (!previous && item.visibility === "visible" && Number.isSafeInteger(item.low) &&
                  Number.isSafeInteger(item.high) && item.low > 0 && item.high >= item.low && item.high <= 100000) {
         found.set(ingredient, item);
       } else {
-        found.set(ingredient, { visibility: "unknown" });
+        found.set(ingredient, { visibility: "unknown", unit: item.unit });
       }
     }
   }

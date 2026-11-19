@@ -14,10 +14,15 @@ const actions = {
   schedule: (i) => schedule(Number(i)),
   planned: (k) => detail(state.plan[k], k),
   cook: (args) => {
-    let [i, day] = args.split(",");
+    let [i, day, mode] = args.split(",");
     let d = dishes[i];
-    if (missing(d).length) return;
-    for (const [n, q] of ingredientsFor(d)) {
+    let amounts = ingredientsFor(d);
+    if (mode === "swaps") {
+      const match = pantryMatch(d, confirmedPantry());
+      if (match.gaps.length || !match.swaps.length) return;
+      amounts = Object.entries(match.usedAmounts);
+    } else if (missing(d).length) return;
+    for (const [n, q] of amounts) {
       state.pantry[n] -= q;
       if (state.pantry[n] <= 0) delete state.pantry[n];
     }
