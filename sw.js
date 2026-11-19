@@ -1,8 +1,8 @@
 const prefix = 'fridge-to-fork:' + self.registration.scope + ':';
-const cacheName = prefix + 'ranges-v9';
+const cacheName = prefix + 'discovery-v10';
 const files = [
   './', 'index.html', 'style.css', 'app.js', 'recipes.js', 'scanner.js',
-  'assets/fork-maskable-512.png', 'cloud-scan.js', 'events.js', 'install.js', 'app.webmanifest',
+  'assets/fork-maskable-512.png', 'cloud-scan.js', 'events.js', 'discovery.js', 'install.js', 'app.webmanifest',
   ...[180, 192, 512].map(size => 'assets/fork-mascot-' + size + '.png'),
   ...Array.from({length: 6}, (_, i) => 'assets/meal-' + i + '.jpg'),
   'assets/sample.jpg', 'assets/scanner/tf.js', 'assets/scanner/mobilenet.js',

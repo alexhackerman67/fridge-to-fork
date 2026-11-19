@@ -691,3 +691,19 @@ label.field select,
 
 .scanrow { flex-wrap: wrap; }
 .scan-amount-hint { flex-basis: 100%; font-size: .85rem; }
+.discovery-head { margin: 0 0 1rem; }
+.discovery-head h1 { margin: 0; }
+.herotext h2 { font-size: clamp(32px, 4vw, 58px); margin: 0; }
+.text-feature { display: block; min-height: 0; }
+.text-feature .herotext { padding-block: 2rem; }
+.text-feature .desc { max-width: 65ch; }
+.nutrition, .feature-link small { font-size: .85rem; color: var(--muted); }
+.featured-pair, .goal-fields { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: .75rem; }
+.featured-pair { margin-block: .8rem 1.6rem; }
+.feature-link { text-align: left; display: grid; gap: .35rem; padding: 1rem; background: #fff; border: 1px solid #d7dfd1; border-radius: 14px; }
+.goal-fields { border: 0; padding: 0; margin: 1rem 0; }
+.goal-fields input { width: 100%; min-width: 0; }
+.web-search label { display: block; font-weight: bold; margin-bottom: .5rem; }
+.web-search > div { display: flex; gap: .5rem; }
+.web-search input[type=search] { padding: .8rem; flex: 1; min-width: 0; border-radius: 10px; border: 1px solid #acb7ac; font: inherit; }
+@media (max-width: 500px) { .featured-pair { grid-template-columns: 1fr; } }

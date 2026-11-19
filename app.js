@@ -45,8 +45,6 @@ const ib = (label, action, symbol) =>
   "</button>";
 const key = "fridge-to-fork.v1";
 let state = { pantry: { ...starter }, plan: {}, checked: {} },
-  filter = "All recipes",
-  query = "",
   weekShift = 0;
 try {
   const old = JSON.parse(localStorage.getItem(key));
@@ -108,65 +106,6 @@ window.addEventListener("hashchange", () => {
   window.scrollTo(0, 0);
 });
 $("#scan").innerHTML = icon("scan") + "Scan pantry";
-function recipes() {
-  const d = dishes[0];
-  main.innerHTML =
-    '<section class="hero"><div class="herotext"><p class="kicker">Featured recipe</p><h1>' +
-    d.name +
-    '</h1><p class="desc">' +
-    d.note +
-    "</p>" +
-    meta(d) +
-    btn("View recipe " + icon("arrow"), "recipe:0", "primary") +
-    '</div><div class="herophoto"><img src="' +
-    pic(0) +
-    '" alt="Spaghetti coated in basil pesto"></div></section><div class="sectiontop"><h2>Recipe finder</h2><label class="search">' +
-    icon("search") +
-    '<input type="search" aria-label="Search recipes or ingredients" placeholder="Search recipes" value="' +
-    esc(query) +
-    '"></label></div><div class="tools"><div class="chips">' +
-    ["All recipes", "Ready to cook", "Under 20 min"]
-      .map((f) =>
-        btn(f, "filter:" + f, "chip" + (f === filter ? " active" : "")),
-      )
-      .join("") +
-    '</div></div><div id="cards" class="grid"></div>';
-  main.querySelector("input").oninput = (e) => {
-    query = e.target.value;
-    cards();
-  };
-  cards();
-}
-function cards() {
-  const matches = dishes
-    .map((d, i) => ({ d, i }))
-    .filter(
-      ({ d }) =>
-        (d.name + " " + Object.keys(d.needs).join(" "))
-          .toLowerCase()
-          .includes(query.toLowerCase().trim()) &&
-        (filter !== "Ready to cook" || !missing(d).length) &&
-        (filter !== "Under 20 min" || d.time < 20),
-    );
-  $("#cards").innerHTML =
-    matches
-      .map(
-        ({ d, i }) =>
-          '<button class="card" data-do="recipe:' +
-          i +
-          '">' + (i < 6 ? '<div class="pic"><img loading="lazy" src="' + pic(i) + '" alt="">' : '<div class="recipe-summary"><p>' + esc(d.note) + '</p>') + '<span class="pill">' +
-          stock(d) +
-          "</span></div><h3>" +
-          d.name +
-          "</h3>" +
-          meta(d) +
-          "</button>",
-      )
-      .join("") ||
-    '<p class="empty">No matching recipes. ' +
-      btn("Clear filters", "reset", "quiet") +
-      "</p>";
-}
 function detail(i, plannedDay = "") {
   const d = dishes[i];
   pop(

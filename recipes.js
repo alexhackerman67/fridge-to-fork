@@ -130,6 +130,7 @@ const starter = {
 const dishes = [
   {
     name: "Lemony pesto spaghetti",
+    cuisine: "Italian", kcal: 430, protein: 14,
     time: 20,
     gear: "One pot",
     note: "Spinach wilts in the spaghetti pot just before draining. A splash of the starchy cooking water loosens the pesto into a glossy sauce that coats each strand, and a squeeze of lemon brightens the basil.",
@@ -143,6 +144,7 @@ const dishes = [
   },
   {
     name: "Tomato & feta baked eggs",
+    cuisine: "Mediterranean", kcal: 260, protein: 19,
     time: 25,
     gear: "One pan",
     note: "A tin of tomatoes cooks down into a thick sauce with little wells for the eggs. Cover the pan until the whites set, then crumble feta over the top so each spoonful gets a salty bite.",
@@ -156,6 +158,7 @@ const dishes = [
   },
   {
     name: "Capsicum egg fried rice",
+    cuisine: "Chinese", kcal: 345, protein: 13,
     time: 15,
     gear: "One pan",
     note: "Chilled leftover rice separates into grains as it hits the hot pan. Diced capsicum adds crunch, soft ribbons of scrambled egg run through the rice, and soy sauce seasons the whole dish.",
@@ -169,6 +172,7 @@ const dishes = [
   },
   {
     name: "White bean & tomato salad",
+    cuisine: "Mediterranean", kcal: 210, protein: 12,
     time: 10,
     gear: "No cooking",
     note: "Halved cherry tomatoes release their juices into the lemon and olive oil, making a quick dressing for the creamy white beans. Serve straight away for a ten-minute lunch with no cooking.",
@@ -181,6 +185,7 @@ const dishes = [
   },
   {
     name: "Spinach melt toasties",
+    cuisine: "Australian", kcal: 295, protein: 14,
     time: 10,
     gear: "One pan",
     note: "A handful of spinach and grated cheese turn four slices of bread into two hot toasties. Press them gently in the pan so the crusts turn golden while the cheese melts around the leaves.",
@@ -193,6 +198,7 @@ const dishes = [
   },
   {
     name: "Banana oat pancakes",
+    cuisine: "American", kcal: 340, protein: 15,
     time: 20,
     gear: "One pan",
     note: "Ripe bananas sweeten a simple batter of oats, egg and milk. Spoon it into small rounds that are easy to flip, then cook until the edges are golden and the centres are soft.",
@@ -206,6 +212,7 @@ const dishes = [
   },
   {
     "name": "Peanut sesame noodles",
+    cuisine: "Chinese", kcal: 505, protein: 17,
     "time": 15,
     "note": "Lime loosens a creamy peanut dressing that clings to warm noodles.",
     "needs": {
@@ -222,6 +229,7 @@ const dishes = [
   },
   {
     "name": "Red lentil dal",
+    cuisine: "Indian", kcal: 345, protein: 20,
     "time": 30,
     "note": "Split lentils soften into a thick, cumin-scented dal in one pot.",
     "needs": {
@@ -238,6 +246,7 @@ const dishes = [
   },
   {
     "name": "Miso mushroom udon",
+    cuisine: "Japanese", kcal: 260, protein: 10,
     "time": 15,
     "note": "Sliced mushrooms give this quick noodle broth a savoury base.",
     "needs": {
@@ -253,6 +262,7 @@ const dishes = [
   },
   {
     "name": "Black bean quesadillas",
+    cuisine: "Mexican", kcal: 540, protein: 24,
     "time": 15,
     "note": "A dry pan crisps the tortillas around a soft filling of mashed beans and melted cheese.",
     "needs": {
@@ -268,6 +278,7 @@ const dishes = [
   },
   {
     "name": "Carrot and ginger soup",
+    cuisine: "European", kcal: 155, protein: 3,
     "time": 35,
     "note": "Fresh ginger lifts a smooth soup made from sweet carrots and softened onion.",
     "needs": {
@@ -283,6 +294,7 @@ const dishes = [
   },
   {
     "name": "Coconut chickpea curry",
+    cuisine: "Indian", kcal: 480, protein: 15,
     "time": 25,
     "note": "A tin of chickpeas becomes a creamy curry with a handful of spinach folded in at the end.",
     "needs": {
@@ -300,6 +312,7 @@ const dishes = [
   },
   {
     "name": "Broccoli cheddar jacket potatoes",
+    cuisine: "British", kcal: 330, protein: 14,
     "time": 55,
     "note": "Fluffy potato centres are mashed with tender broccoli and a little sharp cheese.",
     "needs": {
@@ -315,6 +328,7 @@ const dishes = [
   },
   {
     "name": "Lemon tuna spaghetti",
+    cuisine: "Italian", kcal: 510, protein: 32,
     "time": 20,
     "note": "Lemon zest perfumes the oil before flaked tuna and spaghetti go into the pan.",
     "needs": {
@@ -331,6 +345,7 @@ const dishes = [
   },
   {
     "name": "Kimchi fried rice",
+    cuisine: "Korean", kcal: 370, protein: 13,
     "time": 15,
     "note": "Sizzling the chopped kimchi brings out its flavour before the rice goes in.",
     "needs": {
@@ -346,6 +361,7 @@ const dishes = [
   },
   {
     "name": "Chickpea cucumber wraps",
+    cuisine: "Mediterranean", kcal: 480, protein: 18,
     "time": 10,
     "gear": "No cooking",
     "note": "Crunchy cucumber and lemon yoghurt brighten a chunky chickpea filling.",
@@ -363,6 +379,7 @@ const dishes = [
   },
   {
     "name": "Roast sweet potato tahini bowls",
+    cuisine: "Middle Eastern", kcal: 495, protein: 17,
     "time": 40,
     "note": "Roasted chickpeas add crunch to sweet potato wedges with a lemon tahini dressing.",
     "needs": {
@@ -379,6 +396,7 @@ const dishes = [
   },
   {
     "name": "Garlicky butter bean mash",
+    cuisine: "Mediterranean", kcal: 365, protein: 19,
     "time": 20,
     "note": "Creamy mashed beans make a warm base for lemony wilted spinach.",
     "needs": {
@@ -395,6 +413,7 @@ const dishes = [
   },
   {
     "name": "Pea and mint couscous",
+    cuisine: "North African", kcal: 410, protein: 16,
     "time": 15,
     "note": "Mint, peas and crumbled feta turn fluffy couscous into a quick lunch.",
     "needs": {
@@ -411,6 +430,7 @@ const dishes = [
   },
   {
     "name": "Gochujang tofu bowls",
+    cuisine: "Korean", kcal: 490, protein: 24,
     "time": 25,
     "note": "A sticky chilli glaze coats crisp-edged cubes of tofu.",
     "needs": {
@@ -428,6 +448,7 @@ const dishes = [
   },
   {
     "name": "Smashed avocado and white bean toast",
+    cuisine: "Australian", kcal: 365, protein: 13,
     "time": 10,
     "note": "Beans give avocado toast a chunkier texture and help one avocado stretch to two servings.",
     "needs": {
@@ -443,6 +464,7 @@ const dishes = [
   },
   {
     "name": "Tomato red lentil pasta",
+    cuisine: "Italian", kcal: 530, protein: 22,
     "time": 30,
     "note": "Red lentils break down in the tomato sauce while the pasta cooks.",
     "needs": {
@@ -459,6 +481,7 @@ const dishes = [
   },
   {
     "name": "Mushroom barley pot",
+    cuisine: "European", kcal: 400, protein: 12,
     "time": 50,
     "note": "Barley keeps a gentle bite as the browned mushrooms flavour the cooking liquid.",
     "needs": {
@@ -474,6 +497,7 @@ const dishes = [
   },
   {
     "name": "Zucchini feta fritters",
+    cuisine: "Greek", kcal: 350, protein: 16,
     "time": 25,
     "note": "Squeezing the grated zucchini helps these little fritters brown at the edges.",
     "needs": {
@@ -490,6 +514,7 @@ const dishes = [
   },
   {
     "name": "Cauliflower cheese soup",
+    cuisine: "British", kcal: 245, protein: 14,
     "time": 30,
     "note": "A potato thickens this cauliflower soup before the cheese melts through.",
     "needs": {
@@ -505,6 +530,7 @@ const dishes = [
   },
   {
     "name": "Egg and potato tortilla",
+    cuisine: "Spanish", kcal: 405, protein: 20,
     "time": 30,
     "note": "Thin potato slices make a filling Spanish-style omelette for two.",
     "needs": {
@@ -520,6 +546,7 @@ const dishes = [
   },
   {
     "name": "Pumpkin coconut soup",
+    cuisine: "Thai", kcal: 350, protein: 6,
     "time": 35,
     "note": "Ginger and coconut milk give a small butternut pumpkin a silky finish.",
     "needs": {
@@ -536,6 +563,7 @@ const dishes = [
   },
   {
     "name": "Harissa carrot couscous",
+    cuisine: "North African", kcal: 440, protein: 14,
     "time": 35,
     "note": "Harissa caramelises on roasted carrots, balanced by cool yoghurt.",
     "needs": {
@@ -552,6 +580,7 @@ const dishes = [
   },
   {
     "name": "Pasta e ceci",
+    cuisine: "Italian", kcal: 530, protein: 19,
     "time": 30,
     "note": "A partly mashed tin of chickpeas thickens this small-pasta soup.",
     "needs": {
@@ -568,6 +597,7 @@ const dishes = [
   },
   {
     "name": "Lime and black bean rice bowl",
+    cuisine: "Mexican", kcal: 410, protein: 14,
     "time": 15,
     "note": "Sweetcorn adds bite to spiced beans served over hot rice.",
     "needs": {
@@ -584,6 +614,7 @@ const dishes = [
   },
   {
     "name": "Peanut cucumber noodle salad",
+    cuisine: "Thai", kcal: 450, protein: 12,
     "time": 15,
     "note": "Cold rice noodles and cucumber ribbons carry a tangy peanut dressing.",
     "needs": {
@@ -600,6 +631,7 @@ const dishes = [
   },
   {
     "name": "Spinach and ricotta pasta",
+    cuisine: "Italian", kcal: 460, protein: 21,
     "time": 20,
     "note": "Ricotta makes a creamy sauce with a splash of starchy pasta water.",
     "needs": {
@@ -615,6 +647,7 @@ const dishes = [
   },
   {
     "name": "Oven-roasted chickpea pita pockets",
+    cuisine: "Middle Eastern", kcal: 420, protein: 18,
     "time": 30,
     "note": "Paprika chickpeas, shredded lettuce and yoghurt fill warm pita pockets.",
     "needs": {
@@ -632,6 +665,7 @@ const dishes = [
   },
   {
     "name": "Soy ginger bok choy noodles",
+    cuisine: "Chinese", kcal: 390, protein: 12,
     "time": 15,
     "note": "The bok choy stems stay crisp while the leaves wilt into the noodles.",
     "needs": {
@@ -648,6 +682,7 @@ const dishes = [
   },
   {
     "name": "Smoky baked bean toast",
+    cuisine: "British", kcal: 445, protein: 21,
     "time": 15,
     "note": "A little paprika gives this bubbling cheese toast a smoky tomato base.",
     "needs": {
@@ -663,6 +698,7 @@ const dishes = [
   },
   {
     "name": "Mushroom and thyme omelettes",
+    cuisine: "French", kcal: 240, protein: 17,
     "time": 20,
     "note": "Browned mushrooms and thyme make a savoury filling for two folded omelettes.",
     "needs": {
@@ -678,6 +714,7 @@ const dishes = [
   },
   {
     "name": "Cinnamon apple porridge",
+    cuisine: "Australian", kcal: 330, protein: 13,
     "time": 15,
     "note": "Grated apple softens into the oats and sweetens the porridge as it cooks.",
     "needs": {
@@ -693,6 +730,7 @@ const dishes = [
   },
   {
     "name": "Overnight cocoa oats",
+    cuisine: "American", kcal: 345, protein: 14,
     "time": 485,
     "gear": "No cooking",
     "note": "A few minutes of mixing the night before makes a chilled chocolate breakfast.",
@@ -710,6 +748,7 @@ const dishes = [
   },
   {
     "name": "Corn and spring onion fritters",
+    cuisine: "Australian", kcal: 335, protein: 14,
     "time": 20,
     "note": "Sweetcorn kernels and thinly sliced spring onions make crisp, chunky fritters.",
     "needs": {
@@ -726,6 +765,7 @@ const dishes = [
   },
   {
     "name": "Za’atar labneh flatbreads",
+    cuisine: "Middle Eastern", kcal: 420, protein: 14,
     "time": 10,
     "note": "Tangy labneh, cool cucumber and fragrant za’atar dress warm flatbreads.",
     "needs": {
@@ -742,6 +782,7 @@ const dishes = [
   },
   {
     "name": "Quinoa tabbouleh",
+    cuisine: "Middle Eastern", kcal: 315, protein: 11,
     "time": 30,
     "note": "Chopped parsley and juicy tomatoes brighten a fluffy quinoa salad.",
     "needs": {
@@ -759,6 +800,7 @@ const dishes = [
   },
   {
     "name": "Ginger congee with spring onions",
+    cuisine: "Chinese", kcal: 200, protein: 5,
     "time": 55,
     "note": "Rice breaks down into a soft porridge scented with thin slices of ginger.",
     "needs": {
@@ -774,6 +816,7 @@ const dishes = [
   },
   {
     "name": "Sweet potato hash with eggs",
+    cuisine: "American", kcal: 400, protein: 17,
     "time": 25,
     "note": "Small sweet potato cubes crisp in the pan before eggs cook in little wells.",
     "needs": {
@@ -789,6 +832,7 @@ const dishes = [
   },
   {
     "name": "Dill yoghurt potato salad",
+    cuisine: "European", kcal: 305, protein: 10,
     "time": 25,
     "note": "Fresh dill and mustard turn yoghurt into a light dressing for warm potatoes.",
     "needs": {
@@ -805,6 +849,7 @@ const dishes = [
   },
   {
     "name": "Roasted aubergine with miso",
+    cuisine: "Japanese", kcal: 240, protein: 7,
     "time": 35,
     "note": "A sweet miso glaze browns on top as the eggplant flesh softens.",
     "needs": {
@@ -821,6 +866,7 @@ const dishes = [
   },
   {
     "name": "Ricotta and honey pear toast",
+    cuisine: "European", kcal: 345, protein: 14,
     "time": 10,
     "note": "Thin slices of ripe pear sit on creamy ricotta with a drizzle of honey.",
     "needs": {
@@ -836,6 +882,7 @@ const dishes = [
   },
   {
     "name": "Tomato and basil bruschetta",
+    cuisine: "Italian", kcal: 295, protein: 9,
     "time": 15,
     "note": "Toasted bread soaks up the juices from chopped tomatoes and torn basil.",
     "needs": {
@@ -852,6 +899,7 @@ const dishes = [
   },
   {
     "name": "Cheesy polenta with mushrooms",
+    cuisine: "Italian", kcal: 380, protein: 14,
     "time": 25,
     "note": "Golden pan-fried mushrooms sit on soft polenta finished with cheese.",
     "needs": {
