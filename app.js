@@ -68,7 +68,6 @@ const missing = (d) =>
   Object.entries(d.needs).filter(([n, q]) => (state.pantry[n] || 0) < q);
 const stock = (d) =>
   missing(d).length ? missing(d).length + " to buy" : "Ready to cook";
-const pic = (id) => "assets/meal-" + id + ".jpg";
 const meta = (d) =>
   '<div class="meta">' + icon("clock") + d.time + " min" + (d.gear ? " · " + d.gear : "") + "</div>";
 function pop(title, body) {
@@ -110,8 +109,7 @@ function detail(i, plannedDay = "") {
   const d = dishes[i];
   pop(
     d.name,
-    (i < 6 ? '<img class="modalphoto" src="' + pic(i) + '" alt="">' : '') +
-      meta(d) +
+    meta(d) +
       "<p>" +
       d.note +
       '</p><h4>Ingredients · serves 2</h4><div class="ingredients">' +

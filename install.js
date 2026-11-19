@@ -16,11 +16,11 @@ window.addEventListener("DOMContentLoaded", () => {
   intro.className = "bite-intro";
   intro.setAttribute("popover", "manual");
   intro.setAttribute("aria-hidden", "true");
-  intro.innerHTML = '<div class="bite-boy"><span class="bite-face"></span><span class="bite-fork"></span></div><strong>Fridge to Fork</strong>';
+  intro.innerHTML = '<div class="bite-boy"><img src="assets/napkin-boy-512.png" alt=""></div><strong>Fridge to Fork</strong>';
   document.body.append(intro);
   // Open above the first-visit dialog without changing its focus.
   requestAnimationFrame(() => {
     intro.showPopover();
-    setTimeout(() => intro.remove(), 1450);
+    setTimeout(() => intro.remove(), 1250);
   });
 });

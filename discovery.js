@@ -53,21 +53,35 @@ function featuredRecipes() {
 function nutrition(d) {
   return 'Approx. ' + d.kcal + ' kcal · ' + d.protein + ' g protein per serving';
 }
+function featuredPhoto(dish, lead = false) {
+  const photo = dishPhotos[dish.name];
+  if (!photo) return "";
+  const { image, source, title } = photo;
+  return '<figure class="featured-photo"><img ' + (lead ? 'fetchpriority="high"' : 'loading="lazy"') +
+    ' src="' + esc(image) + '" alt="' + esc(title) + '" referrerpolicy="no-referrer">' +
+    '<figcaption><a href="' + esc(source) + '" target="_blank" rel="noopener noreferrer" aria-label="' +
+    esc("Photo source: " + title) + '">Photo source ↗</a></figcaption></figure>';
+}
 function recipes() {
   const [lead, ...others] = featuredRecipes().slice(0, 6);
   const { d, i } = lead;
   main.innerHTML = '<div class="sectiontop discovery-head"><h1>Featured for you</h1>' +
     btn("Edit preferences", "preferences", "quiet") + '</div>' +
-    '<section class="hero' + (i < 6 ? '' : ' text-feature') + '"><div class="herotext"><p class="kicker">' +
+    '<section class="hero"><div class="herotext"><p class="kicker">' +
     esc(d.cuisine) + '</p><h2>' + esc(d.name) + '</h2><p class="desc">' + esc(d.note) + '</p>' +
     meta(d) + '<p class="nutrition">' + nutrition(d) + '</p>' + btn("View recipe", "recipe:" + i, "primary") +
-    '</div>' + (i < 6 ? '<div class="herophoto"><img src="' + pic(i) + '" alt=""></div>' : '') + '</section>' +
+    '</div>' + featuredPhoto(d, true) + '</section>' +
     '<div class="featured-pair">' + others.map(({ d, i }) =>
-      '<button class="feature-link" data-do="recipe:' + i + '"><strong>' + esc(d.name) + '</strong><small>' +
-      esc(d.cuisine) + ' · ' + d.time + ' min</small><small>' + nutrition(d) + '</small></button>').join("") + '</div>' +
+      '<article class="featured-card">' + featuredPhoto(d) + '<button class="feature-link" data-do="recipe:' + i + '"><strong>' + esc(d.name) + '</strong><small>' +
+      esc(d.cuisine) + ' · ' + d.time + ' min</small><small>' + nutrition(d) + '</small></button></article>').join("") + '</div>' +
     '<form id="cookbookSearch" class="web-search" role="search"><label for="recipeQuery">Search the cookbook</label>' +
     '<div><input id="recipeQuery" type="search" placeholder="Search ' + dishes.length + ' recipes by dish, cuisine or ingredient">' +
     '<button class="primary">Search</button></div></form><p id="resultCount" role="status"></p><div id="localMatches"></div>';
+  main.querySelectorAll(".featured-photo img").forEach(img => {
+    const hide = () => { img.closest("figure").hidden = true; };
+    img.addEventListener("error", hide, { once: true });
+    if (img.complete && !img.naturalWidth) hide();
+  });
   const field = $("#recipeQuery");
   function showResults() {
     const query = field.value.trim();
