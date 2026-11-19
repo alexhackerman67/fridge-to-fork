@@ -162,7 +162,7 @@ const dishes = [
     note: "Spinach wilts in the spaghetti pot just before draining. A splash of the starchy cooking water loosens the pesto into a glossy sauce that coats each strand, and a squeeze of lemon brightens the basil.",
     needs: { Spaghetti: 180, Spinach: 60, Pesto: 50, Lemon: 0.5 },
     steps: [
-      "Bring a pot of water to the boil. Cook the spaghetti according to the packet.",
+      "Bring a pot of water to the boil. Cook the spaghetti according to the packet. Stir as the strands soften so they separate. Bite into one just before the packet time is up. It should still have a little firmness in the centre.",
       "Add the spinach for the last minute. Reserve a mug of cooking water, then drain.",
       "Off the heat, toss with pesto, lemon juice and a splash of cooking water.",
     ],
@@ -176,8 +176,8 @@ const dishes = [
     note: "A tin of tomatoes cooks down into a thick sauce with little wells for the eggs. Cover the pan until the whites set, then crumble feta over the top so each spoonful gets a salty bite.",
     needs: { Egg: 4, "Tinned tomatoes": 400, Feta: 40 },
     steps: [
-      "Simmer the tomatoes in a small frying pan for 8 minutes, stirring occasionally.",
-      "Make four wells and crack an egg into each. Cover and cook gently until the eggs are set.",
+      "Simmer the tomatoes in a frying pan large enough for the eggs for 8 minutes, stirring occasionally. Drag a spoon through the sauce. If the gap fills immediately, simmer a little longer so the eggs will sit in their wells.",
+      "Make a well for each egg and crack an egg into each. Cover and cook gently until the eggs are set.",
       "Scatter over the crumbled feta and serve from the pan.",
     ],
     swaps: "A little grated cheese can replace the feta.",
@@ -190,7 +190,7 @@ const dishes = [
     note: "Chilled leftover rice separates into grains as it hits the hot pan. Diced capsicum adds crunch, soft ribbons of scrambled egg run through the rice, and soy sauce seasons the whole dish.",
     needs: { "Cooked rice": 300, Egg: 2, Capsicum: 1, "Soy sauce": 15 },
     steps: [
-      "Dice the capsicum. Soften it in a lightly oiled pan.",
+      "Dice the capsicum. Soften it in a lightly oiled pan. Cut the capsicum into pea-sized pieces so a little fits into each spoonful of rice.",
       "Push it aside, add beaten eggs and scramble until set.",
       "Add chilled cooked rice and soy sauce. Stir until steaming hot throughout.",
     ],
@@ -204,7 +204,7 @@ const dishes = [
     note: "Halved cherry tomatoes release their juices into the lemon and olive oil, making a quick dressing for the creamy white beans. Serve straight away for a ten-minute lunch with no cooking.",
     needs: { "White beans": 240, "Cherry tomatoes": 200, Lemon: 0.5 },
     steps: [
-      "Rinse and drain the beans. Halve the tomatoes.",
+      "Rinse and drain the beans. Halve the tomatoes. Let the beans sit in the sieve while you cut the tomatoes. Excess rinse water will dilute the dressing.",
       "Toss together with lemon juice and a drizzle of olive oil to taste.",
     ],
     swaps: "Chickpeas work in place of white beans.",
@@ -214,10 +214,10 @@ const dishes = [
     cuisine: "Australian", difficulty: 1, kcal: 295, protein: 14,
     time: 10,
     gear: "One pan",
-    note: "A handful of spinach and grated cheese turn four slices of bread into two hot toasties. Press them gently in the pan so the crusts turn golden while the cheese melts around the leaves.",
+    note: "A handful of spinach and grated cheese make a filling for hot toasties. Press them gently in the pan so the crusts turn golden while the cheese melts around the leaves.",
     needs: { Bread: 4, Cheese: 60, Spinach: 40 },
     steps: [
-      "Layer cheese and spinach between the bread slices.",
+      "Layer cheese and spinach between the bread slices. Put a little cheese on each side of the spinach so the filling holds together as it melts.",
       "Toast in a lightly oiled pan over medium heat, pressing down gently. Flip and cook until golden and melted.",
     ],
     swaps: "Use wraps in place of sliced bread.",
@@ -230,7 +230,7 @@ const dishes = [
     note: "Ripe bananas sweeten a simple batter of oats, egg and milk. Spoon it into small rounds that are easy to flip, then cook until the edges are golden and the centres are soft.",
     needs: { Banana: 2, Oats: 80, Egg: 2, Milk: 50 },
     steps: [
-      "Mash the bananas, then blend with oats, eggs and milk until smooth.",
+      "Mash the bananas, then blend with oats, eggs and milk until smooth. Let the batter stand for a few minutes while the pan heats. The oats absorb milk, making the rounds easier to flip.",
       "Spoon small rounds into a lightly oiled pan over medium heat.",
       "Flip when bubbles appear. Cook until set and golden on both sides.",
     ],
@@ -250,7 +250,7 @@ const dishes = [
     },
     "steps": [
       "Boil the noodles according to the packet, reserving a mug of water.",
-      "Whisk the peanut butter, soy and lime juice with enough warm water to coat a spoon. Toss through the noodles and scatter with sesame seeds."
+      "Whisk the peanut butter, soy and lime juice with enough warm water to coat a spoon. Toss through the noodles and scatter with sesame seeds. Add the warm water a splash at a time. The sauce may tighten at first. Keep whisking until it falls off the spoon in a ribbon."
     ]
   },
   {
@@ -266,7 +266,7 @@ const dishes = [
       "Oil": 10
     },
     "steps": [
-      "Dice and soften the onion in oil, then stir in the spices for 30 seconds.",
+      "Dice and soften the onion in oil, then stir in the spices for 30 seconds. Cut the onion small. Let it turn translucent before adding the spices so the spices spend only a short time in the hot oil.",
       "Add rinsed lentils and 550 ml water. Simmer for 18–22 minutes, stirring and adding water until soft."
     ]
   },
@@ -282,7 +282,7 @@ const dishes = [
       "Spring onion": 2
     },
     "steps": [
-      "Slice mushrooms and simmer in 650 ml water for 7 minutes. Add fresh udon and heat according to the packet.",
+      "Slice mushrooms and simmer in 650 ml water for 7 minutes. Add fresh udon and heat according to the packet. Cut the mushrooms into slices of similar thickness so they soften evenly in the broth.",
       "Mix miso with a little hot broth, stir back into the pot off the heat and top with sliced spring onion."
     ]
   },
@@ -298,7 +298,7 @@ const dishes = [
       "Cumin": 2
     },
     "steps": [
-      "Drain cooked beans and mash with cumin and a splash of water. Spread over half of each tortilla.",
+      "Drain cooked beans and mash with cumin and a splash of water. Spread over half of each tortilla. Leave a few beans partly whole for texture. Keep the filling just inside the tortilla edge so it stays in the pan when you turn it.",
       "Top with grated cheese, fold and toast both sides in a frying pan over medium heat until golden."
     ]
   },
@@ -315,7 +315,7 @@ const dishes = [
     },
     "steps": [
       "Chop the vegetables, grate the ginger and soften everything in oil for 5 minutes.",
-      "Add 650 ml water and simmer until the carrots cut easily with a spoon. Blend carefully until smooth."
+      "Add 650 ml water and simmer until the carrots cut easily with a spoon. Blend carefully until smooth. Cut the carrots into even coins. Stir them through the onion and ginger so each piece picks up some of the fragrant oil."
     ]
   },
   {
@@ -332,7 +332,7 @@ const dishes = [
       "Oil": 10
     },
     "steps": [
-      "Dice the onion and soften in oil. Stir in curry powder for 30 seconds.",
+      "Dice the onion and soften in oil. Stir in curry powder for 30 seconds. Keep the heat gentle once the curry powder goes in and stir continuously until you smell the spices.",
       "Add drained cooked chickpeas and coconut milk. Simmer for 12 minutes and stir in spinach until wilted."
     ]
   },
@@ -348,8 +348,8 @@ const dishes = [
       "Milk": 30
     },
     "steps": [
-      "Prick two large potatoes and bake at 210°C until tender, around 45–55 minutes. Steam broccoli until soft.",
-      "Split potatoes and scoop the centres into a bowl. Mash with milk, chopped broccoli and grated cheese, then spoon back into the skins."
+      "Prick the potatoes and bake at 210°C until tender, around 45–55 minutes. Steam broccoli until soft.",
+      "Split potatoes and scoop the centres into a bowl. Mash with milk, chopped broccoli and grated cheese, then spoon back into the skins. Leave a thin wall of potato inside the skin when scooping so it can hold the filling."
     ]
   },
   {
@@ -365,7 +365,7 @@ const dishes = [
       "Garlic": 1
     },
     "steps": [
-      "Cook spaghetti and reserve a mug of cooking water. Warm a crushed garlic clove and lemon zest gently in the oil.",
+      "Cook spaghetti and reserve a mug of cooking water. Warm the crushed garlic and lemon zest gently in the oil. Grate only the yellow part of the lemon peel. The white layer underneath tastes bitter.",
       "Add drained tinned tuna, spaghetti, lemon juice to taste and a splash of pasta water. Toss until glossy."
     ]
   },
@@ -381,7 +381,7 @@ const dishes = [
       "Oil": 15
     },
     "steps": [
-      "Chop and fry kimchi in half the oil for 3 minutes. Add chilled cooked rice and a spoonful of kimchi liquid.",
+      "Chop and fry kimchi in half the oil for 3 minutes. Add chilled cooked rice and a spoonful of kimchi liquid. Use kitchen scissors to snip the kimchi in a bowl so you can save the juices for the rice.",
       "Stir until steaming hot throughout. Fry the eggs in the remaining oil until set and serve on top."
     ]
   },
@@ -399,7 +399,7 @@ const dishes = [
       "Tortilla": 4
     },
     "steps": [
-      "Mash drained cooked chickpeas with yoghurt and lemon juice. Cut cucumber into thin batons.",
+      "Mash drained cooked chickpeas with yoghurt and lemon juice. Cut cucumber into thin batons. Crush the chickpeas against the side of the bowl until the mixture holds together on a spoon.",
       "Divide the filling between tortillas, add cucumber and roll tightly."
     ]
   },
@@ -416,7 +416,7 @@ const dishes = [
       "Oil": 15
     },
     "steps": [
-      "Cube sweet potatoes and toss with drained cooked chickpeas and oil. Roast at 210°C for 30–35 minutes, turning once.",
+      "Cube sweet potatoes and toss with drained cooked chickpeas and oil. Roast at 210°C for 30–35 minutes, turning once. Spread the cubes and chickpeas in one layer, using another tray if needed, so the edges roast evenly.",
       "Whisk tahini with lemon juice and enough water to drizzle. Spoon over the hot bowls."
     ]
   },
@@ -433,7 +433,7 @@ const dishes = [
       "Spinach": 80
     },
     "steps": [
-      "Warm crushed garlic cloves gently in oil. Add drained cooked beans and 80 ml water, simmer for 5 minutes and mash.",
+      "Warm crushed garlic cloves gently in oil. Add drained cooked beans and 80 ml water, simmer for 5 minutes and mash. Press a bean against the pot with a spoon. When it flattens easily, mash until creamy with a few pieces left for texture.",
       "Wilt spinach in a separate pan with a splash of water. Serve on the beans with lemon juice."
     ]
   },
@@ -450,7 +450,7 @@ const dishes = [
       "Feta": 50
     },
     "steps": [
-      "Prepare couscous following the packet and fluff with a fork. Boil peas until tender and drain.",
+      "Prepare couscous following the packet and fluff with a fork. Boil peas until tender and drain. Run the tines of the fork lightly across the couscous to separate the grains without crushing them.",
       "Fold peas, torn mint, lemon zest and juice into the couscous. Finish with crumbled feta."
     ]
   },
@@ -468,7 +468,7 @@ const dishes = [
       "Oil": 15
     },
     "steps": [
-      "Pat tofu dry, cube it and fry in oil, turning until browned. Mix gochujang, soy, honey and 30 ml water.",
+      "Pat tofu dry, cube it and fry in oil, turning until browned. Mix gochujang, soy, honey and 30 ml water. Give each side of the tofu time to form a crust. A browned cube should release easily when you turn it.",
       "Toss the tofu in the glaze until glossy. Reheat the rice until steaming hot throughout and divide between bowls."
     ]
   },
@@ -476,7 +476,7 @@ const dishes = [
     "name": "Smashed avocado and white bean toast",
     cuisine: "Australian", difficulty: 1, kcal: 365, protein: 13,
     "time": 10,
-    "note": "Beans give avocado toast a chunkier texture and help one avocado stretch to two servings.",
+    "note": "Beans give avocado toast a chunkier texture and stretch the avocado filling.",
     "needs": {
       "Avocado": 1,
       "White beans": 160,
@@ -484,7 +484,7 @@ const dishes = [
       "Bread": 4
     },
     "steps": [
-      "Mash drained cooked beans with avocado and lemon juice, leaving a few beans whole.",
+      "Mash drained cooked beans with avocado and lemon juice, leaving a few beans whole. Use a fork to crush the avocado against the sides of the bowl and fold it through the beans.",
       "Toast bread and spoon the mixture generously over each slice."
     ]
   },
@@ -501,7 +501,7 @@ const dishes = [
       "Oil": 10
     },
     "steps": [
-      "Warm crushed garlic cloves in oil. Add rinsed lentils, tomatoes and 250 ml water. Simmer for 20 minutes until soft.",
+      "Warm crushed garlic cloves in oil. Add rinsed lentils, tomatoes and 250 ml water. Simmer for 20 minutes until soft. Stir along the bottom as the lentils soften. Add a splash of water if the sauce begins catching before the lentils are tender.",
       "Meanwhile cook pasta according to the packet. Drain and toss with the thickened sauce."
     ]
   },
@@ -517,7 +517,7 @@ const dishes = [
       "Butter": 20
     },
     "steps": [
-      "Slice mushrooms and brown in butter. Set half aside. Add diced onion to the pan and soften.",
+      "Slice mushrooms and brown in butter. Set half aside. Add diced onion to the pan and soften. Leave space between the mushroom slices. If the pan fills up, brown them in batches.",
       "Add rinsed pearl barley and 650 ml water. Simmer for 35–45 minutes, topping up as needed. Fold in reserved mushrooms."
     ]
   },
@@ -534,7 +534,7 @@ const dishes = [
       "Oil": 15
     },
     "steps": [
-      "Grate the zucchini and squeeze out excess liquid in a clean cloth. Mix with crumbled feta, beaten eggs and flour.",
+      "Grate the zucchini and squeeze out excess liquid in a clean cloth. Mix with crumbled feta, beaten eggs and flour. Twist the cloth over the sink until very little liquid drips out. A drier mixture holds its shape in the pan.",
       "Fry flattened spoonfuls in oil over medium heat for 3–4 minutes per side until golden and cooked through."
     ]
   },
@@ -550,7 +550,7 @@ const dishes = [
       "Cheese": 60
     },
     "steps": [
-      "Chop cauliflower and peeled potato. Simmer in 450 ml water until both are tender, about 18 minutes.",
+      "Chop cauliflower and peeled potato. Simmer in 450 ml water until both are tender, about 18 minutes. Keep the potato pieces small so they soften around the same time as the cauliflower florets.",
       "Blend until smooth. Add milk, warm gently and stir in grated cheese off the heat."
     ]
   },
@@ -558,7 +558,7 @@ const dishes = [
     "name": "Egg and potato tortilla",
     cuisine: "Spanish", difficulty: 3, kcal: 405, protein: 20,
     "time": 30,
-    "note": "Thin potato slices make a filling Spanish-style omelette for two.",
+    "note": "Thin potato slices make a filling Spanish-style omelette.",
     "needs": {
       "Egg": 5,
       "Potato": 2,
@@ -566,7 +566,7 @@ const dishes = [
       "Oil": 20
     },
     "steps": [
-      "Slice potatoes thinly and dice onion. Cover and cook gently in oil, turning occasionally, until tender.",
+      "Slice potatoes thinly and dice onion. Cover and cook gently in oil, turning occasionally, until tender. Aim for slices of similar thickness. Test a potato slice with the edge of a spatula before adding the eggs.",
       "Pour over beaten eggs and cook on low until mostly set. Finish under a grill in an ovenproof pan until the centre sets."
     ]
   },
@@ -583,7 +583,7 @@ const dishes = [
       "Oil": 10
     },
     "steps": [
-      "Peel, deseed and cube the pumpkin. Soften diced onion and grated ginger in oil.",
+      "Peel, deseed and cube the pumpkin. Soften diced onion and grated ginger in oil. Cut the pumpkin into even chunks. Check a larger piece with a fork before blending.",
       "Add pumpkin and enough water to barely cover. Simmer until tender, blend carefully, then stir in coconut milk and warm through."
     ]
   },
@@ -600,7 +600,7 @@ const dishes = [
       "Oil": 15
     },
     "steps": [
-      "Cut carrots into thin batons, toss with oil and harissa and roast at 210°C for 25–30 minutes.",
+      "Cut carrots into thin batons, toss with oil and harissa and roast at 210°C for 25–30 minutes. Turn the carrots when the undersides begin to colour. Their thin tips will brown first.",
       "Prepare couscous according to the packet. Fluff and top with carrots and yoghurt."
     ]
   },
@@ -617,7 +617,7 @@ const dishes = [
       "Oil": 15
     },
     "steps": [
-      "Warm crushed garlic cloves and tomato paste in oil. Add drained cooked chickpeas and mash half against the side of the pot.",
+      "Warm crushed garlic cloves and tomato paste in oil. Add drained cooked chickpeas and mash half against the side of the pot. Keep stirring the tomato paste until it darkens slightly and coats the garlic.",
       "Add 650 ml water, bring to a boil and stir in small pasta. Simmer until tender, adding water to keep it soupy."
     ]
   },
@@ -634,7 +634,7 @@ const dishes = [
       "Cumin": 2
     },
     "steps": [
-      "Simmer drained cooked beans and corn with cumin and 60 ml water for 6 minutes.",
+      "Simmer drained cooked beans and corn with cumin and 60 ml water for 6 minutes. Crush a spoonful of beans against the side of the pan to help the cumin-flavoured liquid cling to the corn.",
       "Reheat rice until steaming hot throughout. Spoon beans and corn on top and finish with lime juice."
     ]
   },
@@ -651,7 +651,7 @@ const dishes = [
       "Soy sauce": 15
     },
     "steps": [
-      "Prepare noodles according to the packet, rinse under cold water and drain. Peel cucumber into ribbons.",
+      "Prepare noodles according to the packet, rinse under cold water and drain. Peel cucumber into ribbons. Rotate the cucumber as you peel and stop at the watery core to keep the ribbons firm.",
       "Whisk peanut butter with soy, lime juice and a splash of water. Toss with the noodles and cucumber."
     ]
   },
@@ -668,7 +668,7 @@ const dishes = [
     },
     "steps": [
       "Cook pasta and add spinach for the last minute. Reserve a mug of cooking water, then drain.",
-      "Beat ricotta with lemon zest, a squeeze of juice and a little cooking water. Fold through the hot pasta."
+      "Beat ricotta with lemon zest, a squeeze of juice and a little cooking water. Fold through the hot pasta. Loosen the ricotta a spoonful at a time until the sauce slides easily off the spoon."
     ]
   },
   {
@@ -685,7 +685,7 @@ const dishes = [
       "Oil": 10
     },
     "steps": [
-      "Drain and dry cooked chickpeas. Toss with oil and paprika and roast at 210°C for 20–25 minutes.",
+      "Drain and dry cooked chickpeas. Toss with oil and paprika and roast at 210°C for 20–25 minutes. Pat the chickpeas dry with a towel and spread them out on the tray. Surface moisture slows browning.",
       "Warm pitas briefly, split open and fill with shredded lettuce, chickpeas and yoghurt."
     ]
   },
@@ -702,7 +702,7 @@ const dishes = [
       "Oil": 10
     },
     "steps": [
-      "Prepare noodles. Separate and slice bok choy stems and leaves.",
+      "Prepare noodles. Separate and slice bok choy stems and leaves. Slice the thick stems more thinly than the leaves so both are tender when the noodles are ready.",
       "Stir-fry grated ginger and stems in oil for 2 minutes. Add leaves, noodles, soy and a splash of water. Toss until hot."
     ]
   },
@@ -718,7 +718,7 @@ const dishes = [
       "Bread": 4
     },
     "steps": [
-      "Heat baked beans with paprika, stirring until the sauce thickens slightly. Toast the bread.",
+      "Heat baked beans with paprika, stirring until the sauce thickens slightly. Toast the bread. Run a spoon through the beans. Once the sauce briefly holds a trail it will sit neatly on the toast.",
       "Spoon beans over toast, cover with grated cheese and grill briefly until melted."
     ]
   },
@@ -726,7 +726,7 @@ const dishes = [
     "name": "Mushroom and thyme omelettes",
     cuisine: "French", difficulty: 3, kcal: 240, protein: 17,
     "time": 20,
-    "note": "Browned mushrooms and thyme make a savoury filling for two folded omelettes.",
+    "note": "Browned mushrooms and thyme make a savoury filling for folded omelettes.",
     "needs": {
       "Egg": 4,
       "Mushroom": 160,
@@ -734,8 +734,8 @@ const dishes = [
       "Butter": 15
     },
     "steps": [
-      "Slice mushrooms and sauté in half the butter with thyme until their moisture evaporates. Set aside.",
-      "For each omelette, melt a little butter, add two beaten eggs and tilt the pan. When set, add half the mushrooms and fold."
+      "Slice mushrooms and sauté in half the butter with thyme until their moisture evaporates. Set aside. Spread out the mushrooms and let the released liquid cook away so the filling stays dry enough to fold.",
+      "For each omelette, melt a little butter, add two beaten eggs and tilt the pan. When set, add a share of the mushrooms and fold."
     ]
   },
   {
@@ -750,7 +750,7 @@ const dishes = [
       "Cinnamon": 2
     },
     "steps": [
-      "Core and grate the apple. Put it in a saucepan with oats, milk and cinnamon.",
+      "Core and grate the apple. Put it in a saucepan with oats, milk and cinnamon. Stir across the base and into the corners of the pan, where the oats tend to catch.",
       "Simmer gently for 6–8 minutes, stirring often. Loosen with water to taste."
     ]
   },
@@ -768,7 +768,7 @@ const dishes = [
       "Honey": 15
     },
     "steps": [
-      "Whisk milk, yoghurt, cocoa and honey until smooth. Stir in oats and divide between two covered jars.",
+      "Whisk milk, yoghurt, cocoa and honey until smooth. Stir in oats and divide between individual covered jars. Press any cocoa lumps against the bowl with the back of a spoon before folding in the oats.",
       "Refrigerate for about 8 hours. Stir before eating and loosen with a little milk if needed."
     ]
   },
@@ -785,7 +785,7 @@ const dishes = [
       "Oil": 15
     },
     "steps": [
-      "Drain cooked corn and mix with chopped spring onions, beaten eggs and flour.",
+      "Drain cooked corn and mix with chopped spring onions, beaten eggs and flour. Blot the drained corn dry so the batter clings to the kernels.",
       "Fry flattened spoonfuls in a thin layer of oil over medium heat until golden and set on both sides."
     ]
   },
@@ -802,7 +802,7 @@ const dishes = [
       "Oil": 10
     },
     "steps": [
-      "Warm flatbreads in a dry frying pan. Slice the cucumber thinly.",
+      "Warm flatbreads in a dry frying pan. Slice the cucumber thinly. Turn each flatbread when it feels pliable. Cover the warmed flatbreads with a clean towel while you prepare the toppings.",
       "Spread labneh over the bread, add cucumber and finish with za’atar and oil."
     ]
   },
@@ -820,7 +820,7 @@ const dishes = [
       "Oil": 15
     },
     "steps": [
-      "Rinse quinoa and cook following the packet. Spread it on a plate to cool slightly.",
+      "Rinse quinoa and cook following the packet. Spread it on a plate to cool slightly. Let excess rinse water drain from the quinoa before cooking. Fluff the cooked grains before spreading them out.",
       "Finely chop parsley, tomatoes and cucumber. Toss with quinoa, lemon juice and oil."
     ]
   },
@@ -836,7 +836,7 @@ const dishes = [
       "Soy sauce": 15
     },
     "steps": [
-      "Rinse rice and simmer with sliced ginger and 1 litre of water for 40–50 minutes, stirring occasionally.",
+      "Rinse rice and simmer with sliced ginger and 1000 ml water for 40–50 minutes, stirring occasionally. Use a deep pan and keep the bubbles small. Stir across the bottom more frequently as the grains break down.",
       "Add water if it thickens too much. Serve in bowls with sliced spring onions and soy sauce."
     ]
   },
@@ -852,8 +852,8 @@ const dishes = [
       "Oil": 15
     },
     "steps": [
-      "Dice sweet potatoes and capsicum. Fry potatoes in oil for 5 minutes, then cover with a splash of water until tender.",
-      "Add capsicum and fry uncovered until golden. Make four wells, add eggs and cover over low heat until set."
+      "Dice sweet potatoes and capsicum. Fry potatoes in oil for 5 minutes, then cover with a splash of water until tender. Cut the potato into small, even cubes. Check that a fork slips into one before adding the capsicum.",
+      "Add capsicum and fry uncovered until golden. Make a well for each egg, add eggs and cover over low heat until set."
     ]
   },
   {
@@ -869,7 +869,7 @@ const dishes = [
       "Mustard": 8
     },
     "steps": [
-      "Cut potatoes into bite-sized pieces and simmer until just tender. Drain and let steam escape.",
+      "Cut potatoes into bite-sized pieces and simmer until just tender. Drain and let steam escape. Start the potatoes in cool water and bring them to a gentle simmer so the centres cook evenly.",
       "Mix yoghurt, chopped dill, lemon juice and mustard. Gently fold through the warm potatoes."
     ]
   },
@@ -886,7 +886,7 @@ const dishes = [
       "Sesame seeds": 5
     },
     "steps": [
-      "Halve eggplants, score the flesh and brush with oil. Roast cut-side up at 210°C for 25 minutes until tender.",
+      "Halve eggplants, score the flesh and brush with oil. Roast cut-side up at 210°C for 25 minutes until tender. Make shallow diagonal cuts in both directions, keeping the skin intact so each half holds together.",
       "Mix miso, honey and a spoonful of water. Brush over eggplants, scatter with sesame seeds and roast for 5 more minutes."
     ]
   },
@@ -902,7 +902,7 @@ const dishes = [
       "Honey": 15
     },
     "steps": [
-      "Toast bread and spread with ricotta. Core and thinly slice the pear.",
+      "Toast bread and spread with ricotta. Core and thinly slice the pear. Aim for slices thin enough to bend slightly as you spread them into a fan.",
       "Fan pear slices over the toast and drizzle with honey just before serving."
     ]
   },
@@ -920,7 +920,7 @@ const dishes = [
     },
     "steps": [
       "Dice tomatoes and toss with torn basil and oil. Leave for 5 minutes while the bread toasts.",
-      "Rub warm toast lightly with a cut garlic clove. Spoon over tomatoes just before eating."
+      "Rub warm toast lightly with a cut garlic clove. Spoon over tomatoes just before eating. Scoop up the tomatoes with a slotted spoon if they release lots of juice so the bread keeps its crunch."
     ]
   },
   {
@@ -935,7 +935,7 @@ const dishes = [
       "Cheese": 40
     },
     "steps": [
-      "Cook instant polenta with water according to the packet. Stir through grated cheese and half the butter.",
+      "Cook instant polenta with water according to the packet. Stir through grated cheese and half the butter. Sprinkle the polenta into the water while whisking to prevent pockets of dry grain.",
       "Slice mushrooms and fry in remaining butter over high heat until golden at the edges. Spoon over polenta."
     ]
   },
@@ -954,7 +954,7 @@ const dishes = [
     },
     "note": "Crisp pieces of yesterday’s bread catch the tomato juices and soft scrambled egg.",
     "steps": [
-      "Tear the bread and brown it in half the oil, then set aside. Fry chopped garlic and diced tomatoes in the remaining oil until jammy.",
+      "Tear the bread and brown it in half the oil, then set aside. Fry chopped garlic and diced tomatoes in the remaining oil until jammy. Tear the bread into bite-sized pieces with rough edges that will crisp in the oil.",
       "Beat the eggs and stir them into the tomato over low heat until set. Fold in the bread just before serving."
     ]
   },
@@ -974,7 +974,7 @@ const dishes = [
     },
     "note": "A hot pan gives crumbled tofu crisp edges before basil and chilli go in.",
     "steps": [
-      "Pat the tofu dry and crumble into a hot oiled pan. Fry until browned, stirring occasionally.",
+      "Pat the tofu dry and crumble into a hot oiled pan. Fry until browned, stirring occasionally. Leave some larger tofu crumbles and let them sit against the pan briefly between stirs for browned edges.",
       "Add finely sliced chilli and soy sauce with a splash of water. Fold in basil and serve over rice reheated until steaming."
     ]
   },
@@ -992,7 +992,7 @@ const dishes = [
     },
     "note": "Spinach and toasted sesame fold into small rice balls that hold together in your hand.",
     "steps": [
-      "Wilt spinach, squeeze out excess water and mince. Toast sesame seeds in a dry pan.",
+      "Wilt spinach, squeeze out excess water and mince. Toast sesame seeds in a dry pan. Chop the squeezed spinach finely so it spreads through the rice without pulling the balls apart.",
       "Combine with hot cooked short-grain rice and soy. When cool enough to handle, wet your hands and press into small balls. Serve promptly."
     ]
   },
@@ -1011,7 +1011,7 @@ const dishes = [
     },
     "note": "A short splash of cream gathers the browned mushroom juices into a sauce for toast.",
     "steps": [
-      "Slice mushrooms and fry in butter over high heat until golden and the pan is nearly dry.",
+      "Slice mushrooms and fry in butter over high heat until golden and the pan is nearly dry. Keep the mushrooms spread out so the released liquid can evaporate before you add the cream.",
       "Add crushed black pepper and cream. Simmer briefly and spoon over freshly toasted bread."
     ]
   },
@@ -1031,7 +1031,7 @@ const dishes = [
     },
     "note": "Cool yoghurt and lemon dress a crunchy chickpea salad with a toasted cumin finish.",
     "steps": [
-      "Drain cooked chickpeas, dice tomatoes and finely chop the onion. Toast cumin briefly in a dry pan.",
+      "Drain cooked chickpeas, dice tomatoes and finely chop the onion. Toast cumin briefly in a dry pan. Cut the onion into smaller pieces than the tomato so each bite gets a little crunch.",
       "Toss the vegetables and chickpeas with lemon juice, then spoon on the yoghurt and scatter with cumin."
     ]
   },
@@ -1050,7 +1050,7 @@ const dishes = [
     },
     "note": "Thin garlic slices flavour the oil that coats the spaghetti and mushrooms.",
     "steps": [
-      "Cook spaghetti and reserve a mug of cooking water. Brown sliced mushrooms in half the oil.",
+      "Cook spaghetti and reserve a mug of cooking water. Brown sliced mushrooms in half the oil. Wait until one side of the mushrooms is golden before turning; this leaves browned bits to flavour the sauce.",
       "Lower the heat, add the remaining oil and sliced garlic, and stir until fragrant. Toss with pasta, parsley and a splash of pasta water."
     ]
   },
@@ -1070,7 +1070,7 @@ const dishes = [
     },
     "note": "A mashed spoonful of beans thickens this tomato chilli without a long simmer.",
     "steps": [
-      "Soften diced onion in oil and stir in cumin and paprika. Add tomatoes and drained tinned kidney beans.",
+      "Soften diced onion in oil and stir in cumin and paprika. Add tomatoes and drained tinned kidney beans. Stir until the spices coat the softened onion, then add the tomatoes before the paprika catches.",
       "Mash a few beans against the pan and simmer for 18 minutes, stirring occasionally."
     ]
   },
@@ -1090,7 +1090,7 @@ const dishes = [
     },
     "note": "A thin stream of beaten egg sets into delicate ribbons in ginger broth.",
     "steps": [
-      "Simmer sliced ginger and soy sauce in 650 ml water for 5 minutes. Stir in cubed tofu and cornflour mixed with a spoonful of cold water.",
+      "Simmer sliced ginger and soy sauce in 650 ml water for 5 minutes. Stir in cubed tofu and cornflour mixed with a spoonful of cold water. Mix the cornflour with cold water until smooth and stir it again just before adding; it settles quickly.",
       "Once simmering, stir in a circle and slowly pour in beaten egg. Cook until the ribbons are set and finish with spring onion."
     ]
   },
@@ -1110,7 +1110,7 @@ const dishes = [
     },
     "note": "Sweet paprika gives the tomato broth depth while spinach wilts around soft chickpeas.",
     "steps": [
-      "Warm crushed garlic and paprika in oil for 30 seconds. Add tomatoes, drained cooked chickpeas and a splash of water.",
+      "Warm crushed garlic and paprika in oil for 30 seconds. Add tomatoes, drained cooked chickpeas and a splash of water. Stir the paprika into the oil until fragrant and have the tomatoes ready to add before it darkens.",
       "Simmer for 15 minutes. Mash a few chickpeas and stir in spinach until wilted."
     ]
   },
@@ -1129,7 +1129,7 @@ const dishes = [
     },
     "note": "Sweet browned onion tops a fragrant pan of rice and green lentils.",
     "steps": [
-      "Rinse dry green lentils and simmer in water for 12 minutes. Meanwhile slice onions and fry in oil until deeply golden.",
+      "Rinse dry green lentils and simmer in water for 12 minutes. Meanwhile slice onions and fry in oil until deeply golden. Slice the onions evenly and turn them as their edges brown so they develop sweetness throughout.",
       "Add rice to the lentils with cumin and enough water to cover by 2 cm. Cover and simmer until tender, adding water if needed. Top with onions."
     ]
   },
@@ -1148,7 +1148,7 @@ const dishes = [
     },
     "note": "Cool noodles pick up a nutty dressing made from crushed sesame seeds.",
     "steps": [
-      "Cook soba according to the packet, rinse under cold water and drain well.",
+      "Cook soba according to the packet, rinse under cold water and drain well. Rub a few rinsed noodles between your fingers. Once the sticky coating has washed away, shake the sieve well.",
       "Toast and crush sesame seeds. Mix with soy, vinegar and a little water, toss with the noodles and finish with spring onion."
     ]
   },
@@ -1168,7 +1168,7 @@ const dishes = [
     },
     "note": "Sweet peas go into the rice at the end so they keep their bright colour.",
     "steps": [
-      "Soften diced onion in butter, stir in rice and add hot water a ladle at a time, stirring as each addition is absorbed.",
+      "Soften diced onion in butter, stir in rice and add hot water a ladle at a time, stirring as each addition is absorbed. Add another ladle when a spoon drawn across the rice briefly exposes the pan. Keep the mixture loose enough to stir.",
       "After about 15 minutes add peas and continue until rice is tender. Fold in grated cheese and scatter with pea shoots."
     ]
   },
@@ -1188,7 +1188,7 @@ const dishes = [
     },
     "note": "Crisp-edged potato cubes fill warm tortillas with lime yoghurt.",
     "steps": [
-      "Dice potatoes small, toss with oil and paprika, and roast at 220°C for 25–30 minutes, turning once.",
+      "Dice potatoes small, toss with oil and paprika, and roast at 220°C for 25–30 minutes, turning once. Spread the cubes apart and turn them once the undersides are golden so more than one side crisps.",
       "Warm tortillas in a dry pan. Fill with potatoes and spoon over yoghurt mixed with lime juice."
     ]
   },
@@ -1207,7 +1207,7 @@ const dishes = [
     },
     "note": "Thin potato rounds roast before the salmon goes on the tray with lemon and dill.",
     "steps": [
-      "Slice potatoes thinly, coat with oil and roast at 210°C for 15 minutes.",
+      "Slice potatoes thinly, coat with oil and roast at 210°C for 15 minutes. Spread the potato slices in a thin layer. Overlapping them heavily leaves the middle slices slower to cook.",
       "Place salmon fillets on top with lemon slices. Roast until cooked through and flaking, then finish with chopped dill."
     ]
   },
@@ -1227,7 +1227,7 @@ const dishes = [
     },
     "note": "Seared chicken strips, onion and capsicum make a filling for warm tortillas.",
     "steps": [
-      "Slice chicken, onions and capsicum into thin strips. Fry the chicken in oil, turning until browned.",
+      "Slice chicken, onions and capsicum into thin strips. Fry the chicken in oil, turning until browned. Keep the strips similar in width. Work in batches if the pan is too crowded for the chicken to brown.",
       "Add onion, capsicum and cumin and cook until vegetables soften and chicken is cooked through. Serve in warm tortillas."
     ]
   },
@@ -1246,7 +1246,7 @@ const dishes = [
     },
     "note": "Lemon juice and oregano coat bite-sized chicken and potato pieces on one tray.",
     "steps": [
-      "Dice potatoes into small cubes and roast with half the oil at 210°C for 12 minutes.",
+      "Dice potatoes into small cubes and roast with half the oil at 210°C for 12 minutes. Cut the potatoes evenly and leave room on the tray for the chicken before you start roasting.",
       "Toss diced chicken with remaining oil, lemon juice and oregano. Add to tray and roast until the chicken is cooked through and potatoes are tender."
     ]
   },
@@ -1265,7 +1265,7 @@ const dishes = [
     },
     "note": "Split lentils simmer to a soft purée with ginger and coconut milk.",
     "steps": [
-      "Rinse lentils and combine with turmeric, grated ginger and 500 ml water. Simmer until tender, about 18 minutes.",
+      "Rinse lentils and combine with turmeric, grated ginger and 500 ml water. Simmer until tender, about 18 minutes. Skim any foam from the surface and stir along the base occasionally as the lentils soften.",
       "Stir in coconut milk and gently heat through. Finish with lime juice to taste."
     ]
   },
@@ -1285,7 +1285,7 @@ const dishes = [
     },
     "note": "Crisp lettuce leaves hold crumbled tofu and finely chopped carrot.",
     "steps": [
-      "Separate and dry the lettuce leaves. Dice carrot, grate ginger and crumble the tofu.",
+      "Separate and dry the lettuce leaves. Dice carrot, grate ginger and crumble the tofu. Keep the larger lettuce leaves whole for scooping. Dry the insides so the warm filling stays in place.",
       "Brown tofu in oil, add carrot and ginger and stir-fry until tender. Stir in soy and spoon into lettuce leaves."
     ]
   },
@@ -1304,7 +1304,7 @@ const dishes = [
     },
     "note": "Mashed beans bind flaked tuna into a lemony topping for thick toast.",
     "steps": [
-      "Drain cooked beans and tinned tuna. Mash half the beans with lemon juice and a spoonful of water.",
+      "Drain cooked beans and tinned tuna. Mash half the beans with lemon juice and a spoonful of water. Add the water gradually while mashing until the beans spread easily and still hold their shape.",
       "Fold in remaining beans, tuna and chopped parsley. Divide over hot toast."
     ]
   },
@@ -1323,7 +1323,7 @@ const dishes = [
     },
     "note": "Miso turns oats into a savoury breakfast topped with eggs and toasted seeds.",
     "steps": [
-      "Simmer oats in 400 ml water, stirring until creamy. Meanwhile boil eggs until set, peel and halve.",
+      "Simmer oats in 400 ml water, stirring until creamy. Meanwhile boil eggs until set, peel and halve. Stir the oats along the base of the pan and loosen with a splash of water if they thicken before they soften.",
       "Take oats off the heat and stir in miso loosened with water. Top with eggs, sliced spring onion and toasted seeds."
     ]
   },
@@ -1343,7 +1343,7 @@ const dishes = [
     },
     "note": "Browned mushrooms and paprika make a creamy sauce for ribbon pasta.",
     "steps": [
-      "Cook pasta and save a mug of water. Fry sliced mushrooms and onion in oil until well browned.",
+      "Cook pasta and save a mug of water. Fry sliced mushrooms and onion in oil until well browned. Give the mushrooms enough room to brown. Save the pasta water before draining so you can loosen the sauce later.",
       "Add paprika and a splash of pasta water. Remove from heat, stir in yoghurt and toss through pasta."
     ]
   },
@@ -1363,7 +1363,7 @@ const dishes = [
     "note": "Stale bread melts into a thick tomato soup with torn basil.",
     "steps": [
       "Warm sliced garlic in oil, then add tomatoes and 350 ml water. Simmer for 12 minutes.",
-      "Tear in bread and simmer, stirring, until soft and thick. Tear basil over the bowls."
+      "Tear in bread and simmer, stirring, until soft and thick. Tear basil over the bowls. Tear the bread into small uneven pieces so some dissolve into the soup and others keep a little texture."
     ]
   },
   {
@@ -1381,7 +1381,7 @@ const dishes = [
     },
     "note": "Long carrot ribbons stay crisp under a nutty lemon dressing.",
     "steps": [
-      "Peel carrots into ribbons. Drain cooked chickpeas and finely chop parsley.",
+      "Peel carrots into ribbons. Drain cooked chickpeas and finely chop parsley. Turn the carrot after each few strokes of the peeler to keep the ribbons narrow enough to toss.",
       "Whisk tahini, lemon juice and water to a pouring consistency. Toss with the carrots, chickpeas and parsley."
     ]
   },
@@ -1400,8 +1400,8 @@ const dishes = [
     },
     "note": "A small batch of tender savoury scones with pockets of melted cheese.",
     "steps": [
-      "Rub cold diced butter into the flour, then add grated cheese and snipped chives. Stir in enough milk for a soft dough.",
-      "Pat 2 cm thick and cut four rounds. Bake at 210°C for 12–15 minutes until risen and golden."
+      "Rub cold diced butter into the flour, then add grated cheese and snipped chives. Stir in enough milk for a soft dough. Use your fingertips to rub in the butter until the mixture resembles coarse crumbs with a few small flakes remaining.",
+      "Pat 2 cm thick and cut into rounds. Bake at 210°C for 12–15 minutes until risen and golden."
     ]
   },
   {
@@ -1419,7 +1419,7 @@ const dishes = [
     },
     "note": "Some of the corn and potato is mashed to thicken the chowder while leaving whole kernels.",
     "steps": [
-      "Soften chopped onion in butter. Add diced potatoes, corn kernels and enough water to cover. Simmer until tender.",
+      "Soften chopped onion in butter. Add diced potatoes, corn kernels and enough water to cover. Simmer until tender. Cut the potatoes into similar-sized pieces and check that they crush easily against the pot before mashing.",
       "Mash roughly in the pan. Pour in milk and reheat gently, stirring until creamy."
     ]
   },
@@ -1439,7 +1439,7 @@ const dishes = [
     },
     "note": "Steam carries ginger through the fish while spring onions stay bright and fresh.",
     "steps": [
-      "Lay fillets on a heatproof plate with ginger matchsticks. Steam, covered, until cooked through and flaking easily.",
+      "Lay fillets on a heatproof plate with ginger matchsticks. Steam, covered, until cooked through and flaking easily. Arrange the fish in a single layer and keep the plate above the simmering water so the steam circulates around it.",
       "Top with sliced spring onions, soy and warmed oil. Serve over reheated, steaming-hot rice."
     ]
   },
@@ -1458,7 +1458,7 @@ const dishes = [
     },
     "note": "Roasted capsicum blends into a sweet red sauce that catches inside penne.",
     "steps": [
-      "Quarter and deseed capsicums, toss with garlic and oil, and roast at 220°C until soft and blistered.",
+      "Quarter and deseed capsicums, toss with garlic and oil, and roast at 220°C until soft and blistered. Lay the capsicum pieces skin-side up so the skins blister as the flesh softens.",
       "Cook pasta. Blend roasted vegetables with a splash of cooking water and toss with drained pasta and basil."
     ]
   },
@@ -1477,7 +1477,7 @@ const dishes = [
     },
     "note": "Chickpea flour makes a savoury batter flecked with chopped herbs and onion.",
     "steps": [
-      "Whisk flour, cumin and 210 ml water until smooth. Stir in finely diced onion and chopped coriander.",
+      "Whisk flour, cumin and 210 ml water until smooth. Stir in finely diced onion and chopped coriander. Pour the water into the flour gradually while whisking, scraping the edges of the bowl to catch dry pockets.",
       "Spread thin circles in a lightly oiled frying pan. Cook each side until golden and the centre is set."
     ]
   },
@@ -1497,7 +1497,7 @@ const dishes = [
     },
     "note": "Firm pieces of tomato, cucumber and feta keep their texture under an oregano dressing.",
     "steps": [
-      "Cut tomatoes and cucumber into chunky pieces. Toss with olives, oil and oregano.",
+      "Cut tomatoes and cucumber into chunky pieces. Toss with olives, oil and oregano. Cut the cucumber and tomato to roughly the same size so both fit on a fork with a piece of feta.",
       "Cut feta into cubes and fold through gently. Leave for five minutes before serving."
     ]
   },
@@ -1516,7 +1516,7 @@ const dishes = [
     },
     "note": "Creamy beans absorb a smoky tomato sauce flavoured with sliced garlic.",
     "steps": [
-      "Warm garlic and paprika gently in oil. Add tomatoes and simmer for 8 minutes.",
+      "Warm garlic and paprika gently in oil. Add tomatoes and simmer for 8 minutes. Keep the heat low while stirring the paprika through the garlic oil. Add the tomatoes as soon as it smells fragrant.",
       "Fold in drained cooked beans and heat for another 6 minutes, loosening with water if needed."
     ]
   },
@@ -1536,7 +1536,7 @@ const dishes = [
     },
     "note": "Edamame and carrot ribbons add colour and bite to chilled soba noodles.",
     "steps": [
-      "Cook soba and frozen shelled edamame according to their packets. Drain and cool under running water.",
+      "Cook soba and frozen shelled edamame according to their packets. Drain and cool under running water. Check both packet timings before starting so you can drain the noodles and edamame as each becomes tender.",
       "Peel carrot into ribbons. Toss everything with soy, vinegar and sesame seeds."
     ]
   },
@@ -1555,7 +1555,7 @@ const dishes = [
     },
     "note": "Soft tomato shells hold basil ricotta beneath a crisp breadcrumb topping.",
     "steps": [
-      "Halve tomatoes, scoop out the wet seeds and place cut-side up in a baking dish. Mix ricotta with chopped basil and spoon into the halves.",
+      "Halve tomatoes, scoop out the wet seeds and place cut-side up in a baking dish. Mix ricotta with chopped basil and spoon into the halves. Use a teaspoon to lift out the seeds, leaving the outer tomato wall intact to support the filling.",
       "Crumble bread over the top, drizzle with oil and bake at 200°C for 18–22 minutes."
     ]
   },
@@ -1574,7 +1574,7 @@ const dishes = [
     },
     "note": "Roast pumpkin and chickpeas turn fluffy couscous into a warm supper.",
     "steps": [
-      "Peel and dice pumpkin, then toss with drained chickpeas, cumin and oil. Roast at 210°C for about 30 minutes until tender.",
+      "Peel and dice pumpkin, then toss with drained chickpeas, cumin and oil. Roast at 210°C for about 30 minutes until tender. Keep the pumpkin pieces close in size. Spread them around the chickpeas so the hot air reaches their edges.",
       "Prepare couscous following the packet, fluff with a fork and fold through the roasted vegetables."
     ]
   },
@@ -1595,7 +1595,7 @@ const dishes = [
     },
     "note": "Quick-pickled carrot gives these tofu rolls their tang and crunch.",
     "steps": [
-      "Cut carrot into matchsticks and toss with vinegar. Pat tofu dry, slice and fry in oil until golden, then coat with soy.",
+      "Cut carrot into matchsticks and toss with vinegar. Pat tofu dry, slice and fry in oil until golden, then coat with soy. Cut the carrot sticks thinly enough to bend. Turn them in the vinegar while the tofu cooks.",
       "Split rolls and fill with tofu, thin cucumber slices and drained carrot."
     ]
   },
@@ -1614,7 +1614,7 @@ const dishes = [
     },
     "note": "Chopped kimchi adds heat to crisp grated potato cakes.",
     "steps": [
-      "Grate potatoes and squeeze dry. Mix with finely chopped kimchi, beaten egg and flour.",
+      "Grate potatoes and squeeze dry. Mix with finely chopped kimchi, beaten egg and flour. Wring out the grated potato in a clean towel. Dry shreds brown more readily and help the cakes hold together.",
       "Flatten spoonfuls in an oiled pan and cook over medium heat until crisp on both sides and cooked through."
     ]
   },
@@ -1633,7 +1633,7 @@ const dishes = [
     },
     "note": "Soft scrambled eggs and wilted spinach make a quick breakfast wrap.",
     "steps": [
-      "Wilt spinach in butter, then add beaten eggs and stir gently until set.",
+      "Wilt spinach in butter, then add beaten eggs and stir gently until set. Let excess moisture evaporate from the spinach before adding the eggs so the wrap stays firm.",
       "Warm tortillas, divide the eggs and spinach between them, top with grated cheese and roll."
     ]
   },
@@ -1652,7 +1652,7 @@ const dishes = [
     },
     "note": "Fine bulgur absorbs the tomato juices in a lemony grain salad.",
     "steps": [
-      "Prepare bulgur according to the packet and let it cool until warm. Finely chop parsley and tomatoes.",
+      "Prepare bulgur according to the packet and let it cool until warm. Finely chop parsley and tomatoes. Fluff the bulgur with a fork before cooling so the dressing can reach the individual grains.",
       "Toss everything with lemon juice and oil. Rest for five minutes before serving."
     ]
   },
@@ -1671,7 +1671,7 @@ const dishes = [
     },
     "note": "Crisp broccoli florets sit on a bed of freshly blended chickpeas.",
     "steps": [
-      "Toss broccoli in oil and roast at 220°C for 18–22 minutes until the edges brown.",
+      "Toss broccoli in oil and roast at 220°C for 18–22 minutes until the edges brown. Slice large florets through the stem and place a flat side against the tray for deeper browning.",
       "Blend drained cooked chickpeas with tahini, lemon juice and a little water until smooth. Spread on plates and top with broccoli."
     ]
   },
@@ -1691,7 +1691,7 @@ const dishes = [
     },
     "note": "Warm spiced apple tops slices of golden French toast.",
     "steps": [
-      "Slice and soften apple in half the butter with cinnamon and a splash of water. Transfer to a bowl.",
+      "Slice and soften apple in half the butter with cinnamon and a splash of water. Transfer to a bowl. Slice the apple thinly and turn the pieces in the cinnamon butter until they bend easily.",
       "Whisk eggs and milk. Dip bread briefly and fry in remaining butter until golden on both sides and cooked through. Top with apple."
     ]
   },
@@ -1711,7 +1711,7 @@ const dishes = [
     "note": "Eggs poach gently in a tomato and chickpea sauce spiced with cumin.",
     "steps": [
       "Warm cumin in oil and add tomatoes and drained cooked chickpeas. Simmer until slightly thickened.",
-      "Make four hollows, add eggs and cover. Cook gently until the eggs are set."
+      "Make a hollow for each egg, add eggs and cover. Cook gently until the eggs are set. Simmer until a spoon makes a hollow that holds its shape; this keeps the eggs separate as they cook."
     ]
   },
   {
@@ -1731,7 +1731,7 @@ const dishes = [
     "note": "Peanut butter thickens the broth around cubes of sweet potato and wilted greens.",
     "steps": [
       "Soften diced onion in oil, add cubed sweet potato, tomatoes and enough water to cover. Simmer until tender.",
-      "Whisk peanut butter with a little broth, stir back into the pot and add spinach until wilted."
+      "Whisk peanut butter with a little broth, stir back into the pot and add spinach until wilted. Test a larger sweet potato cube with a fork before adding the peanut butter, which thickens the broth."
     ]
   },
   {
@@ -1750,7 +1750,7 @@ const dishes = [
     },
     "note": "Lemon and parsley brighten a quick sauce of garlic oil and prawns.",
     "steps": [
-      "Boil pasta and reserve a mug of water. In a pan warm sliced garlic in oil, add peeled prawns and cook until opaque throughout.",
+      "Boil pasta and reserve a mug of water. In a pan warm sliced garlic in oil, add peeled prawns and cook until opaque throughout. Have the drained pasta and reserved water within reach so you can finish the sauce as soon as the prawns are cooked.",
       "Toss with the pasta, lemon zest, juice, chopped parsley and a little cooking water."
     ]
   },
@@ -1768,7 +1768,7 @@ const dishes = [
     },
     "note": "Soft rice and coconut milk make a warm pudding topped with fresh mango.",
     "steps": [
-      "Rinse rice and simmer in 300 ml water until tender. Stir in coconut milk and sugar.",
+      "Rinse rice and simmer in 300 ml water until tender. Stir in coconut milk and sugar. Stir more often as the rice absorbs the water, scraping the bottom to keep the grains from sticking.",
       "Cook gently until creamy, adding a little water as needed. Serve with diced mango."
     ]
   },
@@ -1788,7 +1788,7 @@ const dishes = [
     },
     "note": "Soft leeks and a simple cheese sauce coat pasta under a browned top.",
     "steps": [
-      "Cook pasta just short of tender. Wash and slice leek, soften in butter, stir in flour and gradually add milk until thickened.",
+      "Cook pasta just short of tender. Wash and slice leek, soften in butter, stir in flour and gradually add milk until thickened. Split the leek lengthways and rinse between the layers, where grit can hide, before slicing.",
       "Stir in half the grated cheese and pasta. Transfer to a baking dish, top with remaining cheese and bake at 210°C for 12 minutes."
     ]
   },
@@ -1808,7 +1808,7 @@ const dishes = [
     },
     "note": "Sweet beetroot and earthy lentils soak up a sharp mustard dressing.",
     "steps": [
-      "Drain the cooked lentils and warm in a pan with a splash of water. Cut cooked beetroot into wedges.",
+      "Drain the cooked lentils and warm in a pan with a splash of water. Cut cooked beetroot into wedges. Let any excess water evaporate from the lentils so the mustard dressing coats them evenly.",
       "Whisk mustard, vinegar and oil. Toss with the warm lentils and beetroot, then crumble feta on top."
     ]
   },
@@ -1827,7 +1827,7 @@ const dishes = [
     },
     "note": "Tender aubergine cubes and tomato cook together with the rice in one pan.",
     "steps": [
-      "Dice eggplant and onion and brown in oil. Add rinsed rice and tomatoes.",
+      "Dice eggplant and onion and brown in oil. Add rinsed rice and tomatoes. Cut the eggplant into similar-sized cubes. Turn them when the first side is golden to build flavour before adding liquid.",
       "Add 250 ml water, cover and simmer gently until rice is tender, adding water as needed. Rest covered for 5 minutes."
     ]
   },
@@ -1846,7 +1846,7 @@ const dishes = [
     },
     "note": "Warm browned halloumi pairs with ripe peach and crisp lettuce.",
     "steps": [
-      "Slice halloumi and fry in half the oil until golden on both sides. Pit and slice peaches.",
+      "Slice halloumi and fry in half the oil until golden on both sides. Pit and slice peaches. Pat the halloumi slices dry and leave them undisturbed until they release easily from the pan.",
       "Dress lettuce with remaining oil and lemon juice. Divide between plates and add halloumi and peaches."
     ]
   },
@@ -1867,7 +1867,7 @@ const dishes = [
     "note": "A glossy soy and honey sauce coats thin strips of chicken and noodles.",
     "steps": [
       "Cook noodles following the packet. Slice chicken thinly and stir-fry in oil until cooked through.",
-      "Add thin carrot sticks, honey, soy and a splash of water. Toss with noodles until glossy and hot."
+      "Add thin carrot sticks, honey, soy and a splash of water. Toss with noodles until glossy and hot. Loosen the drained noodles before adding them so the soy and honey can coat the strands evenly."
     ]
   },
   {
@@ -1884,8 +1884,8 @@ const dishes = [
     },
     "note": "Toasted oats keep a little crunch between layers of yoghurt and berries.",
     "steps": [
-      "Toast oats in a dry pan over medium heat, stirring until fragrant. Tip onto a plate to cool.",
-      "Layer yoghurt, berries and oats into two glasses. Drizzle with honey and serve."
+      "Toast oats in a dry pan over medium heat, stirring until fragrant. Tip onto a plate to cool. Move the oats around the pan as they toast and transfer them as soon as they smell nutty. The hot pan keeps cooking them.",
+      "Layer yoghurt, berries and oats into individual glasses. Drizzle with honey and serve."
     ]
   },
   {
@@ -1903,7 +1903,7 @@ const dishes = [
     },
     "note": "Peas and lemon zest lighten a quick butter sauce for tender potato gnocchi.",
     "steps": [
-      "Cook gnocchi and peas following packet timings. Reserve some cooking water before draining.",
+      "Cook gnocchi and peas following packet timings. Reserve some cooking water before draining. Check the packet times for both ingredients and add the quicker one later so they finish together.",
       "Melt butter with lemon zest. Toss in gnocchi, peas, grated cheese and a splash of the cooking water."
     ]
   },
@@ -1923,7 +1923,7 @@ const dishes = [
     },
     "note": "Crumbled tofu takes on a golden colour from turmeric and a smoky edge from paprika.",
     "steps": [
-      "Fry crumbled tofu in oil with turmeric and paprika, stirring until lightly browned.",
+      "Fry crumbled tofu in oil with turmeric and paprika, stirring until lightly browned. Break the tofu into bite-sized curds, leaving a mix of small and large pieces for different textures.",
       "Fold in spinach and cook until wilted. Serve over toasted bread."
     ]
   },
@@ -1943,7 +1943,7 @@ const dishes = [
     },
     "note": "Toasted pumpkin seeds make a nutty alternative to pine nuts in basil pesto.",
     "steps": [
-      "Toast seeds in a dry pan and cool. Blend with basil, grated cheese, oil, lemon juice and a spoonful of water.",
+      "Toast seeds in a dry pan and cool. Blend with basil, grated cheese, oil, lemon juice and a spoonful of water. Shake the pan frequently when toasting the seeds. Let them cool on a plate before blending so the basil keeps its fresh flavour.",
       "Cook pasta and reserve a mug of cooking water. Toss off the heat with pesto, loosening with cooking water."
     ]
   },

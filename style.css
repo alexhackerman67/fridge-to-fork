@@ -415,7 +415,13 @@ h1 {
 .missing {
   color: var(--red);
 }
+html:has(dialog[open]),
+body:has(dialog[open]) {
+  overflow: hidden;
+}
 dialog {
+  overflow-y: auto;
+  overscroll-behavior: contain;
   border: 0;
   border-radius: 22px;
   background: var(--paper);

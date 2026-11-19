@@ -42,8 +42,8 @@ document.addEventListener("submit", async event => {
     const origin = connectedScanner() || "https://fridge-to-fork.axiang28.workers.dev";
     const response = await fetch(origin + "/substitute", {
       method: "POST", headers: { "Content-Type": "application/json" }, signal: AbortSignal.timeout(45000),
-      body: JSON.stringify({ dish: dish.name, method: dish.steps.join(" "), original,
-        amount: amount(original, dish.needs[original]), replacement })
+      body: JSON.stringify({ dish: dish.name, method: methodFor(dish).join(" "), original,
+        amount: amount(original, portion(dish.needs[original])), replacement })
     });
     if (!response.ok) throw new Error();
     const { verdict, reason, tip } = await response.json();

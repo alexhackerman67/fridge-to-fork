@@ -13,6 +13,7 @@ function preferencesForm() {
     Object.keys(allergyIngredients).map(name => '<label><input type="checkbox" name="allergies" value="' + name + '"' +
       ((profile.allergies || []).includes(name) ? " checked" : "") + '> ' + name + '</label>').join("") +
     '</div></details><p class="hint">Filters use recipe ingredients. Check packet labels for allergens and cross-contact, and choose products suitable for your diet.</p>' +
+    '<label class="field">How many people do you usually cook for?<input required type="number" name="servings" min="1" step="1" inputmode="numeric" value="' + servings() + '"></label>' +
     '<fieldset class="goal-fields"><legend>Optional goals per serving</legend>' +
     '<label class="field">Protein (g)<input type="number" name="protein" min="0.1" step="any" inputmode="decimal" value="' + esc(profile.protein || "") + '"></label>' +
     '<label class="field">Calories (kcal)<input type="number" name="calories" min="1" step="any" inputmode="decimal" value="' + esc(profile.calories || "") + '"></label></fieldset>' +
@@ -22,6 +23,7 @@ function preferencesForm() {
     event.preventDefault();
     const fields = new FormData(event.currentTarget);
     state.preferences = {
+      servings: Number(fields.get("servings")),
       cuisines: fields.get("cuisines").trim(), meals: fields.get("meals").trim(),
       diet: fields.get("diet") || "", allergies: fields.getAll("allergies"),
       protein: Number(fields.get("protein")) || null, calories: Number(fields.get("calories")) || null
