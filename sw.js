@@ -1,9 +1,9 @@
 const prefix = 'fridge-to-fork:' + self.registration.scope + ':';
-const cacheName = prefix + 'mobile-v3';
+const cacheName = prefix + 'mobile-v4';
 const files = [
   './', 'index.html', 'style.css', 'app.js', 'recipes.js', 'scanner.js',
-  'events.js', 'install.js', 'app.webmanifest',
-  ...[180, 192, 512].map(size => 'assets/icon-' + size + '.png'),
+  'assets/fork-maskable-512.png', 'cloud-scan.js', 'events.js', 'install.js', 'app.webmanifest',
+  ...[180, 192, 512].map(size => 'assets/fork-mascot-' + size + '.png'),
   ...Array.from({length: 6}, (_, i) => 'assets/meal-' + i + '.jpg'),
   'assets/sample.jpg', 'assets/scanner/tf.js', 'assets/scanner/mobilenet.js',
   'assets/scanner/model.json',

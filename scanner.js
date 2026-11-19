@@ -25,6 +25,7 @@ function loadScript(url) {
     );
   return libraries.get(url);
 }
+let cloudRequest;
 let modelPromise,
   scanToken = 0,
   imageUrl = "",
@@ -108,6 +109,7 @@ async function recognise(img, token) {
   return [...found];
 }
 function resetScan() {
+  cloudRequest?.abort();
   scanToken++;
   if (imageUrl.startsWith("blob:")) URL.revokeObjectURL(imageUrl);
   imageUrl = "";
@@ -120,7 +122,9 @@ function scan() {
     "Scan pantry",
     '<div class="scanbox">' +
       icon("scan") +
-      '<h3 style="font-size:26px;margin:8px">Fridge or pantry photo</h3><p class="hint">Photograph one shelf at a time. You can also read packet labels when you review the photo.</p><div class="actions" style="justify-content:center">' +
+      '<h3 style="font-size:26px;margin:8px">Fridge or pantry photo</h3><p class="hint">Photograph one shelf at a time. You can also read packet labels when you review the photo.</p>' +
+      (connectedScanner() ? '<p><label><input type="checkbox" id="useCloud"> Send this photo to my Cloudflare scanner</label></p>' : "") +
+      '<div class="actions" style="justify-content:center">' +
       btn("Take photo", "camera", "primary") +
       btn("Upload photo", "upload") +
       '</div></div><div class="actions">' +
@@ -130,6 +134,7 @@ function scan() {
   );
 }
 function pickPhoto(camera) {
+  const origin = $("#useCloud")?.checked ? connectedScanner() : "";
   const file = document.createElement("input");
   file.type = "file";
   file.accept = "image/*";
@@ -137,11 +142,11 @@ function pickPhoto(camera) {
   file.onchange = async () => {
     const chosen = file.files[0];
     if (!chosen) return;
-    startRecognition(URL.createObjectURL(chosen));
+    startRecognition(URL.createObjectURL(chosen), origin);
   };
   file.click();
 }
-async function startRecognition(url) {
+async function startRecognition(url, origin = "") {
   resetScan();
   const token = scanToken;
   imageUrl = url;
@@ -158,6 +163,29 @@ async function startRecognition(url) {
     const img = new Image();
     img.src = imageUrl;
     await img.decode();
+    if (token !== scanToken) return;
+    let fallback = "";
+    if (origin) {
+      inside.querySelector('[role="status"]').textContent = "Checking ingredients with Cloudflare…";
+      const controller = new AbortController();
+      cloudRequest = controller;
+      const deadline = setTimeout(() => controller.abort(), 30000);
+      try {
+        const matches = await cloudIngredients(img, origin, controller.signal);
+        if (token !== scanToken) return;
+        if (matches.length) {
+          suggestions = matches.map(n => ({ n, q: state.pantry[n] ?? "" }));
+          review("Check the cloud suggestions and enter the amounts.");
+          return;
+        }
+        fallback = "Cloud scan found no matches. ";
+      } catch {
+        if (token !== scanToken) return;
+        fallback = "Cloud scan unavailable. ";
+      } finally {
+        clearTimeout(deadline);
+      }
+    }
     const result = await Promise.race([
       recognise(img, token),
       new Promise(
@@ -168,10 +196,11 @@ async function startRecognition(url) {
     if (token !== scanToken) return;
     suggestions = result.map((n) => ({ n, q: state.pantry[n] ?? "" }));
     review(
-      result.length
+      fallback + (result.length
         ? "Check each ingredient and its current total."
-        : "No confident matches. Add the ingredients you can see.",
+        : "No confident matches. Add the ingredients you can see."),
     );
+    if (url.startsWith("blob:")) $("#reviewForm [data-do=labels]").click();
   } catch {
     if (token === scanToken) {
       scanToken++;
@@ -182,7 +211,7 @@ async function startRecognition(url) {
   }
 }
 function review(message) {
-  const options = Object.keys(foods)
+  const options = [...new Set([...Object.keys(foods), ...suggestions.map(s => s.n)])]
     .sort()
     .map((n) => "<option>" + esc(n) + "</option>")
     .join("");
@@ -215,7 +244,7 @@ function review(message) {
     el.querySelector("select").value = s.n;
     function unit() {
       el.querySelector("small").textContent =
-        foods[el.querySelector("select").value];
+        foods[el.querySelector("select").value] || "each";
     }
     el.querySelector("select").onchange = unit;
     unit();

@@ -9,14 +9,20 @@
   "theme_color": "#faf9f3",
   "icons": [
     {
-      "src": "assets/icon-192.png",
+      "src": "assets/fork-mascot-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "assets/icon-512.png",
+      "src": "assets/fork-mascot-512.png",
       "sizes": "512x512",
       "type": "image/png"
+    },
+    {
+      "src": "assets/fork-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }

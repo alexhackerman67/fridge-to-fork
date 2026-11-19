@@ -55,3 +55,12 @@ The sample fridge image and mascot were generated for this prototype. Recipe pho
 4. Open the home-screen icon while online and allow the first download (roughly 16 MB) to finish. Add a dinner, enable airplane mode, then close and reopen the app from its icon to test offline use.
 
 The app caches its recipes, images and produce scanner on this device. Pantry and meal plans are stored locally. This release uses the existing recipe catalogue.
+
+## Connect the free cloud scanner
+
+The standard scan runs on the device. For uploaded photos it also attempts to read packet labels after the produce pass. You can review and save while it reads.
+
+1. An adult account holder can [deploy the included scanner to Cloudflare](https://deploy.workers.cloudflare.com/?url=https://github.com/alexhackerman67/fridge-to-fork) on **Workers Free**. Keep the free plan. The repository config supplies the AI binding, so there is no API key to create or paste into GitHub.
+2. Open the deployed Worker's public workers.dev address. Tap **Connect this scanner to Fridge to Fork**, then **Connect scanner**. Repeat on each device that needs cloud scanning.
+3. In **Scan pantry**, tick **Send this photo to my Cloudflare scanner**, then take or upload a photo. Only that selected scan sends a resized JPEG. Review the names and quantities before saving. If the service is unavailable, the app tries the on-device scanner.
+4. The daily free allowance is shared by everyone using that Worker. On Workers Free, requests stop when the allowance is exhausted. [Cloudflare pricing](https://developers.cloudflare.com/workers-ai/platform/pricing/)
