@@ -751,6 +751,7 @@ label.field select,
 
 .pantry-ready { margin: .8rem 0 1.25rem; padding: 0 1rem; border: 1px solid var(--line); border-radius: 12px; background: var(--sage); }
 .pantry-ready summary { padding: .9rem 0; cursor: pointer; font-weight: 700; }
+.pantry-ready .match-counts { display: block; margin-top: .2rem; font-size: .9rem; font-weight: 500; }
 .pantry-ready p { margin: 0 0 .8rem; }
 .pantry-ready button { margin: 0 .4rem .7rem 0; }
 .swap { margin: 1rem 0; }
