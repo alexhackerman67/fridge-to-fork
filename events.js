@@ -17,7 +17,7 @@ const actions = {
     let [i, day] = args.split(",");
     let d = dishes[i];
     if (missing(d).length) return;
-    for (const [n, q] of Object.entries(d.needs)) {
+    for (const [n, q] of ingredientsFor(d)) {
       state.pantry[n] -= q;
       if (state.pantry[n] <= 0) delete state.pantry[n];
     }

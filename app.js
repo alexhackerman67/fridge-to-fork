@@ -70,8 +70,26 @@ function toast(msg) {
   timer = setTimeout(() => ($("#notice").textContent = ""), 2600);
 }
 const amount = (n, q) => q == null ? "" : Number(q.toFixed(2)) + " " + (foods[n] || "each");
+function servings() {
+  const count = state.preferences?.servings;
+  return Number.isSafeInteger(count) && count > 0 ? count : 2;
+}
+function servingLabel() {
+  return servings() + (servings() === 1 ? " serving" : " servings");
+}
+// The cookbook stores ingredient quantities and measured method liquids for two.
+function portion(quantity) {
+  return quantity * servings() / 2;
+}
+function ingredientsFor(dish) {
+  return Object.entries(dish.needs).map(([name, quantity]) => [name, portion(quantity)]);
+}
+function methodFor(dish) {
+  return dish.steps.map(step => step.replace(/(\d+) ml water/g,
+    (_, ml) => portion(Number(ml)) + " ml water"));
+}
 const missing = (d, pantry = state.pantry) =>
-  Object.entries(d.needs).filter(([n, q]) => (pantry[n] || 0) + 1e-9 < q);
+  ingredientsFor(d).filter(([n, q]) => (pantry[n] || 0) + 1e-9 < q);
 const stock = (d) =>
   missing(d).length ? missing(d).length + " to buy" : "Ready to cook";
 const meta = (d) =>
@@ -118,8 +136,8 @@ function detail(i, plannedDay = "", inventory = state.pantry) {
     meta(d) + (fitsPreferences(d, state.preferences || {}) ? "" : '<p class="hint">This planned recipe falls outside your current dietary preferences.</p>') +
       "<p>" +
       d.note +
-      '</p><h4>Ingredients · serves 2</h4><div class="ingredients">' +
-      Object.entries(d.needs)
+      '</p><h4>Ingredients · ' + servingLabel() + '</h4><div class="ingredients">' +
+      ingredientsFor(d)
         .map(
           ([n, q]) =>
             '<div class="line"><span>' +
@@ -135,7 +153,7 @@ function detail(i, plannedDay = "", inventory = state.pantry) {
         )
         .join("") +
       '</div>' + swapForm(d) + (d.swaps ? '<p class="hint">' + esc(d.swaps) + '</p>' : '') + '<h4>Method</h4><ol>' +
-      d.steps.map((s) => "<li>" + s + "</li>").join("") +
+      methodFor(d).map((s) => "<li>" + s + "</li>").join("") +
       '</ol><div class="actions">' +
       btn("Add to planner", "schedule:" + i, "primary") +
       (!missing(d, inventory).length
@@ -160,11 +178,11 @@ function readyRecipesMenu() {
   const link = ({ d, i }) => btn(esc(d.name), "pantryRecipe:" + i, "light");
   let body;
   if (ready.length) {
-    body = '<p>Enough in your pantry for two servings.</p>' + ready.map(link).join("");
+    body = '<p>Enough in your pantry for ' + servingLabel() + '.</p>' + ready.map(link).join("");
   } else {
     const closest = matches.filter(({ d }) => Object.keys(d.needs).some(n => inventory[n] > 0))
       .sort((a, b) => a.gaps.length - b.gaps.length || a.distance - b.distance)[0];
-    body = closest ? '<p>Closest recipe for two</p>' + link(closest) +
+    body = closest ? '<p>Closest recipe for ' + servingLabel() + '</p>' + link(closest) +
       '<p>Still needed</p><ul>' + closest.gaps.map(({ name, short }) =>
         '<li>' + esc(name) + ' · ' + esc(amount(name, short)) + '</li>').join("") + '</ul>' :
       '<p>No matching recipe yet. Scan or enter more ingredients and their quantities.</p>';
@@ -264,7 +282,7 @@ function groceries(days) {
   for (const d of days) {
     const meal = dishes[state.plan[dateKey(d)]];
     if (meal)
-      for (const [n, q] of Object.entries(meal.needs))
+      for (const [n, q] of ingredientsFor(meal))
         sums[n] = (sums[n] || 0) + q;
   }
   return Object.entries(sums)
