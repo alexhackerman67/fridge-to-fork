@@ -122,8 +122,8 @@ function scan() {
     "Scan pantry",
     '<div class="scanbox">' +
       icon("scan") +
-      '<h3 style="font-size:26px;margin:8px">Fridge or pantry photo</h3><p class="hint">Photograph one shelf at a time. You can also read packet labels when you review the photo.</p>' +
-      (connectedScanner() ? '<p><label><input type="checkbox" id="useCloud"> Send this photo to my Cloudflare scanner</label></p>' : "") +
+      '<h3 style="font-size:26px;margin:8px">Fridge or pantry photo</h3><p class="hint">Include the front of packets and tins so their labels are visible.</p>' +
+      (connectedScanner() ? '<p><label><input type="checkbox" id="useCloud"> Use cloud AI for packaged foods and produce (sends this photo to Cloudflare)</label></p>' : "") +
       '<div class="actions" style="justify-content:center">' +
       btn("Take photo", "camera", "primary") +
       btn("Upload photo", "upload") +
@@ -169,13 +169,14 @@ async function startRecognition(url, origin = "") {
       inside.querySelector('[role="status"]').textContent = "Checking ingredients with Cloudflare…";
       const controller = new AbortController();
       cloudRequest = controller;
-      const deadline = setTimeout(() => controller.abort(), 30000);
+      const deadline = setTimeout(() => controller.abort(), 60000);
       try {
         const matches = await cloudIngredients(img, origin, controller.signal);
         if (token !== scanToken) return;
         if (matches.length) {
           suggestions = matches.map(n => ({ n, q: state.pantry[n] ?? "" }));
-          review("Check the cloud suggestions and enter the amounts.");
+          review("Cloud AI suggestions. Check the items and enter the amounts.");
+          $("#reviewForm [data-do=labels]").click();
           return;
         }
         fallback = "Cloud scan found no matches. ";
@@ -196,7 +197,7 @@ async function startRecognition(url, origin = "") {
     if (token !== scanToken) return;
     suggestions = result.map((n) => ({ n, q: state.pantry[n] ?? "" }));
     review(
-      fallback + (result.length
+      fallback + "On-device scan. " + (result.length
         ? "Check each ingredient and its current total."
         : "No confident matches. Add the ingredients you can see."),
     );
@@ -289,14 +290,28 @@ const packetAliases = {
   "Tinned tomatoes": ["chopped tomatoes", "diced tomatoes", "crushed tomatoes"],
   "White beans": ["cannellini", "butter beans"],
   Oats: ["oatmeal"], Flour: ["plain flour", "self raising flour"],
+  Pasta: ["penne", "fusilli", "rigatoni", "macaroni"],
+  Cereal: ["corn flakes", "weet bix", "rice bubbles"],
+  Rice: ["basmati", "jasmine rice", "arborio"],
+  Noodles: ["ramen", "vermicelli"],
   Chickpeas: ["garbanzo beans"], Capsicum: ["bell peppers"],
 };
 function ingredientsOnLabels(text) {
   const words = " " + text.toLowerCase().replace(/[^a-z0-9]+/g, " ") + " ";
-  const found = Object.keys(foods).filter(name =>
-    [name, ...(packetAliases[name] || [])].some(alias => words.includes(" " + alias.toLowerCase() + " "))
-  );
-  return found.filter(name => !(name === "Rice" && found.includes("Cooked rice")));
+  // Match longer product names first so "peanut butter" does not also add butter.
+  const terms = Object.keys(foods).flatMap(name =>
+    [name, ...(packetAliases[name] || [])].map(alias => [alias.toLowerCase(), name])
+  ).sort((a, b) => b[0].length - a[0].length);
+  let remaining = words;
+  const found = new Set();
+  for (const [alias, name] of terms) {
+    const label = " " + alias + " ";
+    if (remaining.includes(label)) {
+      found.add(name);
+      remaining = remaining.replaceAll(label, " ");
+    }
+  }
+  return [...found];
 }
 async function readPacketLabels(button, append) {
   const token = scanToken;
