@@ -113,7 +113,33 @@ const foods = {
   "Dill": "g",
   "Mustard": "g",
   "Basil": "g",
-  "Instant polenta": "g"
+  "Instant polenta": "g",
+  "Chilli": "each",
+  "Black pepper": "g",
+  "Soba noodles": "g",
+  "Arborio rice": "g",
+  "Pea shoots": "g",
+  "Salmon": "g",
+  "Oregano": "g",
+  "Self-raising flour": "g",
+  "Chives": "g",
+  "Corn kernels": "g",
+  "White fish": "g",
+  "Chickpea flour": "g",
+  "Coriander": "g",
+  "Olives": "g",
+  "Edamame": "g",
+  "Bread roll": "each",
+  "Bulgur": "g",
+  "Prawns": "g",
+  "Leek": "each",
+  "Cooked beetroot": "g",
+  "Cooked lentils": "g",
+  "Halloumi": "g",
+  "Blueberries": "g",
+  "Gnocchi": "g",
+  "Pumpkin seeds": "g",
+
 };
 const starter = {
   Spaghetti: 250,
@@ -911,6 +937,1014 @@ const dishes = [
     "steps": [
       "Cook instant polenta with water according to the packet. Stir through grated cheese and half the butter.",
       "Slice mushrooms and fry in remaining butter over high heat until golden at the edges. Spoon over polenta."
+    ]
+  },
+  {
+    "name": "Tomato garlic migas",
+    "cuisine": "Spanish",
+    "time": 15,
+    "kcal": 360,
+    "protein": 16,
+    "needs": {
+      "Bread": 3,
+      "Egg": 3,
+      "Tomato": 2,
+      "Garlic": 1,
+      "Oil": 15
+    },
+    "note": "Crisp pieces of yesterday’s bread catch the tomato juices and soft scrambled egg.",
+    "steps": [
+      "Tear the bread and brown it in half the oil, then set aside. Fry chopped garlic and diced tomatoes in the remaining oil until jammy.",
+      "Beat the eggs and stir them into the tomato over low heat until set. Fold in the bread just before serving."
+    ]
+  },
+  {
+    "name": "Chilli basil tofu",
+    "cuisine": "Thai",
+    "time": 20,
+    "kcal": 370,
+    "protein": 20,
+    "needs": {
+      "Tofu": 300,
+      "Basil": 15,
+      "Soy sauce": 20,
+      "Cooked rice": 250,
+      "Chilli": 1,
+      "Oil": 10
+    },
+    "note": "A hot pan gives crumbled tofu crisp edges before basil and chilli go in.",
+    "steps": [
+      "Pat the tofu dry and crumble into a hot oiled pan. Fry until browned, stirring occasionally.",
+      "Add finely sliced chilli and soy sauce with a splash of water. Fold in basil and serve over rice reheated until steaming."
+    ]
+  },
+  {
+    "name": "Sesame spinach rice balls",
+    "cuisine": "Japanese",
+    "time": 20,
+    "kcal": 310,
+    "protein": 8,
+    "needs": {
+      "Cooked rice": 350,
+      "Spinach": 100,
+      "Sesame seeds": 20,
+      "Soy sauce": 10
+    },
+    "note": "Spinach and toasted sesame fold into small rice balls that hold together in your hand.",
+    "steps": [
+      "Wilt spinach, squeeze out excess water and mince. Toast sesame seeds in a dry pan.",
+      "Combine with hot cooked short-grain rice and soy. When cool enough to handle, wet your hands and press into small balls. Serve promptly."
+    ]
+  },
+  {
+    "name": "Black pepper mushroom toast",
+    "cuisine": "British",
+    "time": 15,
+    "kcal": 340,
+    "protein": 13,
+    "needs": {
+      "Mushroom": 250,
+      "Bread": 4,
+      "Butter": 20,
+      "Black pepper": 1,
+      "Cream": 30
+    },
+    "note": "A short splash of cream gathers the browned mushroom juices into a sauce for toast.",
+    "steps": [
+      "Slice mushrooms and fry in butter over high heat until golden and the pan is nearly dry.",
+      "Add crushed black pepper and cream. Simmer briefly and spoon over freshly toasted bread."
+    ]
+  },
+  {
+    "name": "Chana chaat",
+    "cuisine": "Indian",
+    "time": 15,
+    "kcal": 325,
+    "protein": 14,
+    "needs": {
+      "Chickpeas": 300,
+      "Tomato": 2,
+      "Onion": 0.5,
+      "Lemon": 1,
+      "Cumin": 3,
+      "Yoghurt": 80
+    },
+    "note": "Cool yoghurt and lemon dress a crunchy chickpea salad with a toasted cumin finish.",
+    "steps": [
+      "Drain cooked chickpeas, dice tomatoes and finely chop the onion. Toast cumin briefly in a dry pan.",
+      "Toss the vegetables and chickpeas with lemon juice, then spoon on the yoghurt and scatter with cumin."
+    ]
+  },
+  {
+    "name": "Garlic mushroom aglio e olio",
+    "cuisine": "Italian",
+    "time": 20,
+    "kcal": 455,
+    "protein": 14,
+    "needs": {
+      "Spaghetti": 180,
+      "Mushroom": 200,
+      "Garlic": 3,
+      "Oil": 25,
+      "Parsley": 8
+    },
+    "note": "Thin garlic slices flavour the oil that coats the spaghetti and mushrooms.",
+    "steps": [
+      "Cook spaghetti and reserve a mug of cooking water. Brown sliced mushrooms in half the oil.",
+      "Lower the heat, add the remaining oil and sliced garlic, and stir until fragrant. Toss with pasta, parsley and a splash of pasta water."
+    ]
+  },
+  {
+    "name": "Red bean chilli",
+    "cuisine": "Mexican",
+    "time": 30,
+    "kcal": 405,
+    "protein": 19,
+    "needs": {
+      "Kidney beans": 400,
+      "Tinned tomatoes": 400,
+      "Onion": 1,
+      "Cumin": 4,
+      "Paprika": 3,
+      "Oil": 10
+    },
+    "note": "A mashed spoonful of beans thickens this tomato chilli without a long simmer.",
+    "steps": [
+      "Soften diced onion in oil and stir in cumin and paprika. Add tomatoes and drained tinned kidney beans.",
+      "Mash a few beans against the pan and simmer for 18 minutes, stirring occasionally."
+    ]
+  },
+  {
+    "name": "Ginger egg drop soup",
+    "cuisine": "Chinese",
+    "time": 15,
+    "kcal": 190,
+    "protein": 14,
+    "needs": {
+      "Egg": 3,
+      "Ginger": 10,
+      "Spring onion": 2,
+      "Soy sauce": 15,
+      "Cornflour": 8,
+      "Tofu": 80
+    },
+    "note": "A thin stream of beaten egg sets into delicate ribbons in ginger broth.",
+    "steps": [
+      "Simmer sliced ginger and soy sauce in 650 ml water for 5 minutes. Stir in cubed tofu and cornflour mixed with a spoonful of cold water.",
+      "Once simmering, stir in a circle and slowly pour in beaten egg. Cook until the ribbons are set and finish with spring onion."
+    ]
+  },
+  {
+    "name": "Spinach chickpea stew",
+    "cuisine": "Spanish",
+    "time": 25,
+    "kcal": 365,
+    "protein": 16,
+    "needs": {
+      "Chickpeas": 320,
+      "Spinach": 150,
+      "Tinned tomatoes": 250,
+      "Paprika": 4,
+      "Garlic": 2,
+      "Oil": 15
+    },
+    "note": "Sweet paprika gives the tomato broth depth while spinach wilts around soft chickpeas.",
+    "steps": [
+      "Warm crushed garlic and paprika in oil for 30 seconds. Add tomatoes, drained cooked chickpeas and a splash of water.",
+      "Simmer for 15 minutes. Mash a few chickpeas and stir in spinach until wilted."
+    ]
+  },
+  {
+    "name": "Lentil and rice pilaf",
+    "cuisine": "Middle Eastern",
+    "time": 40,
+    "kcal": 490,
+    "protein": 19,
+    "needs": {
+      "Rice": 120,
+      "Lentils": 100,
+      "Onion": 2,
+      "Cumin": 3,
+      "Oil": 20
+    },
+    "note": "Sweet browned onion tops a fragrant pan of rice and green lentils.",
+    "steps": [
+      "Rinse dry green lentils and simmer in water for 12 minutes. Meanwhile slice onions and fry in oil until deeply golden.",
+      "Add rice to the lentils with cumin and enough water to cover by 2 cm. Cover and simmer until tender, adding water if needed. Top with onions."
+    ]
+  },
+  {
+    "name": "Quick sesame soba",
+    "cuisine": "Japanese",
+    "time": 15,
+    "kcal": 395,
+    "protein": 15,
+    "needs": {
+      "Soba noodles": 180,
+      "Sesame seeds": 18,
+      "Soy sauce": 20,
+      "Vinegar": 15,
+      "Spring onion": 2
+    },
+    "note": "Cool noodles pick up a nutty dressing made from crushed sesame seeds.",
+    "steps": [
+      "Cook soba according to the packet, rinse under cold water and drain well.",
+      "Toast and crush sesame seeds. Mix with soy, vinegar and a little water, toss with the noodles and finish with spring onion."
+    ]
+  },
+  {
+    "name": "Pea and pea-shoot risotto",
+    "cuisine": "Italian",
+    "time": 35,
+    "kcal": 465,
+    "protein": 15,
+    "needs": {
+      "Arborio rice": 160,
+      "Peas": 180,
+      "Onion": 1,
+      "Butter": 20,
+      "Cheese": 30,
+      "Pea shoots": 20
+    },
+    "note": "Sweet peas go into the rice at the end so they keep their bright colour.",
+    "steps": [
+      "Soften diced onion in butter, stir in rice and add hot water a ladle at a time, stirring as each addition is absorbed.",
+      "After about 15 minutes add peas and continue until rice is tender. Fold in grated cheese and scatter with pea shoots."
+    ]
+  },
+  {
+    "name": "Crispy potato tacos",
+    "cuisine": "Mexican",
+    "time": 35,
+    "kcal": 445,
+    "protein": 12,
+    "needs": {
+      "Potato": 3,
+      "Tortilla": 4,
+      "Paprika": 3,
+      "Oil": 15,
+      "Yoghurt": 60,
+      "Lime": 1
+    },
+    "note": "Crisp-edged potato cubes fill warm tortillas with lime yoghurt.",
+    "steps": [
+      "Dice potatoes small, toss with oil and paprika, and roast at 220°C for 25–30 minutes, turning once.",
+      "Warm tortillas in a dry pan. Fill with potatoes and spoon over yoghurt mixed with lime juice."
+    ]
+  },
+  {
+    "name": "Lemon dill salmon tray bake",
+    "cuisine": "Mediterranean",
+    "time": 35,
+    "kcal": 445,
+    "protein": 35,
+    "needs": {
+      "Salmon": 300,
+      "Potato": 2,
+      "Lemon": 1,
+      "Dill": 8,
+      "Oil": 15
+    },
+    "note": "Thin potato rounds roast before the salmon goes on the tray with lemon and dill.",
+    "steps": [
+      "Slice potatoes thinly, coat with oil and roast at 210°C for 15 minutes.",
+      "Place salmon fillets on top with lemon slices. Roast until cooked through and flaking, then finish with chopped dill."
+    ]
+  },
+  {
+    "name": "Chicken fajita skillet",
+    "cuisine": "Mexican",
+    "time": 25,
+    "kcal": 465,
+    "protein": 35,
+    "needs": {
+      "Chicken": 280,
+      "Capsicum": 2,
+      "Onion": 1,
+      "Tortilla": 4,
+      "Cumin": 3,
+      "Oil": 15
+    },
+    "note": "Seared chicken strips, onion and capsicum make a filling for warm tortillas.",
+    "steps": [
+      "Slice chicken, onions and capsicum into thin strips. Fry the chicken in oil, turning until browned.",
+      "Add onion, capsicum and cumin and cook until vegetables soften and chicken is cooked through. Serve in warm tortillas."
+    ]
+  },
+  {
+    "name": "Lemon oregano chicken",
+    "cuisine": "Greek",
+    "time": 35,
+    "kcal": 400,
+    "protein": 34,
+    "needs": {
+      "Chicken": 300,
+      "Lemon": 1,
+      "Oregano": 3,
+      "Potato": 2,
+      "Oil": 15
+    },
+    "note": "Lemon juice and oregano coat bite-sized chicken and potato pieces on one tray.",
+    "steps": [
+      "Dice potatoes into small cubes and roast with half the oil at 210°C for 12 minutes.",
+      "Toss diced chicken with remaining oil, lemon juice and oregano. Add to tray and roast until the chicken is cooked through and potatoes are tender."
+    ]
+  },
+  {
+    "name": "Coconut red lentil soup",
+    "cuisine": "Sri Lankan",
+    "time": 30,
+    "kcal": 410,
+    "protein": 17,
+    "needs": {
+      "Red lentils": 150,
+      "Coconut milk": 180,
+      "Turmeric": 2,
+      "Ginger": 10,
+      "Lime": 1
+    },
+    "note": "Split lentils simmer to a soft purée with ginger and coconut milk.",
+    "steps": [
+      "Rinse lentils and combine with turmeric, grated ginger and 500 ml water. Simmer until tender, about 18 minutes.",
+      "Stir in coconut milk and gently heat through. Finish with lime juice to taste."
+    ]
+  },
+  {
+    "name": "Pan-fried tofu lettuce cups",
+    "cuisine": "Chinese",
+    "time": 20,
+    "kcal": 310,
+    "protein": 18,
+    "needs": {
+      "Tofu": 300,
+      "Lettuce": 120,
+      "Carrot": 1,
+      "Soy sauce": 20,
+      "Ginger": 10,
+      "Oil": 15
+    },
+    "note": "Crisp lettuce leaves hold crumbled tofu and finely chopped carrot.",
+    "steps": [
+      "Separate and dry the lettuce leaves. Dice carrot, grate ginger and crumble the tofu.",
+      "Brown tofu in oil, add carrot and ginger and stir-fry until tender. Stir in soy and spoon into lettuce leaves."
+    ]
+  },
+  {
+    "name": "Tuna and white bean toast",
+    "cuisine": "Italian",
+    "time": 10,
+    "kcal": 405,
+    "protein": 29,
+    "needs": {
+      "Tuna": 160,
+      "White beans": 180,
+      "Bread": 4,
+      "Lemon": 0.5,
+      "Parsley": 10
+    },
+    "note": "Mashed beans bind flaked tuna into a lemony topping for thick toast.",
+    "steps": [
+      "Drain cooked beans and tinned tuna. Mash half the beans with lemon juice and a spoonful of water.",
+      "Fold in remaining beans, tuna and chopped parsley. Divide over hot toast."
+    ]
+  },
+  {
+    "name": "Savoury miso oats",
+    "cuisine": "Japanese",
+    "time": 15,
+    "kcal": 325,
+    "protein": 16,
+    "needs": {
+      "Oats": 90,
+      "Miso": 25,
+      "Egg": 2,
+      "Spring onion": 2,
+      "Sesame seeds": 8
+    },
+    "note": "Miso turns oats into a savoury breakfast topped with eggs and toasted seeds.",
+    "steps": [
+      "Simmer oats in 400 ml water, stirring until creamy. Meanwhile boil eggs until set, peel and halve.",
+      "Take oats off the heat and stir in miso loosened with water. Top with eggs, sliced spring onion and toasted seeds."
+    ]
+  },
+  {
+    "name": "Mushroom stroganoff",
+    "cuisine": "European",
+    "time": 25,
+    "kcal": 480,
+    "protein": 16,
+    "needs": {
+      "Mushroom": 300,
+      "Pasta": 160,
+      "Onion": 1,
+      "Yoghurt": 100,
+      "Paprika": 3,
+      "Oil": 10
+    },
+    "note": "Browned mushrooms and paprika make a creamy sauce for ribbon pasta.",
+    "steps": [
+      "Cook pasta and save a mug of water. Fry sliced mushrooms and onion in oil until well browned.",
+      "Add paprika and a splash of pasta water. Remove from heat, stir in yoghurt and toss through pasta."
+    ]
+  },
+  {
+    "name": "Tuscan bread soup",
+    "cuisine": "Italian",
+    "time": 30,
+    "kcal": 320,
+    "protein": 10,
+    "needs": {
+      "Bread": 4,
+      "Tinned tomatoes": 400,
+      "Garlic": 2,
+      "Basil": 10,
+      "Oil": 15
+    },
+    "note": "Stale bread melts into a thick tomato soup with torn basil.",
+    "steps": [
+      "Warm sliced garlic in oil, then add tomatoes and 350 ml water. Simmer for 12 minutes.",
+      "Tear in bread and simmer, stirring, until soft and thick. Tear basil over the bowls."
+    ]
+  },
+  {
+    "name": "Carrot ribbon tahini salad",
+    "cuisine": "Middle Eastern",
+    "time": 15,
+    "kcal": 335,
+    "protein": 12,
+    "needs": {
+      "Carrot": 4,
+      "Chickpeas": 200,
+      "Tahini": 35,
+      "Lemon": 1,
+      "Parsley": 8
+    },
+    "note": "Long carrot ribbons stay crisp under a nutty lemon dressing.",
+    "steps": [
+      "Peel carrots into ribbons. Drain cooked chickpeas and finely chop parsley.",
+      "Whisk tahini, lemon juice and water to a pouring consistency. Toss with the carrots, chickpeas and parsley."
+    ]
+  },
+  {
+    "name": "Cheese and chive scones",
+    "cuisine": "British",
+    "time": 30,
+    "kcal": 405,
+    "protein": 14,
+    "needs": {
+      "Self-raising flour": 140,
+      "Butter": 30,
+      "Cheese": 50,
+      "Milk": 85,
+      "Chives": 6
+    },
+    "note": "A small batch of tender savoury scones with pockets of melted cheese.",
+    "steps": [
+      "Rub cold diced butter into the flour, then add grated cheese and snipped chives. Stir in enough milk for a soft dough.",
+      "Pat 2 cm thick and cut four rounds. Bake at 210°C for 12–15 minutes until risen and golden."
+    ]
+  },
+  {
+    "name": "Sweetcorn chowder",
+    "cuisine": "American",
+    "time": 30,
+    "kcal": 365,
+    "protein": 13,
+    "needs": {
+      "Corn kernels": 250,
+      "Potato": 2,
+      "Milk": 250,
+      "Onion": 1,
+      "Butter": 15
+    },
+    "note": "Some of the corn and potato is mashed to thicken the chowder while leaving whole kernels.",
+    "steps": [
+      "Soften chopped onion in butter. Add diced potatoes, corn kernels and enough water to cover. Simmer until tender.",
+      "Mash roughly in the pan. Pour in milk and reheat gently, stirring until creamy."
+    ]
+  },
+  {
+    "name": "Ginger scallion fish",
+    "cuisine": "Chinese",
+    "time": 25,
+    "kcal": 380,
+    "protein": 32,
+    "needs": {
+      "White fish": 300,
+      "Ginger": 15,
+      "Spring onion": 3,
+      "Soy sauce": 20,
+      "Cooked rice": 260,
+      "Oil": 10
+    },
+    "note": "Steam carries ginger through the fish while spring onions stay bright and fresh.",
+    "steps": [
+      "Lay fillets on a heatproof plate with ginger matchsticks. Steam, covered, until cooked through and flaking easily.",
+      "Top with sliced spring onions, soy and warmed oil. Serve over reheated, steaming-hot rice."
+    ]
+  },
+  {
+    "name": "Penne with roasted capsicum",
+    "cuisine": "Italian",
+    "time": 35,
+    "kcal": 460,
+    "protein": 14,
+    "needs": {
+      "Pasta": 180,
+      "Capsicum": 2,
+      "Garlic": 2,
+      "Oil": 20,
+      "Basil": 8
+    },
+    "note": "Roasted capsicum blends into a sweet red sauce that catches inside penne.",
+    "steps": [
+      "Quarter and deseed capsicums, toss with garlic and oil, and roast at 220°C until soft and blistered.",
+      "Cook pasta. Blend roasted vegetables with a splash of cooking water and toss with drained pasta and basil."
+    ]
+  },
+  {
+    "name": "Herbed chickpea pancakes",
+    "cuisine": "Indian",
+    "time": 25,
+    "kcal": 360,
+    "protein": 16,
+    "needs": {
+      "Chickpea flour": 150,
+      "Onion": 0.5,
+      "Cumin": 3,
+      "Coriander": 12,
+      "Oil": 15
+    },
+    "note": "Chickpea flour makes a savoury batter flecked with chopped herbs and onion.",
+    "steps": [
+      "Whisk flour, cumin and 210 ml water until smooth. Stir in finely diced onion and chopped coriander.",
+      "Spread thin circles in a lightly oiled frying pan. Cook each side until golden and the centre is set."
+    ]
+  },
+  {
+    "name": "Chopped Greek salad",
+    "cuisine": "Greek",
+    "time": 15,
+    "kcal": 345,
+    "protein": 12,
+    "needs": {
+      "Tomato": 3,
+      "Cucumber": 1,
+      "Feta": 100,
+      "Olives": 50,
+      "Oregano": 2,
+      "Oil": 15
+    },
+    "note": "Firm pieces of tomato, cucumber and feta keep their texture under an oregano dressing.",
+    "steps": [
+      "Cut tomatoes and cucumber into chunky pieces. Toss with olives, oil and oregano.",
+      "Cut feta into cubes and fold through gently. Leave for five minutes before serving."
+    ]
+  },
+  {
+    "name": "Smoky tomato butter beans",
+    "cuisine": "Spanish",
+    "time": 20,
+    "kcal": 360,
+    "protein": 16,
+    "needs": {
+      "White beans": 400,
+      "Tinned tomatoes": 300,
+      "Garlic": 2,
+      "Paprika": 4,
+      "Oil": 15
+    },
+    "note": "Creamy beans absorb a smoky tomato sauce flavoured with sliced garlic.",
+    "steps": [
+      "Warm garlic and paprika gently in oil. Add tomatoes and simmer for 8 minutes.",
+      "Fold in drained cooked beans and heat for another 6 minutes, loosening with water if needed."
+    ]
+  },
+  {
+    "name": "Soba and edamame lunch bowl",
+    "cuisine": "Japanese",
+    "time": 20,
+    "kcal": 450,
+    "protein": 23,
+    "needs": {
+      "Soba noodles": 150,
+      "Edamame": 200,
+      "Carrot": 1,
+      "Soy sauce": 20,
+      "Vinegar": 15,
+      "Sesame seeds": 8
+    },
+    "note": "Edamame and carrot ribbons add colour and bite to chilled soba noodles.",
+    "steps": [
+      "Cook soba and frozen shelled edamame according to their packets. Drain and cool under running water.",
+      "Peel carrot into ribbons. Toss everything with soy, vinegar and sesame seeds."
+    ]
+  },
+  {
+    "name": "Baked ricotta tomatoes",
+    "cuisine": "Italian",
+    "time": 30,
+    "kcal": 295,
+    "protein": 17,
+    "needs": {
+      "Tomato": 4,
+      "Ricotta": 200,
+      "Bread": 1,
+      "Basil": 10,
+      "Oil": 10
+    },
+    "note": "Soft tomato shells hold basil ricotta beneath a crisp breadcrumb topping.",
+    "steps": [
+      "Halve tomatoes, scoop out the wet seeds and place cut-side up in a baking dish. Mix ricotta with chopped basil and spoon into the halves.",
+      "Crumble bread over the top, drizzle with oil and bake at 200°C for 18–22 minutes."
+    ]
+  },
+  {
+    "name": "Pumpkin chickpea couscous",
+    "cuisine": "North African",
+    "time": 40,
+    "kcal": 475,
+    "protein": 15,
+    "needs": {
+      "Butternut pumpkin": 0.5,
+      "Couscous": 120,
+      "Chickpeas": 200,
+      "Cumin": 3,
+      "Oil": 15
+    },
+    "note": "Roast pumpkin and chickpeas turn fluffy couscous into a warm supper.",
+    "steps": [
+      "Peel and dice pumpkin, then toss with drained chickpeas, cumin and oil. Roast at 210°C for about 30 minutes until tender.",
+      "Prepare couscous following the packet, fluff with a fork and fold through the roasted vegetables."
+    ]
+  },
+  {
+    "name": "Crispy tofu banh mi rolls",
+    "cuisine": "Vietnamese",
+    "time": 25,
+    "kcal": 470,
+    "protein": 23,
+    "needs": {
+      "Bread roll": 2,
+      "Tofu": 250,
+      "Carrot": 1,
+      "Cucumber": 0.5,
+      "Vinegar": 20,
+      "Soy sauce": 15,
+      "Oil": 10
+    },
+    "note": "Quick-pickled carrot gives these tofu rolls their tang and crunch.",
+    "steps": [
+      "Cut carrot into matchsticks and toss with vinegar. Pat tofu dry, slice and fry in oil until golden, then coat with soy.",
+      "Split rolls and fill with tofu, thin cucumber slices and drained carrot."
+    ]
+  },
+  {
+    "name": "Kimchi potato cakes",
+    "cuisine": "Korean",
+    "time": 25,
+    "kcal": 310,
+    "protein": 9,
+    "needs": {
+      "Potato": 3,
+      "Kimchi": 100,
+      "Egg": 1,
+      "Flour": 35,
+      "Oil": 15
+    },
+    "note": "Chopped kimchi adds heat to crisp grated potato cakes.",
+    "steps": [
+      "Grate potatoes and squeeze dry. Mix with finely chopped kimchi, beaten egg and flour.",
+      "Flatten spoonfuls in an oiled pan and cook over medium heat until crisp on both sides and cooked through."
+    ]
+  },
+  {
+    "name": "Spinach and egg breakfast wrap",
+    "cuisine": "Australian",
+    "time": 10,
+    "kcal": 365,
+    "protein": 20,
+    "needs": {
+      "Tortilla": 2,
+      "Egg": 3,
+      "Spinach": 80,
+      "Cheese": 40,
+      "Butter": 8
+    },
+    "note": "Soft scrambled eggs and wilted spinach make a quick breakfast wrap.",
+    "steps": [
+      "Wilt spinach in butter, then add beaten eggs and stir gently until set.",
+      "Warm tortillas, divide the eggs and spinach between them, top with grated cheese and roll."
+    ]
+  },
+  {
+    "name": "Lemon parsley bulgur",
+    "cuisine": "Middle Eastern",
+    "time": 20,
+    "kcal": 365,
+    "protein": 11,
+    "needs": {
+      "Bulgur": 140,
+      "Parsley": 25,
+      "Tomato": 2,
+      "Lemon": 1,
+      "Oil": 15
+    },
+    "note": "Fine bulgur absorbs the tomato juices in a lemony grain salad.",
+    "steps": [
+      "Prepare bulgur according to the packet and let it cool until warm. Finely chop parsley and tomatoes.",
+      "Toss everything with lemon juice and oil. Rest for five minutes before serving."
+    ]
+  },
+  {
+    "name": "Roast broccoli with hummus",
+    "cuisine": "Mediterranean",
+    "time": 30,
+    "kcal": 345,
+    "protein": 14,
+    "needs": {
+      "Broccoli": 350,
+      "Chickpeas": 240,
+      "Tahini": 25,
+      "Lemon": 0.5,
+      "Oil": 15
+    },
+    "note": "Crisp broccoli florets sit on a bed of freshly blended chickpeas.",
+    "steps": [
+      "Toss broccoli in oil and roast at 220°C for 18–22 minutes until the edges brown.",
+      "Blend drained cooked chickpeas with tahini, lemon juice and a little water until smooth. Spread on plates and top with broccoli."
+    ]
+  },
+  {
+    "name": "Apple cinnamon French toast",
+    "cuisine": "French",
+    "time": 20,
+    "kcal": 375,
+    "protein": 14,
+    "needs": {
+      "Bread": 4,
+      "Apple": 1,
+      "Egg": 2,
+      "Milk": 80,
+      "Cinnamon": 2,
+      "Butter": 15
+    },
+    "note": "Warm spiced apple tops slices of golden French toast.",
+    "steps": [
+      "Slice and soften apple in half the butter with cinnamon and a splash of water. Transfer to a bowl.",
+      "Whisk eggs and milk. Dip bread briefly and fry in remaining butter until golden on both sides and cooked through. Top with apple."
+    ]
+  },
+  {
+    "name": "Tomato poached chickpeas and eggs",
+    "cuisine": "Mediterranean",
+    "time": 25,
+    "kcal": 395,
+    "protein": 23,
+    "needs": {
+      "Chickpeas": 220,
+      "Egg": 4,
+      "Tinned tomatoes": 350,
+      "Cumin": 3,
+      "Oil": 10
+    },
+    "note": "Eggs poach gently in a tomato and chickpea sauce spiced with cumin.",
+    "steps": [
+      "Warm cumin in oil and add tomatoes and drained cooked chickpeas. Simmer until slightly thickened.",
+      "Make four hollows, add eggs and cover. Cook gently until the eggs are set."
+    ]
+  },
+  {
+    "name": "Peanut sweet potato stew",
+    "cuisine": "West African",
+    "time": 35,
+    "kcal": 470,
+    "protein": 15,
+    "needs": {
+      "Sweet potato": 2,
+      "Peanut butter": 50,
+      "Tinned tomatoes": 300,
+      "Onion": 1,
+      "Spinach": 80,
+      "Oil": 10
+    },
+    "note": "Peanut butter thickens the broth around cubes of sweet potato and wilted greens.",
+    "steps": [
+      "Soften diced onion in oil, add cubed sweet potato, tomatoes and enough water to cover. Simmer until tender.",
+      "Whisk peanut butter with a little broth, stir back into the pot and add spinach until wilted."
+    ]
+  },
+  {
+    "name": "Garlic lemon prawn linguine",
+    "cuisine": "Italian",
+    "time": 20,
+    "kcal": 450,
+    "protein": 32,
+    "needs": {
+      "Pasta": 180,
+      "Prawns": 250,
+      "Garlic": 3,
+      "Lemon": 1,
+      "Oil": 15,
+      "Parsley": 8
+    },
+    "note": "Lemon and parsley brighten a quick sauce of garlic oil and prawns.",
+    "steps": [
+      "Boil pasta and reserve a mug of water. In a pan warm sliced garlic in oil, add peeled prawns and cook until opaque throughout.",
+      "Toss with the pasta, lemon zest, juice, chopped parsley and a little cooking water."
+    ]
+  },
+  {
+    "name": "Coconut rice pudding",
+    "cuisine": "Thai",
+    "time": 35,
+    "kcal": 355,
+    "protein": 5,
+    "needs": {
+      "Rice": 90,
+      "Coconut milk": 180,
+      "Sugar": 20,
+      "Mango": 1
+    },
+    "note": "Soft rice and coconut milk make a warm pudding topped with fresh mango.",
+    "steps": [
+      "Rinse rice and simmer in 300 ml water until tender. Stir in coconut milk and sugar.",
+      "Cook gently until creamy, adding a little water as needed. Serve with diced mango."
+    ]
+  },
+  {
+    "name": "Cheddar leek pasta bake",
+    "cuisine": "British",
+    "time": 40,
+    "kcal": 535,
+    "protein": 23,
+    "needs": {
+      "Pasta": 160,
+      "Leek": 1,
+      "Milk": 250,
+      "Cheese": 80,
+      "Butter": 15,
+      "Flour": 15
+    },
+    "note": "Soft leeks and a simple cheese sauce coat pasta under a browned top.",
+    "steps": [
+      "Cook pasta just short of tender. Wash and slice leek, soften in butter, stir in flour and gradually add milk until thickened.",
+      "Stir in half the grated cheese and pasta. Transfer to a baking dish, top with remaining cheese and bake at 210°C for 12 minutes."
+    ]
+  },
+  {
+    "name": "Warm beetroot lentil salad",
+    "cuisine": "French",
+    "time": 15,
+    "kcal": 380,
+    "protein": 17,
+    "needs": {
+      "Cooked beetroot": 250,
+      "Cooked lentils": 300,
+      "Feta": 50,
+      "Mustard": 8,
+      "Vinegar": 15,
+      "Oil": 15
+    },
+    "note": "Sweet beetroot and earthy lentils soak up a sharp mustard dressing.",
+    "steps": [
+      "Drain the cooked lentils and warm in a pan with a splash of water. Cut cooked beetroot into wedges.",
+      "Whisk mustard, vinegar and oil. Toss with the warm lentils and beetroot, then crumble feta on top."
+    ]
+  },
+  {
+    "name": "Eggplant tomato rice",
+    "cuisine": "Turkish",
+    "time": 35,
+    "kcal": 440,
+    "protein": 9,
+    "needs": {
+      "Eggplant": 1,
+      "Rice": 150,
+      "Tinned tomatoes": 250,
+      "Onion": 1,
+      "Oil": 20
+    },
+    "note": "Tender aubergine cubes and tomato cook together with the rice in one pan.",
+    "steps": [
+      "Dice eggplant and onion and brown in oil. Add rinsed rice and tomatoes.",
+      "Add 250 ml water, cover and simmer gently until rice is tender, adding water as needed. Rest covered for 5 minutes."
+    ]
+  },
+  {
+    "name": "Halloumi and peach salad",
+    "cuisine": "Mediterranean",
+    "time": 15,
+    "kcal": 375,
+    "protein": 19,
+    "needs": {
+      "Halloumi": 150,
+      "Peach": 2,
+      "Lettuce": 100,
+      "Lemon": 0.5,
+      "Oil": 10
+    },
+    "note": "Warm browned halloumi pairs with ripe peach and crisp lettuce.",
+    "steps": [
+      "Slice halloumi and fry in half the oil until golden on both sides. Pit and slice peaches.",
+      "Dress lettuce with remaining oil and lemon juice. Divide between plates and add halloumi and peaches."
+    ]
+  },
+  {
+    "name": "Sweet soy chicken noodles",
+    "cuisine": "Chinese",
+    "time": 25,
+    "kcal": 490,
+    "protein": 35,
+    "needs": {
+      "Chicken": 250,
+      "Noodles": 160,
+      "Soy sauce": 25,
+      "Honey": 15,
+      "Carrot": 1,
+      "Oil": 10
+    },
+    "note": "A glossy soy and honey sauce coats thin strips of chicken and noodles.",
+    "steps": [
+      "Cook noodles following the packet. Slice chicken thinly and stir-fry in oil until cooked through.",
+      "Add thin carrot sticks, honey, soy and a splash of water. Toss with noodles until glossy and hot."
+    ]
+  },
+  {
+    "name": "Yoghurt berry breakfast pots",
+    "cuisine": "Australian",
+    "time": 10,
+    "kcal": 305,
+    "protein": 13,
+    "needs": {
+      "Yoghurt": 300,
+      "Oats": 60,
+      "Blueberries": 140,
+      "Honey": 12
+    },
+    "note": "Toasted oats keep a little crunch between layers of yoghurt and berries.",
+    "steps": [
+      "Toast oats in a dry pan over medium heat, stirring until fragrant. Tip onto a plate to cool.",
+      "Layer yoghurt, berries and oats into two glasses. Drizzle with honey and serve."
+    ]
+  },
+  {
+    "name": "Lemon butter gnocchi with peas",
+    "cuisine": "Italian",
+    "time": 15,
+    "kcal": 465,
+    "protein": 15,
+    "needs": {
+      "Gnocchi": 350,
+      "Peas": 140,
+      "Butter": 25,
+      "Lemon": 0.5,
+      "Cheese": 20
+    },
+    "note": "Peas and lemon zest lighten a quick butter sauce for tender potato gnocchi.",
+    "steps": [
+      "Cook gnocchi and peas following packet timings. Reserve some cooking water before draining.",
+      "Melt butter with lemon zest. Toss in gnocchi, peas, grated cheese and a splash of the cooking water."
+    ]
+  },
+  {
+    "name": "Smoky tofu breakfast scramble",
+    "cuisine": "American",
+    "time": 15,
+    "kcal": 375,
+    "protein": 23,
+    "needs": {
+      "Tofu": 280,
+      "Bread": 4,
+      "Paprika": 3,
+      "Turmeric": 1,
+      "Spinach": 80,
+      "Oil": 10
+    },
+    "note": "Crumbled tofu takes on a golden colour from turmeric and a smoky edge from paprika.",
+    "steps": [
+      "Fry crumbled tofu in oil with turmeric and paprika, stirring until lightly browned.",
+      "Fold in spinach and cook until wilted. Serve over toasted bread."
+    ]
+  },
+  {
+    "name": "Pumpkin seed pesto pasta",
+    "cuisine": "Italian",
+    "time": 20,
+    "kcal": 530,
+    "protein": 18,
+    "needs": {
+      "Pasta": 180,
+      "Pumpkin seeds": 40,
+      "Basil": 25,
+      "Cheese": 25,
+      "Oil": 15,
+      "Lemon": 0.5
+    },
+    "note": "Toasted pumpkin seeds make a nutty alternative to pine nuts in basil pesto.",
+    "steps": [
+      "Toast seeds in a dry pan and cool. Blend with basil, grated cheese, oil, lemon juice and a spoonful of water.",
+      "Cook pasta and reserve a mug of cooking water. Toss off the heat with pesto, loosening with cooking water."
     ]
   },
 ];

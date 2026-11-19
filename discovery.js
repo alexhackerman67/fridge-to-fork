@@ -54,7 +54,7 @@ function nutrition(d) {
   return 'Approx. ' + d.kcal + ' kcal · ' + d.protein + ' g protein per serving';
 }
 function recipes() {
-  const [lead, ...others] = featuredRecipes().slice(0, 3);
+  const [lead, ...others] = featuredRecipes().slice(0, 6);
   const { d, i } = lead;
   main.innerHTML = '<div class="sectiontop discovery-head"><h1>Featured for you</h1>' +
     btn("Edit preferences", "preferences", "quiet") + '</div>' +
@@ -65,34 +65,49 @@ function recipes() {
     '<div class="featured-pair">' + others.map(({ d, i }) =>
       '<button class="feature-link" data-do="recipe:' + i + '"><strong>' + esc(d.name) + '</strong><small>' +
       esc(d.cuisine) + ' · ' + d.time + ' min</small><small>' + nutrition(d) + '</small></button>').join("") + '</div>' +
-    '<form id="webSearch" class="web-search" action="https://www.google.com/search" method="get" target="_blank" rel="noopener noreferrer">' +
-    '<label for="recipeQuery">Search recipes on the web</label><div><input id="recipeQuery" type="search" required placeholder="Dish, cuisine or ingredients">' +
-    '<input type="hidden" name="q"><button class="primary">Search web</button></div></form><div id="localMatches"></div>';
+    '<form id="cookbookSearch" class="web-search" role="search"><label for="recipeQuery">Search the cookbook</label>' +
+    '<div><input id="recipeQuery" type="search" placeholder="Search ' + dishes.length + ' recipes by dish, cuisine or ingredient">' +
+    '<button class="primary">Search</button></div></form><p id="resultCount" role="status"></p><div id="localMatches"></div>';
   const field = $("#recipeQuery");
-  field.oninput = () => {
-    field.setCustomValidity("");
-    const matches = field.value.trim() ? matchingRecipes(field.value).slice(0, 5) : [];
-    $("#localMatches").innerHTML = matches.length ? '<h3>In your cookbook</h3>' +
-      matches.map(({ d, i }) => btn(esc(d.name), "recipe:" + i, "quiet")).join("") : "";
-  };
-  $("#webSearch").onsubmit = event => {
-    const term = field.value.trim();
-    if (!term) { event.preventDefault(); field.setCustomValidity("Enter a dish or ingredient."); field.reportValidity(); return; }
-    event.currentTarget.elements.q.value = term + " recipes";
-  };
+  function showResults() {
+    const query = field.value.trim();
+    const matches = query ? matchingRecipes(query) : [];
+    $("#resultCount").textContent = !query ? "" : matches.length
+      ? matches.length + (matches.length === 1 ? " recipe found" : " recipes found")
+      : "No recipes found. Try another dish or ingredient.";
+    $("#localMatches").innerHTML = matches.map(({ d, i }) =>
+      '<button class="feature-link" data-do="recipe:' + i + '"><strong>' + esc(d.name) + '</strong><small>' +
+      esc(d.cuisine) + ' · ' + d.time + ' min · ' + esc(stock(d)) + '</small></button>').join("");
+  }
+  field.oninput = showResults;
+  $("#cookbookSearch").onsubmit = event => { event.preventDefault(); showResults(); };
+  // Keep search within reach before the longer recommendation section.
+  const form = $("#cookbookSearch");
+  main.prepend(form, $("#resultCount"), $("#localMatches"));
 }
 function matchingRecipes(query) {
-  const words = normaliseFood(query).split(" ").filter(Boolean);
-  return featuredRecipes().filter(({ d }) => {
-    const text = normaliseFood([d.name, d.cuisine, ...Object.keys(d.needs)].join(" "));
-    return words.every(word => text.includes(word));
-  });
+  function terms(text) {
+    return normaliseFood(text).split(" ").filter(Boolean).map(word => {
+      if (word.endsWith("oes")) return word.slice(0, -2);
+      if (word.endsWith("ies")) return word.slice(0, -3) + "y";
+      return word.length > 3 && /[^s]s$/.test(word) ? word.slice(0, -1) : word;
+    });
+  }
+  const words = terms(query);
+  if (!words.length) return [];
+  return featuredRecipes().map(entry => {
+    const title = terms(entry.d.name);
+    const searchable = [...title, ...terms(entry.d.cuisine), ...terms(Object.keys(entry.d.needs).join(" "))];
+    const matches = words.every(word => searchable.some(term => term.startsWith(word)));
+    const titleHits = words.filter(word => title.some(term => term.startsWith(word))).length;
+    return { ...entry, matches, titleHits };
+  }).filter(entry => entry.matches).sort((a, b) => b.titleHits - a.titleHits || b.score - a.score);
 }
 function chooseDinner(day) {
   pop("Choose dinner", '<label class="field">Search your cookbook<input id="planSearch" type="search" placeholder="Dish or ingredient"></label><div id="planMatches"></div>');
   function update() {
     const query = $("#planSearch").value;
-    const matches = query.trim() ? matchingRecipes(query) : featuredRecipes().slice(0, 3);
+    const matches = query.trim() ? matchingRecipes(query) : featuredRecipes().slice(0, 6);
     $("#planMatches").innerHTML = matches.map(({ d, i }) => '<div class="line"><span>' + esc(d.name) +
       '</span>' + ib("Plan " + d.name, "assign:" + day + "," + i, "plus") + '</div>').join("") || '<p>No matching recipes.</p>';
   }
