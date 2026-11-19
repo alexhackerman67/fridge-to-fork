@@ -227,11 +227,11 @@ function review(message) {
   function row(s) {
     return (
       '<div class="line scanrow"><input class="ingredient-name" aria-label="Ingredient" placeholder="Ingredient" required maxlength="100" list="scanNames" value="' + esc(s.n) +
-      '"><input type="number" aria-label="Current total quantity" placeholder="Amount" min=".01" max="100000" step=".01" value="' +
+      '"><input type="number" aria-label="Current total quantity" placeholder="Amount" required min=".01" max="100000" step=".01" value="' +
       s.q +
       '"><small></small>' +
       ib("Remove suggestion", "drop", "close") +
-      "</div>"
+      '<span class="scan-amount-hint">' + esc(s.hint || "Amount unclear. Enter it manually.") + '</span></div>'
     );
   }
   pop(
@@ -240,7 +240,7 @@ function review(message) {
       imageUrl +
       '"><p class="hint">' +
       message +
-      ' Check the amounts before saving. Blank amounts keep any existing pantry total.</p><form id="reviewForm"><datalist id="scanNames">' + options + '</datalist><div id="rows"></div><div class="actions">' +
+      ' Confirm an amount for every ingredient you keep.</p><form id="reviewForm"><datalist id="scanNames">' + options + '</datalist><div id="rows"></div><div class="actions">' +
       btn("Add item", "addrow") +
       btn("Read packet labels", "labels") +
       '<span role="status" id="labelStatus"></span>' +
@@ -256,6 +256,7 @@ function review(message) {
     }
     nameInput.oninput = () => {
       el.querySelector('input[type="number"]').value = "";
+      el.querySelector(".scan-amount-hint").textContent = "Enter the amount manually.";
       unit();
     };
     unit();
@@ -284,7 +285,8 @@ function review(message) {
         return;
       }
       const value = el.querySelector('input[type="number"]').value;
-      items[n] = value === "" ? state.pantry[n] ?? null : Number(value);
+      if (!value || !el.querySelector('input[type="number"]').reportValidity()) return;
+      items[n] = Number(value);
     }
     Object.assign(state.pantry, items);
     save();

@@ -31,11 +31,21 @@ document.addEventListener("DOMContentLoaded", () => {
 function reviewedCounts(views) {
   const names = new Set(views.flatMap(view => view ? [...view.keys()] : []));
   return [...names].map(n => {
-    const count = views[0]?.get(n);
-    const closeups = views.slice(1).filter(view => view?.has(n));
-    const agreed = views.length === 1 || (closeups.length > 0 && closeups.every(view => view.get(n) === count));
-    const q = (foods[n] || "each") === "each" && Number.isSafeInteger(count) && count > 0 && agreed ? count : "";
-    return { n, q };
+    const observations = views.filter(view => view?.has(n)).map(view => view.get(n));
+    const whole = views[0]?.get(n);
+    const manual = { n, q: "", hint: "Amount unclear. Enter it manually." };
+    if (observations.some(item => item.visibility === "closed")) {
+      return { ...manual, hint: "Closed container. Check inside and enter the amount." };
+    }
+    if (!whole || whole.visibility !== "visible" || (foods[n] || "each") !== "each") return manual;
+    const visible = observations.filter(item => item.visibility === "visible");
+    const low = Math.min(...visible.map(item => item.low));
+    const high = Math.max(...visible.map(item => item.high));
+    if (low === high) {
+      if (views.length > 1 && (visible.length < 2 || visible.length !== observations.length)) return manual;
+      return { n, q: low, hint: "Visible count: " + low };
+    }
+    return { n, q: "", hint: "Estimated count: " + low + "–" + high + ". Enter your total." };
   });
 }
 async function cloudIngredients(img, origin, signal, onProgress) {
@@ -81,10 +91,18 @@ async function scanCrop(img, region, origin, signal) {
   for (const item of items ?? ingredients.map(name => ({ name, count: null }))) {
     if (typeof item?.name !== "string") continue;
     const name = item.name.trim().toLowerCase();
-    const plain = name.replace(/^(?:red|yellow|green|orange) (?:bell peppers?|capsicums?)$/, "capsicum");
+    const plain = /^(?:(?:closed |sealed )?egg (?:carton|box)|carton of eggs)$/.test(name) ? "egg" : name.replace(/^(?:red|yellow|green|orange) (?:bell peppers?|capsicums?)$/, "capsicum");
     const ingredient = canonical(Object.hasOwn(aliases, plain) ? aliases[plain] : plain.charAt(0).toUpperCase() + plain.slice(1));
     if (ingredient && !Object.hasOwn(Object.prototype, name)) {
-      found.set(ingredient, found.has(ingredient) ? null : item.count);
+      const previous = found.get(ingredient);
+      if (item.visibility === "closed" || plain === "egg" && name !== plain || previous?.visibility === "closed") {
+        found.set(ingredient, { visibility: "closed" });
+      } else if (!previous && item.visibility === "visible" && Number.isSafeInteger(item.low) &&
+                 Number.isSafeInteger(item.high) && item.low > 0 && item.high >= item.low && item.high <= 100000) {
+        found.set(ingredient, item);
+      } else {
+        found.set(ingredient, { visibility: "unknown" });
+      }
     }
   }
   return found;

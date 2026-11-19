@@ -1,5 +1,5 @@
 const prefix = 'fridge-to-fork:' + self.registration.scope + ':';
-const cacheName = prefix + 'counts-v8';
+const cacheName = prefix + 'ranges-v9';
 const files = [
   './', 'index.html', 'style.css', 'app.js', 'recipes.js', 'scanner.js',
   'assets/fork-maskable-512.png', 'cloud-scan.js', 'events.js', 'install.js', 'app.webmanifest',
