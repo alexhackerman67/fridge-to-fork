@@ -73,6 +73,7 @@ const actions = {
   sample: demoScan,
   manualReview: () => {
     scanToken++;
+    cloudRequest?.abort();
     review("Review the matches so far or add ingredients.");
   },
 };

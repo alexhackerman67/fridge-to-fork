@@ -28,19 +28,36 @@ document.addEventListener("DOMContentLoaded", () => {
     toast("Scanner connected");
   };
 });
-async function cloudIngredients(img, origin, signal) {
+async function cloudIngredients(img, origin, signal, onProgress) {
   const w = img.naturalWidth, h = img.naturalHeight;
-  const full = await scanCrop(img, [0, 0, w, h], origin, signal);
-  if (Math.max(w, h) < 600) return full;
-  const crops = w >= h
-    ? [[0, 0, w * .56, h], [w * .44, 0, w * .56, h]]
-    : [[0, 0, w, h * .56], [0, h * .44, w, h * .56]];
-  const parts = await Promise.allSettled(crops.map(region => scanCrop(img, region, origin, signal)));
-  return [...new Set(full.concat(...parts.filter(p => p.status === "fulfilled").map(p => p.value)))];
+  const regions = [[0, 0, w, h]];
+  if (Math.min(w, h) >= 360) {
+    // Keep neighbouring shelves in context at the edges of each close-up.
+    for (const start of [0, .30, .60]) {
+      regions.push(w > 1.8 * h ? [start * w, 0, .4 * w, h] : [0, start * h, w, .4 * h]);
+    }
+  }
+  const names = new Set();
+  let next = 0, finished = 0, failed = 0;
+  async function inspect() {
+    while (next < regions.length && !signal.aborted) {
+      const region = regions[next++];
+      try {
+        const items = await scanCrop(img, region, origin, signal);
+        for (const name of items) names.add(name);
+      } catch {
+        failed++;
+      }
+      finished++;
+      onProgress([...names], finished, regions.length);
+    }
+  }
+  await Promise.all([inspect(), inspect()]);
+  return { names: [...names], failed: failed + regions.length - finished, total: regions.length };
 }
 async function scanCrop(img, region, origin, signal) {
   const [, , width, height] = region;
-  const scale = Math.min(1, 1440 / Math.max(width, height));
+  const scale = Math.min(1, 960 / Math.max(width, height));
   const canvas = document.createElement("canvas");
   canvas.width = Math.max(1, Math.round(width * scale));
   canvas.height = Math.max(1, Math.round(height * scale));
@@ -50,12 +67,13 @@ async function scanCrop(img, region, origin, signal) {
   const response = await fetch(origin + "/scan", {method: "POST", body, signal, credentials: "omit", referrerPolicy: "no-referrer"});
   if (!response.ok) throw new Error("Cloud scanner unavailable");
   const { ingredients } = await response.json();
-  const aliases = { "bell pepper": "Capsicum", "bell peppers": "Capsicum", "eggs": "Egg", "tomatoes": "Tomato", "yogurt": "Yoghurt", "canned tomatoes": "Tinned tomatoes" };
+  const aliases = { "bell pepper": "Capsicum", "bell peppers": "Capsicum", "eggs": "Egg", "chicken eggs": "Egg", "scallions": "Spring onion", "spring onions": "Spring onion", "green onions": "Spring onion", "green onion": "Spring onion", "tomatoes": "Tomato", "yogurt": "Yoghurt", "canned tomatoes": "Tinned tomatoes" };
   const found = new Set();
   for (const item of ingredients) {
     if (typeof item !== "string") continue;
     const name = item.trim().toLowerCase();
-    const ingredient = canonical(Object.hasOwn(aliases, name) ? aliases[name] : name.charAt(0).toUpperCase() + name.slice(1));
+    const plain = name.replace(/^(?:red|yellow|green|orange) (?:bell peppers?|capsicums?)$/, "capsicum");
+    const ingredient = canonical(Object.hasOwn(aliases, plain) ? aliases[plain] : plain.charAt(0).toUpperCase() + plain.slice(1));
     if (ingredient && !Object.hasOwn(Object.prototype, name)) found.add(ingredient);
   }
   return [...found];

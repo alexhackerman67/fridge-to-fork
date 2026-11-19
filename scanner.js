@@ -148,6 +148,7 @@ function pickPhoto(camera, cloud = false) {
   file.click();
 }
 async function startRecognition(url, origin = "") {
+  if (url === imageUrl) imageUrl = ""; // Reuse the selected photo when retrying.
   resetScan();
   const token = scanToken;
   imageUrl = url;
@@ -165,25 +166,31 @@ async function startRecognition(url, origin = "") {
     img.src = imageUrl;
     await img.decode();
     if (token !== scanToken) return;
-    let fallback = "";
     if (origin) {
       inside.querySelector('[role="status"]').textContent = "Checking ingredients with Cloudflare…";
       const controller = new AbortController();
       cloudRequest = controller;
-      const deadline = setTimeout(() => controller.abort(), 60000);
+      const deadline = setTimeout(() => controller.abort(), 95000);
       try {
-        const matches = await cloudIngredients(img, origin, controller.signal);
+        const result = await cloudIngredients(img, origin, controller.signal, (names, done, total) => {
+          if (token !== scanToken) return;
+          suggestions = names.map(n => ({ n, q: state.pantry[n] ?? "" }));
+          inside.querySelector('[role="status"]').textContent =
+            "Checked " + done + " of " + total + " views · " + names.length + " ingredients found";
+        });
         if (token !== scanToken) return;
-        if (matches.length) {
-          suggestions = matches.map(n => ({ n, q: state.pantry[n] ?? "" }));
-          review("Cloud AI suggestions. Check the items and enter the amounts.");
-          $("#reviewForm [data-do=labels]").click();
-          return;
+        const summary = result.failed === result.total ? "Cloud AI could not check this photo." :
+          "Cloud AI found " + result.names.length + " ingredients across " +
+          (result.total - result.failed) + " of " + result.total + " views.";
+        review(summary);
+        if (result.failed || !result.names.length) {
+          const actions = $("#reviewForm .actions");
+          actions.insertAdjacentHTML("beforebegin", '<div class="actions"><button type="button" id="retryPhoto">Retry cloud scan</button><button type="button" id="localPhoto">Try on-device scan</button></div>');
+          $("#retryPhoto").onclick = () => startRecognition(url, origin);
+          $("#localPhoto").onclick = () => startRecognition(url);
         }
-        fallback = "Cloud scan found no matches. ";
-      } catch {
-        if (token !== scanToken) return;
-        fallback = "Cloud scan unavailable. ";
+        if (result.names.length) $("#reviewForm [data-do=labels]").click();
+        return;
       } finally {
         clearTimeout(deadline);
       }
@@ -198,7 +205,7 @@ async function startRecognition(url, origin = "") {
     if (token !== scanToken) return;
     suggestions = result.map((n) => ({ n, q: state.pantry[n] ?? "" }));
     review(
-      fallback + "On-device scan. " + (result.length
+      "On-device scan. " + (result.length
         ? "Check each ingredient and its current total."
         : "No confident matches. Add the ingredients you can see."),
     );
