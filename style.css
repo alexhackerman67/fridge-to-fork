@@ -729,3 +729,12 @@ label.field select,
 .featured-card { border: 1px solid #d7dfd1; border-radius: 14px; overflow: hidden; background: white; }
 .featured-card .featured-photo { aspect-ratio: 16/8; }
 .featured-card .feature-link { border: 0; width: 100%; }
+.allergy-picker { padding: .6rem 0; }
+.allergy-picker summary { cursor: pointer; font-weight: 600; }
+.allergy-picker > div { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; margin-top: .6rem; }
+.web-search .difficulty-picker { display: flex; align-items: center; gap: .55rem; margin-top: .65rem; font-size: .9rem; }
+.difficulty-picker select { padding: .4rem; font: inherit; border: 1px solid #acb7ac; background: white; border-radius: 7px; }
+.fork-rating { display: inline-flex; align-items: center; gap: 2px; color: #31543b; }
+.fork-rating svg { display: block; width: 10px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; }
+.empty-fork { color: #bcc5be; }
+.fork-rating small { margin-left: .3rem; }

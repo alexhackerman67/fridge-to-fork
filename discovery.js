@@ -7,6 +7,12 @@ function preferencesForm() {
     '<label class="field">Favourite cuisines<input name="cuisines" list="cuisineExamples" placeholder="e.g. Italian, Korean" maxlength="180" value="' + esc(profile.cuisines || "") + '"></label>' +
     '<datalist id="cuisineExamples">' + cuisines.map(c => '<option value="' + esc(c) + '">').join("") + '</datalist>' +
     '<label class="field">Favourite meals<input name="meals" placeholder="e.g. fried rice, pasta" maxlength="240" value="' + esc(profile.meals || "") + '"></label>' +
+    '<label class="field">Diet type<select name="diet"><option value="">No dietary preference</option>' +
+    dietChoices.map(diet => '<option' + (profile.diet === diet ? " selected" : "") + '>' + diet + '</option>').join("") +
+    '</select></label><details class="allergy-picker"><summary>Allergies to exclude</summary><div>' +
+    Object.keys(allergyIngredients).map(name => '<label><input type="checkbox" name="allergies" value="' + name + '"' +
+      ((profile.allergies || []).includes(name) ? " checked" : "") + '> ' + name + '</label>').join("") +
+    '</div></details><p class="hint">Filters use recipe ingredients. Check packet labels for allergens and cross-contact, and choose products suitable for your diet.</p>' +
     '<fieldset class="goal-fields"><legend>Optional goals per serving</legend>' +
     '<label class="field">Protein (g)<input type="number" name="protein" min="0.1" step="any" inputmode="decimal" value="' + esc(profile.protein || "") + '"></label>' +
     '<label class="field">Calories (kcal)<input type="number" name="calories" min="1" step="any" inputmode="decimal" value="' + esc(profile.calories || "") + '"></label></fieldset>' +
@@ -17,6 +23,7 @@ function preferencesForm() {
     const fields = new FormData(event.currentTarget);
     state.preferences = {
       cuisines: fields.get("cuisines").trim(), meals: fields.get("meals").trim(),
+      diet: fields.get("diet") || "", allergies: fields.getAll("allergies"),
       protein: Number(fields.get("protein")) || null, calories: Number(fields.get("calories")) || null
     };
     save();
@@ -48,7 +55,7 @@ function featuredRecipes() {
     if (p.calories) score += 3 * Math.max(0, 1 - Math.abs(d.kcal - p.calories) / p.calories);
     score += 0.5 * (1 - missing(d).length / Object.keys(d.needs).length);
     return { d, i, score };
-  }).sort((a, b) => b.score - a.score || a.i - b.i);
+  }).filter(({ d }) => fitsPreferences(d, p)).sort((a, b) => b.score - a.score || a.i - b.i);
 }
 function nutrition(d) {
   return 'Approx. ' + d.kcal + ' kcal · ' + d.protein + ' g protein per serving';
@@ -64,19 +71,22 @@ function featuredPhoto(dish, lead = false) {
 }
 function recipes() {
   const [lead, ...others] = featuredRecipes().slice(0, 6);
-  const { d, i } = lead;
+  const { d, i } = lead || {};
   main.innerHTML = '<div class="sectiontop discovery-head"><h1>Featured for you</h1>' +
     btn("Edit preferences", "preferences", "quiet") + '</div>' +
-    '<section class="hero"><div class="herotext"><p class="kicker">' +
+    (lead ? '<section class="hero"><div class="herotext"><p class="kicker">' +
     esc(d.cuisine) + '</p><h2>' + esc(d.name) + '</h2><p class="desc">' + esc(d.note) + '</p>' +
     meta(d) + '<p class="nutrition">' + nutrition(d) + '</p>' + btn("View recipe", "recipe:" + i, "primary") +
     '</div>' + featuredPhoto(d, true) + '</section>' +
     '<div class="featured-pair">' + others.map(({ d, i }) =>
       '<article class="featured-card">' + featuredPhoto(d) + '<button class="feature-link" data-do="recipe:' + i + '"><strong>' + esc(d.name) + '</strong><small>' +
-      esc(d.cuisine) + ' · ' + d.time + ' min</small><small>' + nutrition(d) + '</small></button></article>').join("") + '</div>' +
+      esc(d.cuisine) + ' · ' + d.time + ' min</small><small>' + nutrition(d) + '</small>' + forkRating(d) + '</button></article>').join("") + '</div>' : '<p>No recipes match your dietary preferences.</p>') +
     '<form id="cookbookSearch" class="web-search" role="search"><label for="recipeQuery">Search the cookbook</label>' +
     '<div><input id="recipeQuery" type="search" placeholder="Search ' + dishes.length + ' recipes by dish, cuisine or ingredient">' +
-    '<button class="primary">Search</button></div></form><p id="resultCount" role="status"></p><div id="localMatches"></div>';
+    '<button class="primary">Search</button></div><label class="difficulty-picker">Difficulty <select id="difficulty">' +
+    '<option value="">Any difficulty</option>' + difficultyLabels.slice(1).map((label, i) =>
+      '<option value="' + (i + 1) + '">' + (i + 1) + (i ? ' forks · ' : ' fork · ') + label + '</option>').join("") +
+    '</select></label></form><p id="resultCount" role="status"></p><div id="localMatches"></div>';
   main.querySelectorAll(".featured-photo img").forEach(img => {
     const hide = () => { img.closest("figure").hidden = true; };
     img.addEventListener("error", hide, { once: true });
@@ -85,15 +95,18 @@ function recipes() {
   const field = $("#recipeQuery");
   function showResults() {
     const query = field.value.trim();
-    const matches = query ? matchingRecipes(query) : [];
-    $("#resultCount").textContent = !query ? "" : matches.length
+    const level = Number($("#difficulty").value);
+    const candidates = query ? matchingRecipes(query) : level ? featuredRecipes() : [];
+    const matches = candidates.filter(({ d }) => !level || d.difficulty === level);
+    $("#resultCount").textContent = !query && !level ? "" : matches.length
       ? matches.length + (matches.length === 1 ? " recipe found" : " recipes found")
-      : "No recipes found. Try another dish or ingredient.";
+      : "No matching recipes. Try changing your search or filters.";
     $("#localMatches").innerHTML = matches.map(({ d, i }) =>
       '<button class="feature-link" data-do="recipe:' + i + '"><strong>' + esc(d.name) + '</strong><small>' +
-      esc(d.cuisine) + ' · ' + d.time + ' min · ' + esc(stock(d)) + '</small></button>').join("");
+      esc(d.cuisine) + ' · ' + d.time + ' min · ' + esc(stock(d)) + '</small>' + forkRating(d) + '</button>').join("");
   }
   field.oninput = showResults;
+  $("#difficulty").onchange = showResults;
   $("#cookbookSearch").onsubmit = event => { event.preventDefault(); showResults(); };
   // Keep search within reach before the longer recommendation section.
   const form = $("#cookbookSearch");
@@ -122,7 +135,7 @@ function chooseDinner(day) {
   function update() {
     const query = $("#planSearch").value;
     const matches = query.trim() ? matchingRecipes(query) : featuredRecipes().slice(0, 6);
-    $("#planMatches").innerHTML = matches.map(({ d, i }) => '<div class="line"><span>' + esc(d.name) +
+    $("#planMatches").innerHTML = matches.map(({ d, i }) => '<div class="line"><span>' + esc(d.name) + ' ' + forkRating(d) +
       '</span>' + ib("Plan " + d.name, "assign:" + day + "," + i, "plus") + '</div>').join("") || '<p>No matching recipes.</p>';
   }
   $("#planSearch").oninput = update;
