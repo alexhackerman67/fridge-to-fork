@@ -29,10 +29,18 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 });
 function reviewedCounts(views) {
-  const names = new Set(views.flatMap(view => view ? [...view.keys()] : []));
-  return [...names].map(n => {
-    const observations = views.filter(view => view?.has(n)).map(view => view.get(n));
-    const whole = views[0]?.get(n);
+  const groups = new Map();
+  views.forEach((view, index) => {
+    for (const [name, item] of view || []) {
+      const key = scanKey(name);
+      if (!groups.has(key)) groups.set(key, { n: name, observations: [], views: new Set() });
+      const group = groups.get(key);
+      group.observations.push(item);
+      group.views.add(index);
+      if (index === 0) group.whole = item;
+    }
+  });
+  return [...groups.values()].filter(group => group.whole || group.views.size >= 2).map(({ n, observations, whole }) => {
     const manual = { n, q: "", hint: "Amount unclear. Enter it manually." };
     if (observations.some(item => item.visibility === "closed")) {
       return { ...manual, hint: "Closed container. Check inside and enter the amount." };
@@ -85,14 +93,35 @@ async function scanCrop(img, region, origin, signal) {
   if (!body) throw new Error("Photo unavailable");
   const response = await fetch(origin + "/scan", {method: "POST", body, signal, credentials: "omit", referrerPolicy: "no-referrer"});
   if (!response.ok) throw new Error("Cloud scanner unavailable");
-  const { ingredients, items } = await response.json();
-  const aliases = { "bell pepper": "Capsicum", "bell peppers": "Capsicum", "eggs": "Egg", "chicken eggs": "Egg", "scallions": "Spring onion", "spring onions": "Spring onion", "green onions": "Spring onion", "green onion": "Spring onion", "tomatoes": "Tomato", "yogurt": "Yoghurt", "canned tomatoes": "Tinned tomatoes" };
+  const { items } = await response.json();
+  return observationsFrom(items ?? []);
+}
+const scanAliases = { "rice vermicelli noodles": "Rice vermicelli", "rice vermicelli": "Rice vermicelli", "bell pepper": "Capsicum", "bell peppers": "Capsicum", "eggs": "Egg", "chicken eggs": "Egg", "scallions": "Spring onion", "spring onions": "Spring onion", "green onions": "Spring onion", "green onion": "Spring onion", "tomatoes": "Tomato", "yogurt": "Yoghurt", "canned tomatoes": "Tinned tomatoes" };
+// Keep preparation and ingredient words. Only ignore packaging, word order and common plurals.
+function scanKey(value) {
+  const words = ingredientKey(value.normalize("NFKC")).replace(/^(?:an? )?(?:packet|pack|bag|box|carton|bottle|jar|tin) of /, "")
+    .replace(/ (?:packet|pack|bag|box|carton|bottle|jar)$/, "").match(/[\p{L}\p{N}]+/gu) || [];
+  const singular = { tomatoes: "tomato", potatoes: "potato", leaves: "leaf", berries: "berry" };
+  return words.map(word => Object.hasOwn(singular, word) ? singular[word] : (/s$/.test(word) && !/(ss|us|is|ous)$/.test(word) ? word.slice(0,-1) : word)).sort().join(" ");
+}
+function scanName(value) {
+  const clean = canonical(value);
+  if (!clean) return "";
+  const lookup = clean.toLowerCase();
+  const key = scanKey(clean);
+  if (Object.hasOwn(scanAliases, lookup)) return canonical(scanAliases[lookup]);
+  if (["rice vermicelli", "noodle rice vermicelli"].includes(key)) return "Rice vermicelli";
+  return [...Object.keys(state.pantry), ...Object.keys(foods)].find(name => scanKey(name) === key) ||
+    clean.charAt(0).toUpperCase() + clean.slice(1);
+}
+function observationsFrom(items) {
   const found = new Map();
-  for (const item of items ?? ingredients.map(name => ({ name, count: null }))) {
+  for (const item of items) {
     if (typeof item?.name !== "string") continue;
-    const name = item.name.trim().toLowerCase();
+    const title = item.evidence === "product_title" && typeof item.label === "string" ? item.label.trim() : "";
+    const name = (title || item.name).trim().toLowerCase();
     const plain = /^(?:(?:closed |sealed )?egg (?:carton|box)|carton of eggs)$/.test(name) ? "egg" : name.replace(/^(?:red|yellow|green|orange) (?:bell peppers?|capsicums?)$/, "capsicum");
-    const ingredient = canonical(Object.hasOwn(aliases, plain) ? aliases[plain] : plain.charAt(0).toUpperCase() + plain.slice(1));
+    const ingredient = scanName(plain);
     if (ingredient && !Object.hasOwn(Object.prototype, name)) {
       const previous = found.get(ingredient);
       if (item.visibility === "closed" || plain === "egg" && name !== plain || previous?.visibility === "closed") {
