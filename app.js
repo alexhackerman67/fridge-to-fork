@@ -240,14 +240,16 @@ function readyRecipesMenu() {
   const distance = m => m.gaps.reduce((sum, g) => sum + g.short / g.needed, 0);
   close.sort((a,b) => a.gaps.length - b.gaps.length || distance(a) - distance(b) || a.swaps.length - b.swaps.length);
   const link = m => btn(esc(m.d.name), "pantryRecipe:" + m.i, "light");
-  let body = ready.length ? '<p>Enough for ' + servingLabel() + '.</p>' + ready.map(link).join("") : "";
+  let body = ready.length ? '<h4>Ready to cook · ' + servingLabel() + '</h4>' + ready.map(link).join("") : "";
   const picks = close.slice(0, 3);
   const bestSwap = close.find(m => m.swaps.length);
   if (bestSwap && !picks.some(m => m.swaps.length)) picks[picks.length - 1] = bestSwap;
   if (close.length) body += '<h4>Closest recipes for ' + servingLabel() + '</h4>' + picks.map(m =>
     link(m) + (!m.gaps.length ? '<p>Ready with a swap</p>' : '') + '<ul>' + swapList(m.swaps) + m.gaps.map(g => '<li>Still needed: ' + esc(g.name) + ' · ' +
       esc(amount(g.name, g.short)) + '</li>').join("") + '</ul>').join("");
-  return '<details class="pantry-ready"><summary>Recipes you can make (' + ready.length + ')</summary>' +
+  const counts = ready.length + ' ready · ' + picks.length + (picks.length === 1 ? ' close match' : ' close matches');
+  return '<details class="pantry-ready"><summary>Recipes you can make' +
+    '<span class="match-counts">' + counts + '</span></summary>' +
     (body || '<p>No matching recipe yet. Scan or enter more ingredients and their quantities.</p>') + '</details>';
 }
 function pantry() {
