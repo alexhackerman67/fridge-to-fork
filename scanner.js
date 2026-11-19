@@ -189,7 +189,6 @@ async function startRecognition(url, origin = "") {
           $("#retryPhoto").onclick = () => startRecognition(url, origin);
           $("#localPhoto").onclick = () => startRecognition(url);
         }
-        if (result.suggestions.length) $("#reviewForm [data-do=labels]").click();
         return;
       } finally {
         clearTimeout(deadline);
@@ -205,11 +204,10 @@ async function startRecognition(url, origin = "") {
     if (token !== scanToken) return;
     suggestions = result.map((n) => ({ n, q: "" }));
     review(
-      "On-device scan. " + (result.length
+      "On-device suggestions may include pictures on packets. Remove anything you cannot see as a physical product. " + (result.length
         ? "Check each ingredient and its current total."
         : "No confident matches. Add the ingredients you can see."),
     );
-    if (url.startsWith("blob:")) $("#reviewForm [data-do=labels]").click();
   } catch {
     if (token === scanToken) {
       scanToken++;
@@ -242,7 +240,7 @@ function review(message) {
       message +
       ' Confirm an amount for every ingredient you keep.</p><form id="reviewForm"><datalist id="scanNames">' + options + '</datalist><div id="rows"></div><div class="actions">' +
       btn("Add item", "addrow") +
-      btn("Read packet labels", "labels") +
+      btn("View packet text", "labels") +
       '<span role="status" id="labelStatus"></span>' +
       '<button class="primary" id="confirmScan">Save to pantry</button></div></form>',
   );
@@ -267,7 +265,7 @@ function review(message) {
   $("#reviewForm").onclick = (e) => {
     const b = e.target.closest("[data-do]");
     if (!b) return;
-    if (b.dataset.do === "labels") readPacketLabels(b, append);
+    if (b.dataset.do === "labels") readPacketLabels(b);
     if (b.dataset.do === "addrow") append({ n: "", q: "" });
     if (b.dataset.do === "drop") {
       b.closest(".line").remove();
@@ -277,15 +275,17 @@ function review(message) {
   $("#reviewForm").onsubmit = (e) => {
     e.preventDefault();
     let items = {};
+    const seen = new Set();
     for (const el of $("#rows").children) {
-      const n = canonical(el.querySelector(".ingredient-name").value);
+      const n = scanName(el.querySelector(".ingredient-name").value);
       if (!n) { toast("Enter an ingredient name."); return; }
-      if (n in items) {
+      if (seen.has(scanKey(n))) {
         toast("Combine duplicate ingredients into one total.");
         return;
       }
       const value = el.querySelector('input[type="number"]').value;
       if (!value || !el.querySelector('input[type="number"]').reportValidity()) return;
+      seen.add(scanKey(n));
       items[n] = Number(value);
     }
     setPantryAmounts(items);
@@ -309,34 +309,7 @@ function demoScan() {
   startRecognition("assets/sample.jpg");
 }
 
-const packetAliases = {
-  "Tinned tomatoes": ["chopped tomatoes", "diced tomatoes", "crushed tomatoes"],
-  "White beans": ["cannellini", "butter beans"],
-  Oats: ["oatmeal"], Flour: ["plain flour", "self raising flour"],
-  Pasta: ["penne", "fusilli", "rigatoni", "macaroni"],
-  Cereal: ["corn flakes", "weet bix", "rice bubbles"],
-  Rice: ["basmati", "jasmine rice", "arborio"],
-  Noodles: ["ramen", "vermicelli"],
-  Chickpeas: ["garbanzo beans"], Capsicum: ["bell peppers"],
-};
-function ingredientsOnLabels(text) {
-  const words = " " + text.toLowerCase().replace(/[^a-z0-9]+/g, " ") + " ";
-  // Match longer product names first so "peanut butter" does not also add butter.
-  const terms = Object.keys(foods).flatMap(name =>
-    [name, ...(packetAliases[name] || [])].map(alias => [alias.toLowerCase(), name])
-  ).sort((a, b) => b[0].length - a[0].length);
-  let remaining = words;
-  const found = new Set();
-  for (const [alias, name] of terms) {
-    const label = " " + alias + " ";
-    if (remaining.includes(label)) {
-      found.add(name);
-      remaining = remaining.replaceAll(label, " ");
-    }
-  }
-  return [...found];
-}
-async function readPacketLabels(button, append) {
+async function readPacketLabels(button) {
   const token = scanToken;
   const status = $("#labelStatus");
   button.disabled = true;
@@ -354,10 +327,9 @@ async function readPacketLabels(button, append) {
     await worker.setParameters({ tessedit_pageseg_mode: "11" });
     const { data } = await worker.recognize(imageUrl);
     if (stopped || token !== scanToken) return;
-    const existing = new Set([...$("#rows").querySelectorAll(".ingredient-name")].map(el => canonical(el.value)));
-    const added = ingredientsOnLabels(data.text).filter(n => !existing.has(n));
-    added.forEach(n => append({ n, q: "" }));
-    status.textContent = added.length ? "Added " + added.length + " suggestions from labels." : "No additional labels matched.";
+    const words = data.text.trim();
+    status.textContent = words ? "Packet text: " + words + " — use Add item for a product you can confirm." :
+      "No readable packet text found.";
   }
   try {
     await Promise.race([read(), new Promise((_, reject) => {
