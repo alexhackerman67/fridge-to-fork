@@ -29,11 +29,22 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 });
 async function cloudIngredients(img, origin, signal) {
-  const scale = Math.min(1, 1440 / Math.max(img.naturalWidth, img.naturalHeight));
+  const w = img.naturalWidth, h = img.naturalHeight;
+  const full = await scanCrop(img, [0, 0, w, h], origin, signal);
+  if (full.length >= 6 || Math.max(w, h) < 600) return full;
+  const crops = w >= h
+    ? [[0, 0, w * .56, h], [w * .44, 0, w * .56, h]]
+    : [[0, 0, w, h * .56], [0, h * .44, w, h * .56]];
+  const parts = await Promise.allSettled(crops.map(region => scanCrop(img, region, origin, signal)));
+  return [...new Set(full.concat(...parts.filter(p => p.status === "fulfilled").map(p => p.value)))];
+}
+async function scanCrop(img, region, origin, signal) {
+  const [, , width, height] = region;
+  const scale = Math.min(1, 1440 / Math.max(width, height));
   const canvas = document.createElement("canvas");
-  canvas.width = Math.max(1, Math.round(img.naturalWidth * scale));
-  canvas.height = Math.max(1, Math.round(img.naturalHeight * scale));
-  canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
+  canvas.width = Math.max(1, Math.round(width * scale));
+  canvas.height = Math.max(1, Math.round(height * scale));
+  canvas.getContext("2d").drawImage(img, ...region, 0, 0, canvas.width, canvas.height);
   const body = await new Promise(resolve => canvas.toBlob(resolve, "image/jpeg", 0.78));
   if (!body) throw new Error("Photo unavailable");
   const response = await fetch(origin + "/scan", {method: "POST", body, signal, credentials: "omit", referrerPolicy: "no-referrer"});
