@@ -50,6 +50,12 @@ try {
   const old = JSON.parse(localStorage.getItem(key));
   if (old && old.pantry && old.plan && old.checked) state = old;
 } catch {}
+// Older pantries mix sample quantities with the user's entries.
+state.confirmedFoods ??= Object.keys(state.pantry).filter(n => state.pantry[n] !== starter[n]);
+function setPantryAmounts(items) {
+  Object.assign(state.pantry, items);
+  state.confirmedFoods = [...new Set([...state.confirmedFoods, ...Object.keys(items)])];
+}
 function save() {
   try {
     localStorage.setItem(key, JSON.stringify(state));
@@ -64,8 +70,8 @@ function toast(msg) {
   timer = setTimeout(() => ($("#notice").textContent = ""), 2600);
 }
 const amount = (n, q) => q == null ? "" : Number(q.toFixed(2)) + " " + (foods[n] || "each");
-const missing = (d) =>
-  Object.entries(d.needs).filter(([n, q]) => (state.pantry[n] || 0) < q);
+const missing = (d, pantry = state.pantry) =>
+  Object.entries(d.needs).filter(([n, q]) => (pantry[n] || 0) + 1e-9 < q);
 const stock = (d) =>
   missing(d).length ? missing(d).length + " to buy" : "Ready to cook";
 const meta = (d) =>
@@ -138,11 +144,19 @@ function detail(i, plannedDay = "") {
       "</div>",
   );
 }
+function readyRecipesMenu() {
+  const confirmed = Object.fromEntries(state.confirmedFoods.map(n => [n, state.pantry[n]]));
+  const ready = featuredRecipes().filter(({ d }) => !missing(d, confirmed).length);
+  return '<details class="pantry-ready"><summary>Recipes you can make (' + ready.length + ')</summary>' +
+    (ready.length ? '<p>Enough in your pantry for two servings.</p>' + ready.map(({ d, i }) =>
+      btn(esc(d.name), "recipe:" + i, "light")).join("") :
+      '<p>No complete recipe yet. Scan or enter more ingredients and their quantities.</p>') + '</details>';
+}
 function pantry() {
   main.innerHTML =
     '<div class="pagehead"><div><h1>My pantry</h1></div>' +
     btn(icon("plus") + " Add ingredient", "add", "primary") +
-    '</div><div class="list">' +
+    '</div>' + readyRecipesMenu() + '<div class="list">' +
     (Object.keys(state.pantry)
       .sort()
       .map(
@@ -188,7 +202,7 @@ function foodForm(n = "") {
       ["__proto__", "constructor", "prototype"].includes(name.toLowerCase())
     )
       return;
-    state.pantry[name] = Number($("#qty").value);
+    setPantryAmounts({ [name]: Number($("#qty").value) });
     save();
     modal.close();
     render();
