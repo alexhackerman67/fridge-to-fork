@@ -26,15 +26,7 @@ const actions = {
     render();
     toast("Ingredients used · pantry updated");
   },
-  filter: (f) => {
-    filter = f;
-    recipes();
-  },
-  reset: () => {
-    query = "";
-    filter = "All recipes";
-    recipes();
-  },
+  preferences: preferencesForm,
   prev: () => {
     weekShift--;
     planner();
@@ -43,20 +35,7 @@ const actions = {
     weekShift++;
     planner();
   },
-  choose: (k) =>
-    pop(
-      "Choose dinner",
-      dishes
-        .map(
-          (d, i) =>
-            '<div class="line"><span>' +
-            d.name +
-            "</span>" +
-            ib("Plan " + d.name, "assign:" + k + "," + i, "plus") +
-            "</div>",
-        )
-        .join(""),
-    ),
+  choose: chooseDinner,
   assign: (s) => {
     const [k, i] = s.split(",");
     setMeal(k, Number(i));
@@ -91,3 +70,10 @@ document.addEventListener("change", (e) => {
 });
 document.querySelector("#scan").onclick = scan;
 render();
+
+window.addEventListener("DOMContentLoaded", () => {
+  if (!state.preferences) {
+    if (modal.open) modal.addEventListener("close", preferencesForm, { once: true });
+    else preferencesForm();
+  }
+});
