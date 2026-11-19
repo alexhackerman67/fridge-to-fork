@@ -66,6 +66,8 @@ const actions = {
     save();
     planner();
   },
+  cloudCamera: () => pickPhoto(true, true),
+  cloudUpload: () => pickPhoto(false, true),
   camera: () => pickPhoto(true),
   upload: () => pickPhoto(false),
   sample: demoScan,

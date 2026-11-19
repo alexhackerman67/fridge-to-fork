@@ -684,3 +684,7 @@ label.field select,
   #notice { bottom: calc(70px + env(safe-area-inset-bottom)); }
   .circle { min-width: 44px; min-height: 44px; }
 }
+
+.recipe-summary { padding: 1rem 1rem 0; }
+.recipe-summary p { margin: 0 0 .8rem; line-height: 1.45; }
+.scanrow .ingredient-name { min-width: 0; flex: 1; width: 45%; }
