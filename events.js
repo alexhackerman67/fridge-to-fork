@@ -10,6 +10,7 @@ const actions = {
     render();
   },
   recipe: (i) => detail(Number(i)),
+  pantryRecipe: (i) => detail(Number(i), "", confirmedPantry()),
   schedule: (i) => schedule(Number(i)),
   planned: (k) => detail(state.plan[k], k),
   cook: (args) => {

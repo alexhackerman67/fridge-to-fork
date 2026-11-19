@@ -291,8 +291,17 @@ function review(message) {
     setPantryAmounts(items);
     save();
     modal.close();
-    location.hash = "pantry";
-    render();
+    const showMatches = () => {
+      const menu = $(".pantry-ready");
+      if (menu) menu.open = true;
+    };
+    if (route() === "pantry") {
+      render();
+      showMatches();
+    } else {
+      window.addEventListener("hashchange", showMatches, { once: true });
+      location.hash = "pantry";
+    }
     toast("Pantry updated");
   };
 }

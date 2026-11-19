@@ -747,3 +747,6 @@ label.field select,
 .pantry-ready summary { padding: .9rem 0; cursor: pointer; font-weight: 700; }
 .pantry-ready p { margin: 0 0 .8rem; }
 .pantry-ready button { margin: 0 .4rem .7rem 0; }
+.swap { margin: 1rem 0; }
+.swap summary { cursor: pointer; font-weight: 700; }
+.swap form { padding-top: .65rem; }

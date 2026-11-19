@@ -1,10 +1,10 @@
 const prefix = 'fridge-to-fork:' + self.registration.scope + ':';
-const cacheName = prefix + 'pantry-ready-v15';
+const cacheName = prefix + 'ingredient-swaps-v16';
 const files = [
   './', 'index.html', 'style.css', 'app.js', 'recipes.js', 'scanner.js',
   'assets/napkin-maskable-512.png', 'cloud-scan.js', 'events.js', 'discovery.js', 'install.js', 'app.webmanifest',
   ...[180, 192, 512].map(size => 'assets/napkin-boy-' + size + '.png'),
-  'photos.js', 'dietary.js',
+  'substitutions.js', 'photos.js', 'dietary.js',
   'assets/sample.jpg', 'assets/scanner/tf.js', 'assets/scanner/mobilenet.js',
   'assets/scanner/model.json',
   ...[1, 2, 3, 4].map(i => 'assets/scanner/group1-shard' + i + 'of4.bin')
