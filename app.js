@@ -111,7 +111,7 @@ window.addEventListener("hashchange", () => {
   window.scrollTo(0, 0);
 });
 $("#scan").innerHTML = icon("scan") + "Scan pantry";
-function detail(i, plannedDay = "") {
+function detail(i, plannedDay = "", inventory = state.pantry) {
   const d = dishes[i];
   pop(
     d.name,
@@ -126,31 +126,51 @@ function detail(i, plannedDay = "") {
             n +
             "</span><span>" +
             amount(n, q) +
-            ((state.pantry[n] || 0) < q
+            ((inventory[n] || 0) < q
               ? '<br><small class="missing">Need ' +
-                amount(n, q - (state.pantry[n] || 0)) +
+                amount(n, q - (inventory[n] || 0)) +
                 "</small>"
               : "") +
             "</span></div>",
         )
         .join("") +
-      '</div>' + (d.swaps ? '<p class="hint">' + esc(d.swaps) + '</p>' : '') + '<h4>Method</h4><ol>' +
+      '</div>' + swapForm(d) + (d.swaps ? '<p class="hint">' + esc(d.swaps) + '</p>' : '') + '<h4>Method</h4><ol>' +
       d.steps.map((s) => "<li>" + s + "</li>").join("") +
       '</ol><div class="actions">' +
       btn("Add to planner", "schedule:" + i, "primary") +
-      (!missing(d).length
+      (!missing(d, inventory).length
         ? btn("Cook now", "cook:" + i + (plannedDay ? "," + plannedDay : ""))
         : "") +
       "</div>",
   );
 }
+function confirmedPantry() {
+  return Object.fromEntries(state.confirmedFoods.map(n => [n, state.pantry[n]]));
+}
 function readyRecipesMenu() {
-  const confirmed = Object.fromEntries(state.confirmedFoods.map(n => [n, state.pantry[n]]));
-  const ready = featuredRecipes().filter(({ d }) => !missing(d, confirmed).length);
-  return '<details class="pantry-ready"><summary>Recipes you can make (' + ready.length + ')</summary>' +
-    (ready.length ? '<p>Enough in your pantry for two servings.</p>' + ready.map(({ d, i }) =>
-      btn(esc(d.name), "recipe:" + i, "light")).join("") :
-      '<p>No complete recipe yet. Scan or enter more ingredients and their quantities.</p>') + '</details>';
+  const inventory = confirmedPantry();
+  const matches = featuredRecipes().map(({ d, i }) => {
+    const gaps = missing(d, inventory).map(([name, needed]) => {
+      const short = needed - (inventory[name] || 0);
+      return { name, short, fraction: short / needed };
+    });
+    return { d, i, gaps, distance: gaps.reduce((sum, gap) => sum + gap.fraction, 0) };
+  });
+  const ready = matches.filter(match => !match.gaps.length);
+  const link = ({ d, i }) => btn(esc(d.name), "pantryRecipe:" + i, "light");
+  let body;
+  if (ready.length) {
+    body = '<p>Enough in your pantry for two servings.</p>' + ready.map(link).join("");
+  } else {
+    const closest = matches.filter(({ d }) => Object.keys(d.needs).some(n => inventory[n] > 0))
+      .sort((a, b) => a.gaps.length - b.gaps.length || a.distance - b.distance)[0];
+    body = closest ? '<p>Closest recipe for two</p>' + link(closest) +
+      '<p>Still needed</p><ul>' + closest.gaps.map(({ name, short }) =>
+        '<li>' + esc(name) + ' · ' + esc(amount(name, short)) + '</li>').join("") + '</ul>' :
+      '<p>No matching recipe yet. Scan or enter more ingredients and their quantities.</p>';
+  }
+  return '<details class="pantry-ready"><summary>Recipes you can make (' + ready.length +
+    ')</summary>' + body + '</details>';
 }
 function pantry() {
   main.innerHTML =
