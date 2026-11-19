@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
 async function cloudIngredients(img, origin, signal) {
   const w = img.naturalWidth, h = img.naturalHeight;
   const full = await scanCrop(img, [0, 0, w, h], origin, signal);
-  if (full.length >= 6 || Math.max(w, h) < 600) return full;
+  if (Math.max(w, h) < 600) return full;
   const crops = w >= h
     ? [[0, 0, w * .56, h], [w * .44, 0, w * .56, h]]
     : [[0, 0, w, h * .56], [0, h * .44, w, h * .56]];
@@ -55,8 +55,8 @@ async function scanCrop(img, region, origin, signal) {
   for (const item of ingredients) {
     if (typeof item !== "string") continue;
     const name = item.trim().toLowerCase();
-    if (!/^[a-z][a-z '-]{0,59}$/.test(name) || name in Object.prototype || name === "prototype") continue;
-    found.add(canonical(aliases[name] || name[0].toUpperCase() + name.slice(1)));
+    const ingredient = canonical(Object.hasOwn(aliases, name) ? aliases[name] : name.charAt(0).toUpperCase() + name.slice(1));
+    if (ingredient && !Object.hasOwn(Object.prototype, name)) found.add(ingredient);
   }
   return [...found];
 }

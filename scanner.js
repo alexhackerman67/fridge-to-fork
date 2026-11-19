@@ -123,18 +123,19 @@ function scan() {
     '<div class="scanbox">' +
       icon("scan") +
       '<h3 style="font-size:26px;margin:8px">Fridge or pantry photo</h3><p class="hint">Include the front of packets and tins so their labels are visible.</p>' +
-      (connectedScanner() ? '<p><label><input type="checkbox" id="useCloud"> Use cloud AI for packaged foods and produce (sends this photo to Cloudflare)</label></p>' : "") +
-      '<div class="actions" style="justify-content:center">' +
-      btn("Take photo", "camera", "primary") +
-      btn("Upload photo", "upload") +
-      '</div></div><div class="actions">' +
+      '<p>Cloud AI can identify foods by appearance or label. Choosing a cloud scan sends the photo to Cloudflare.</p><div class="actions" style="justify-content:center">' +
+      btn("Take cloud photo", "cloudCamera", "primary") +
+      btn("Upload to cloud AI", "cloudUpload", "primary") +
+      '</div><details><summary>Scan on this device only</summary><div class="actions">' +
+      btn("Take photo", "camera") + btn("Upload photo", "upload") +
+      '</div></details></div><div class="actions">' +
       btn("Try sample scan", "sample", "quiet") +
       btn("Enter manually", "add", "quiet") +
       "</div>",
   );
 }
-function pickPhoto(camera) {
-  const origin = $("#useCloud")?.checked ? connectedScanner() : "";
+function pickPhoto(camera, cloud = false) {
+  const origin = cloud ? connectedScanner() || "https://fridge-to-fork.axiang28.workers.dev" : "";
   const file = document.createElement("input");
   file.type = "file";
   file.accept = "image/*";
@@ -212,15 +213,14 @@ async function startRecognition(url, origin = "") {
   }
 }
 function review(message) {
-  const options = [...new Set([...Object.keys(foods), ...suggestions.map(s => s.n)])]
+  const options = [...new Set([...Object.keys(foods), ...Object.keys(state.pantry), ...suggestions.map(s => s.n)])]
     .sort()
     .map((n) => "<option>" + esc(n) + "</option>")
     .join("");
   function row(s) {
     return (
-      '<div class="line scanrow"><select aria-label="Ingredient">' +
-      options +
-      '</select><input type="number" aria-label="Current total quantity" placeholder="Amount" required min=".01" max="100000" step=".01" value="' +
+      '<div class="line scanrow"><input class="ingredient-name" aria-label="Ingredient" placeholder="Ingredient" required maxlength="100" list="scanNames" value="' + esc(s.n) +
+      '"><input type="number" aria-label="Current total quantity" placeholder="Amount" required min=".01" max="100000" step=".01" value="' +
       s.q +
       '"><small></small>' +
       ib("Remove suggestion", "drop", "close") +
@@ -233,7 +233,7 @@ function review(message) {
       imageUrl +
       '"><p class="hint">' +
       message +
-      ' Saving sets the current totals.</p><form id="reviewForm"><div id="rows"></div><div class="actions">' +
+      ' Saving sets the current totals.</p><form id="reviewForm"><datalist id="scanNames">' + options + '</datalist><div id="rows"></div><div class="actions">' +
       btn("Add item", "addrow") +
       btn("Read packet labels", "labels") +
       '<span role="status" id="labelStatus"></span>' +
@@ -242,12 +242,12 @@ function review(message) {
   function append(s) {
     $("#rows").insertAdjacentHTML("beforeend", row(s));
     const el = $("#rows").lastElementChild;
-    el.querySelector("select").value = s.n;
+    const nameInput = el.querySelector(".ingredient-name");
     function unit() {
       el.querySelector("small").textContent =
-        foods[el.querySelector("select").value] || "each";
+        foods[canonical(nameInput.value)] || "each";
     }
-    el.querySelector("select").onchange = unit;
+    nameInput.oninput = unit;
     unit();
     $("#confirmScan").disabled = false;
   }
@@ -257,7 +257,7 @@ function review(message) {
     const b = e.target.closest("[data-do]");
     if (!b) return;
     if (b.dataset.do === "labels") readPacketLabels(b, append);
-    if (b.dataset.do === "addrow") append({ n: "Egg", q: 1 });
+    if (b.dataset.do === "addrow") append({ n: "", q: 1 });
     if (b.dataset.do === "drop") {
       b.closest(".line").remove();
       $("#confirmScan").disabled = !$("#rows").children.length;
@@ -267,12 +267,13 @@ function review(message) {
     e.preventDefault();
     let items = {};
     for (const el of $("#rows").children) {
-      const n = el.querySelector("select").value;
+      const n = canonical(el.querySelector(".ingredient-name").value);
+      if (!n) { toast("Enter an ingredient name."); return; }
       if (n in items) {
         toast("Combine duplicate ingredients into one total.");
         return;
       }
-      items[n] = +el.querySelector("input").value;
+      items[n] = +el.querySelector('input[type="number"]').value;
     }
     Object.assign(state.pantry, items);
     save();
@@ -331,7 +332,7 @@ async function readPacketLabels(button, append) {
     await worker.setParameters({ tessedit_pageseg_mode: "11" });
     const { data } = await worker.recognize(imageUrl);
     if (stopped || token !== scanToken) return;
-    const existing = new Set([...$("#rows").querySelectorAll("select")].map(el => el.value));
+    const existing = new Set([...$("#rows").querySelectorAll(".ingredient-name")].map(el => canonical(el.value)));
     const added = ingredientsOnLabels(data.text).filter(n => !existing.has(n));
     added.forEach(n => append({ n, q: state.pantry[n] ?? "" }));
     status.textContent = added.length ? "Added " + added.length + " suggestions from labels." : "No additional labels matched.";

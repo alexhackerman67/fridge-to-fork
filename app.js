@@ -72,7 +72,7 @@ const stock = (d) =>
   missing(d).length ? missing(d).length + " to buy" : "Ready to cook";
 const pic = (id) => "assets/meal-" + id + ".jpg";
 const meta = (d) =>
-  '<div class="meta">' + icon("clock") + d.time + " min · " + d.gear + "</div>";
+  '<div class="meta">' + icon("clock") + d.time + " min" + (d.gear ? " · " + d.gear : "") + "</div>";
 function pop(title, body) {
   inside.innerHTML =
     '<div class="modalhead"><h2>' +
@@ -154,9 +154,7 @@ function cards() {
         ({ d, i }) =>
           '<button class="card" data-do="recipe:' +
           i +
-          '"><div class="pic"><img loading="lazy" src="' +
-          pic(i) +
-          '" alt=""><span class="pill">' +
+          '">' + (i < 6 ? '<div class="pic"><img loading="lazy" src="' + pic(i) + '" alt="">' : '<div class="recipe-summary"><p>' + esc(d.note) + '</p>') + '<span class="pill">' +
           stock(d) +
           "</span></div><h3>" +
           d.name +
@@ -173,9 +171,7 @@ function detail(i, plannedDay = "") {
   const d = dishes[i];
   pop(
     d.name,
-    '<img class="modalphoto" src="' +
-      pic(i) +
-      '" alt="">' +
+    (i < 6 ? '<img class="modalphoto" src="' + pic(i) + '" alt="">' : '') +
       meta(d) +
       "<p>" +
       d.note +
@@ -195,9 +191,7 @@ function detail(i, plannedDay = "") {
             "</span></div>",
         )
         .join("") +
-      '</div><p class="hint">' +
-      d.swaps +
-      "</p><h4>Method</h4><ol>" +
+      '</div>' + (d.swaps ? '<p class="hint">' + esc(d.swaps) + '</p>' : '') + '<h4>Method</h4><ol>' +
       d.steps.map((s) => "<li>" + s + "</li>").join("") +
       '</ol><div class="actions">' +
       btn("Add to planner", "schedule:" + i, "primary") +
@@ -230,7 +224,7 @@ function pantry() {
 function foodForm(n = "") {
   pop(
     n ? "Edit ingredient" : "Add ingredient",
-    '<form id="foodForm"><label class="field">Ingredient<input required maxlength="60" list="foodNames" id="food" ' +
+    '<form id="foodForm"><label class="field">Ingredient<input required maxlength="100" list="foodNames" id="food" ' +
       (n ? "readonly" : "") +
       ' value="' +
       esc(n) +
@@ -263,11 +257,16 @@ function foodForm(n = "") {
     render();
   };
 }
+function ingredientKey(s) {
+  return s.toLowerCase().replace(/[’‘]/g, "'").replace(/[‐‑–]/g, "-");
+}
 function canonical(s) {
-  s = s.trim();
+  s = s.normalize("NFC").trim().replace(/\s+/g, " ");
+  if (!s || s.length > 100 || /[<>\p{Cc}]/u.test(s) || !/\p{L}/u.test(s) ||
+      s.toLowerCase() === "prototype" || Object.hasOwn(Object.prototype, s)) return "";
   return (
     [...Object.keys(foods), ...Object.keys(state.pantry)].find(
-      (k) => k.toLowerCase() === s.toLowerCase(),
+      (k) => ingredientKey(k) === ingredientKey(s),
     ) || s
   );
 }
