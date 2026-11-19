@@ -1,5 +1,5 @@
 const prefix = 'fridge-to-fork:' + self.registration.scope + ':';
-const cacheName = prefix + 'preferences-v14';
+const cacheName = prefix + 'pantry-ready-v15';
 const files = [
   './', 'index.html', 'style.css', 'app.js', 'recipes.js', 'scanner.js',
   'assets/napkin-maskable-512.png', 'cloud-scan.js', 'events.js', 'discovery.js', 'install.js', 'app.webmanifest',

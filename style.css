@@ -742,3 +742,8 @@ label.field select,
 .edit-preferences { min-height: 48px; margin-bottom: 1rem; font-size: 1rem; }
 .edit-preferences:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
 @media (max-width: 600px) { .edit-preferences { width: 100%; } }
+
+.pantry-ready { margin: .8rem 0 1.25rem; padding: 0 1rem; border: 1px solid var(--line); border-radius: 12px; background: var(--sage); }
+.pantry-ready summary { padding: .9rem 0; cursor: pointer; font-weight: 700; }
+.pantry-ready p { margin: 0 0 .8rem; }
+.pantry-ready button { margin: 0 .4rem .7rem 0; }

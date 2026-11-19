@@ -288,7 +288,7 @@ function review(message) {
       if (!value || !el.querySelector('input[type="number"]').reportValidity()) return;
       items[n] = Number(value);
     }
-    Object.assign(state.pantry, items);
+    setPantryAmounts(items);
     save();
     modal.close();
     location.hash = "pantry";
