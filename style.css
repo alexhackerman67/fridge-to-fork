@@ -707,3 +707,19 @@ label.field select,
 .web-search > div { display: flex; gap: .5rem; }
 .web-search input[type=search] { padding: .8rem; flex: 1; min-width: 0; border-radius: 10px; border: 1px solid #acb7ac; font: inherit; }
 @media (max-width: 500px) { .featured-pair { grid-template-columns: 1fr; } }
+#localMatches { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: .6rem; }
+#localMatches:not(:empty) { margin: .6rem 0 1.6rem; }
+#resultCount { margin: .45rem 0; }
+#cookbookSearch { margin-top: .4rem; }
+.discovery-head { margin-top: 1.5rem; }
+.bite-intro { position: fixed; inset: 0; margin: 0; border: 0; padding: 0; width: 100%; height: 100%; max-width: none; max-height: none; background: #fcf6e7; pointer-events: none; z-index: 1000; color: #213b26; animation: bite-fade 1.45s both; }
+.bite-intro:popover-open { display: grid; place-content: center; justify-items: center; }
+.bite-intro strong { font: 600 1.8rem Georgia, serif; }
+.bite-boy { position: relative; width: 192px; height: 192px; background-color: #fcf6e7; }
+.bite-face, .bite-fork { position: absolute; inset: 0; background: url("assets/fork-mascot-192.png") center/contain no-repeat; }
+.bite-face { clip-path: polygon(evenodd, 0 0,100% 0,100% 100%,0 100%,0 0, 13% 68%,14% 61%,24% 54%,35% 54%,40% 49%,45% 50%,48% 54%,44% 65%,33% 68%,24% 76%,15% 78%,13% 68%,0 0); animation: bite-nod 1.25s both; }
+.bite-fork { clip-path: polygon(13% 68%,14% 61%,24% 54%,35% 54%,40% 49%,45% 50%,48% 54%,44% 65%,33% 68%,24% 76%,15% 78%); transform-origin: 18% 76%; animation: fork-bite 1.25s both; }
+@keyframes fork-bite { 0%,100% { transform: none; } 20% { transform: translate(-2px,3px) rotate(3deg); } 48%,60% { transform: translate(6px,-2px) rotate(-8deg); } }
+@keyframes bite-nod { 0%,35%,100% { transform: none; } 52% { transform: translate(-1px,2px) rotate(-1.5deg); } 75% { transform: translateY(1px); } }
+@keyframes bite-fade { 0%,82% { opacity: 1; } 100% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .bite-intro { display: none !important; } }

@@ -1,5 +1,5 @@
 const prefix = 'fridge-to-fork:' + self.registration.scope + ':';
-const cacheName = prefix + 'discovery-v10';
+const cacheName = prefix + 'cookbook-v11';
 const files = [
   './', 'index.html', 'style.css', 'app.js', 'recipes.js', 'scanner.js',
   'assets/fork-maskable-512.png', 'cloud-scan.js', 'events.js', 'discovery.js', 'install.js', 'app.webmanifest',
