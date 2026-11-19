@@ -147,6 +147,10 @@ window.addEventListener("hashchange", () => {
 $("#scan").innerHTML = icon("scan") + "Scan pantry";
 function detail(i, plannedDay = "", inventory = state.pantry) {
   const d = dishes[i];
+  const match = pantryMatch(d, confirmedPantry());
+  const useSwaps = match.swaps.length && (inventory !== state.pantry || missing(d, inventory).length);
+  const shortfalls = Object.fromEntries((useSwaps ? match.gaps.map(g => [g.name, g.short]) :
+    missing(d, inventory).map(([n,q]) => [n, q - (inventory[n] || 0)])));
   pop(
     d.name,
     meta(d) + (fitsPreferences(d, state.preferences || {}) ? "" : '<p class="hint">This planned recipe falls outside your current dietary preferences.</p>') +
@@ -160,20 +164,21 @@ function detail(i, plannedDay = "", inventory = state.pantry) {
             n +
             "</span><span>" +
             amount(n, q) +
-            ((inventory[n] || 0) < q
+            (shortfalls[n]
               ? '<br><small class="missing">Need ' +
-                amount(n, q - (inventory[n] || 0)) +
+                amount(n, shortfalls[n]) +
                 "</small>"
               : "") +
             "</span></div>",
         )
         .join("") +
-      '</div>' + (inventory !== state.pantry && pantryMatch(d, inventory).swaps.length ?
-        '<h4>Possible pantry swaps</h4><ul>' + swapList(pantryMatch(d, inventory).swaps) + '</ul>' : '') + swapForm(d) + (d.swaps ? '<p class="hint">' + esc(d.swaps) + '</p>' : '') + '<h4>Method</h4><ol>' +
+      '</div>' + (useSwaps ?
+        '<h4>Possible pantry swaps</h4><ul>' + swapList(match.swaps) + '</ul>' : '') + swapForm(d) + (d.swaps ? '<p class="hint">' + esc(d.swaps) + '</p>' : '') + '<h4>Method</h4><ol>' +
       methodFor(d).map((s) => "<li>" + s + "</li>").join("") +
       '</ol><div class="actions">' +
       btn("Add to planner", "schedule:" + i, "primary") +
-      (!missing(d, inventory).length
+      (useSwaps && !match.gaps.length ? btn("Cook with these swaps", "cook:" + i + "," + plannedDay + ",swaps") :
+       !missing(d, inventory).length
         ? btn("Cook now", "cook:" + i + (plannedDay ? "," + plannedDay : ""))
         : "") +
       "</div>",
@@ -184,17 +189,18 @@ function confirmedPantry() {
 }
 // Use like-for-like units and keep culinary alternatives separate from exact matches.
 const pantrySwaps = {
-  "Noodles": ["Rice noodles", "Soba noodles"], "Soy sauce": ["Light soy sauce"],
+  "Rice noodles": ["Rice vermicelli"],
+  "Noodles": ["Rice noodles", "Rice vermicelli", "Soba noodles"], "Soy sauce": ["Light soy sauce"],
   "Lime": ["Lemon"], "Lemon": ["Lime"], "Spaghetti": ["Pasta"], "Pasta": ["Spaghetti"]
 };
 function pantryMatch(d, inventory) {
-  const available = { ...inventory }, gaps = [], swaps = [];
+  const available = { ...inventory }, gaps = [], swaps = [], usedAmounts = {};
   let overlap = false;
   // Allocate exact ingredients first so a substitute cannot be spent twice.
   for (const [name, needed] of ingredientsFor(d)) {
     const used = Math.min(available[name] || 0, needed);
     available[name] = (available[name] || 0) - used;
-    if (used > 0) overlap = true;
+    if (used > 0) { overlap = true; usedAmounts[name] = used; }
     if (needed > used) gaps.push({ name, needed, short: needed - used });
   }
   for (const gap of gaps) {
@@ -204,16 +210,27 @@ function pantryMatch(d, inventory) {
       const used = Math.min(available[alt], gap.short);
       swaps.push({ name: gap.name, alt, used });
       available[alt] -= used;
+      usedAmounts[alt] = (usedAmounts[alt] || 0) + used;
       gap.short -= used;
       overlap = true;
       if (!gap.short) break;
     }
   }
-  return { overlap, swaps, gaps: gaps.filter(gap => gap.short > 0) };
+  return { overlap, swaps, usedAmounts, gaps: gaps.filter(gap => gap.short > 0) };
+}
+function swapTip(alt) {
+  switch (alt) {
+    case "Rice vermicelli": return "Prepare the thin strands separately using the vermicelli packet’s soaking or cooking time. Drain as soon as tender and toss gently with the other ingredients at the end.";
+    case "Rice noodles": case "Soba noodles": case "Pasta": case "Spaghetti":
+      return "Follow the replacement pasta or noodle packet’s cooking time, then drain before combining.";
+    case "Lemon": case "Lime": return "Add the juice gradually and taste before adding more.";
+    case "Light soy sauce": return "Add a little at a time and taste as you season.";
+    default: return "";
+  }
 }
 function swapList(swaps) {
   return swaps.map(({ name, alt, used }) => '<li>Use ' + esc(amount(alt, used)) + ' ' + esc(alt.toLowerCase()) +
-    ' in place of ' + esc(name.toLowerCase()) + '.</li>').join("");
+    ' in place of ' + esc(name.toLowerCase()) + '. ' + swapTip(alt) + '</li>').join("");
 }
 function readyRecipesMenu() {
   const inventory = confirmedPantry();
@@ -224,8 +241,11 @@ function readyRecipesMenu() {
   close.sort((a,b) => a.gaps.length - b.gaps.length || distance(a) - distance(b) || a.swaps.length - b.swaps.length);
   const link = m => btn(esc(m.d.name), "pantryRecipe:" + m.i, "light");
   let body = ready.length ? '<p>Enough for ' + servingLabel() + '.</p>' + ready.map(link).join("") : "";
-  if (close.length) body += '<h4>Closest recipes for ' + servingLabel() + '</h4>' + close.slice(0,3).map(m =>
-    link(m) + '<ul>' + swapList(m.swaps) + m.gaps.map(g => '<li>Still needed: ' + esc(g.name) + ' · ' +
+  const picks = close.slice(0, 3);
+  const bestSwap = close.find(m => m.swaps.length);
+  if (bestSwap && !picks.some(m => m.swaps.length)) picks[picks.length - 1] = bestSwap;
+  if (close.length) body += '<h4>Closest recipes for ' + servingLabel() + '</h4>' + picks.map(m =>
+    link(m) + (!m.gaps.length ? '<p>Ready with a swap</p>' : '') + '<ul>' + swapList(m.swaps) + m.gaps.map(g => '<li>Still needed: ' + esc(g.name) + ' · ' +
       esc(amount(g.name, g.short)) + '</li>').join("") + '</ul>').join("");
   return '<details class="pantry-ready"><summary>Recipes you can make (' + ready.length + ')</summary>' +
     (body || '<p>No matching recipe yet. Scan or enter more ingredients and their quantities.</p>') + '</details>';
@@ -292,7 +312,9 @@ function ingredientKey(s) {
 function pantryProduct(s) {
   const words = ingredientKey(s).replace(/[^\p{L}\p{N}]+/gu, " ").trim();
   if (/\brice\b/.test(words) && /\b(?:vermicelli|noodles?)\b/.test(words) &&
-      !/\b(?:soup|kit|meal|cooked|instant|sauce)\b/.test(words)) return "Rice noodles";
+      !/\b(?:soup|kit|meal|cooked|instant|sauce)\b/.test(words)) {
+    return words.includes("vermicelli") ? "Rice vermicelli" : "Rice noodles";
+  }
   if (/\b(?:kecap|ketjap) manis\b/.test(words)) return "Sweet soy sauce";
   if (/\bsoy(?:a)? sauce$/.test(words)) {
     for (const type of ["sweet", "dark", "light"]) {

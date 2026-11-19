@@ -107,6 +107,7 @@ const foods = {
   "Gochujang": "g",
   "Harissa": "g",
   "Rice noodles": "g",
+  "Rice vermicelli": "g",
   "Ricotta": "g",
   "Thyme": "g",
   "Cocoa powder": "g",
