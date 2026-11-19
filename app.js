@@ -65,7 +65,7 @@ function toast(msg) {
   clearTimeout(timer);
   timer = setTimeout(() => ($("#notice").textContent = ""), 2600);
 }
-const amount = (n, q) => Number(q.toFixed(2)) + " " + (foods[n] || "each");
+const amount = (n, q) => q == null ? "" : Number(q.toFixed(2)) + " " + (foods[n] || "each");
 const missing = (d) =>
   Object.entries(d.needs).filter(([n, q]) => (state.pantry[n] || 0) < q);
 const stock = (d) =>
@@ -233,7 +233,7 @@ function foodForm(n = "") {
         .map((k) => '<option value="' + k + '">')
         .join("") +
       '</datalist><label class="field">Quantity <span id="unit"></span><input required type="number" min="0.01" max="100000" step="0.01" id="qty" value="' +
-      (n ? state.pantry[n] : 1) +
+      (n ? state.pantry[n] ?? "" : 1) +
       '"></label><div class="actions"><button class="primary">Save ingredient</button>' +
       (n ? btn("Remove", "delete:" + n) : "") +
       "</div></form>",

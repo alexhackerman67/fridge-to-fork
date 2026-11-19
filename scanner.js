@@ -101,7 +101,7 @@ async function recognise(img, token) {
       if (prediction.probability >= 0.65 || (count >= 2 && name !== "Bread")) found.add(name);
     }
     if (token !== scanToken) return [];
-    suggestions = [...found].map(n => ({ n, q: state.pantry[n] ?? "" }));
+    suggestions = [...found].map(n => ({ n, q: "" }));
     inside.querySelector('[role="status"]').textContent =
       "Checking shelf regions " + (index + 1) + " of " + regions.length + " · " + found.size + " ingredients found";
     await tf.nextFrame();
@@ -172,24 +172,24 @@ async function startRecognition(url, origin = "") {
       cloudRequest = controller;
       const deadline = setTimeout(() => controller.abort(), 95000);
       try {
-        const result = await cloudIngredients(img, origin, controller.signal, (names, done, total) => {
+        const result = await cloudIngredients(img, origin, controller.signal, (rows, done, total) => {
           if (token !== scanToken) return;
-          suggestions = names.map(n => ({ n, q: state.pantry[n] ?? "" }));
+          suggestions = rows;
           inside.querySelector('[role="status"]').textContent =
-            "Checked " + done + " of " + total + " views · " + names.length + " ingredients found";
+            "Checked " + done + " of " + total + " views · " + rows.length + " ingredients found";
         });
         if (token !== scanToken) return;
         const summary = result.failed === result.total ? "Cloud AI could not check this photo." :
-          "Cloud AI found " + result.names.length + " ingredients across " +
+          "Cloud AI found " + result.suggestions.length + " ingredients across " +
           (result.total - result.failed) + " of " + result.total + " views.";
         review(summary);
-        if (result.failed || !result.names.length) {
+        if (result.failed || !result.suggestions.length) {
           const actions = $("#reviewForm .actions");
           actions.insertAdjacentHTML("beforebegin", '<div class="actions"><button type="button" id="retryPhoto">Retry cloud scan</button><button type="button" id="localPhoto">Try on-device scan</button></div>');
           $("#retryPhoto").onclick = () => startRecognition(url, origin);
           $("#localPhoto").onclick = () => startRecognition(url);
         }
-        if (result.names.length) $("#reviewForm [data-do=labels]").click();
+        if (result.suggestions.length) $("#reviewForm [data-do=labels]").click();
         return;
       } finally {
         clearTimeout(deadline);
@@ -203,7 +203,7 @@ async function startRecognition(url, origin = "") {
       ),
     ]);
     if (token !== scanToken) return;
-    suggestions = result.map((n) => ({ n, q: state.pantry[n] ?? "" }));
+    suggestions = result.map((n) => ({ n, q: "" }));
     review(
       "On-device scan. " + (result.length
         ? "Check each ingredient and its current total."
@@ -227,7 +227,7 @@ function review(message) {
   function row(s) {
     return (
       '<div class="line scanrow"><input class="ingredient-name" aria-label="Ingredient" placeholder="Ingredient" required maxlength="100" list="scanNames" value="' + esc(s.n) +
-      '"><input type="number" aria-label="Current total quantity" placeholder="Amount" required min=".01" max="100000" step=".01" value="' +
+      '"><input type="number" aria-label="Current total quantity" placeholder="Amount" min=".01" max="100000" step=".01" value="' +
       s.q +
       '"><small></small>' +
       ib("Remove suggestion", "drop", "close") +
@@ -240,7 +240,7 @@ function review(message) {
       imageUrl +
       '"><p class="hint">' +
       message +
-      ' Saving sets the current totals.</p><form id="reviewForm"><datalist id="scanNames">' + options + '</datalist><div id="rows"></div><div class="actions">' +
+      ' Check the amounts before saving. Blank amounts keep any existing pantry total.</p><form id="reviewForm"><datalist id="scanNames">' + options + '</datalist><div id="rows"></div><div class="actions">' +
       btn("Add item", "addrow") +
       btn("Read packet labels", "labels") +
       '<span role="status" id="labelStatus"></span>' +
@@ -254,7 +254,10 @@ function review(message) {
       el.querySelector("small").textContent =
         foods[canonical(nameInput.value)] || "each";
     }
-    nameInput.oninput = unit;
+    nameInput.oninput = () => {
+      el.querySelector('input[type="number"]').value = "";
+      unit();
+    };
     unit();
     $("#confirmScan").disabled = false;
   }
@@ -264,7 +267,7 @@ function review(message) {
     const b = e.target.closest("[data-do]");
     if (!b) return;
     if (b.dataset.do === "labels") readPacketLabels(b, append);
-    if (b.dataset.do === "addrow") append({ n: "", q: 1 });
+    if (b.dataset.do === "addrow") append({ n: "", q: "" });
     if (b.dataset.do === "drop") {
       b.closest(".line").remove();
       $("#confirmScan").disabled = !$("#rows").children.length;
@@ -280,7 +283,8 @@ function review(message) {
         toast("Combine duplicate ingredients into one total.");
         return;
       }
-      items[n] = +el.querySelector('input[type="number"]').value;
+      const value = el.querySelector('input[type="number"]').value;
+      items[n] = value === "" ? state.pantry[n] ?? null : Number(value);
     }
     Object.assign(state.pantry, items);
     save();
@@ -341,7 +345,7 @@ async function readPacketLabels(button, append) {
     if (stopped || token !== scanToken) return;
     const existing = new Set([...$("#rows").querySelectorAll(".ingredient-name")].map(el => canonical(el.value)));
     const added = ingredientsOnLabels(data.text).filter(n => !existing.has(n));
-    added.forEach(n => append({ n, q: state.pantry[n] ?? "" }));
+    added.forEach(n => append({ n, q: "" }));
     status.textContent = added.length ? "Added " + added.length + " suggestions from labels." : "No additional labels matched.";
   }
   try {
