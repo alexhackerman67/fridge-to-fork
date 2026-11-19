@@ -30,7 +30,7 @@ GitHub instructions: https://docs.github.com/en/pages/getting-started-with-githu
 
 ## Scanner and prototype scope
 
-The bundled TensorFlow.js MobileNet model runs on your device when you scan. The app checks overlapping shelf regions at two sizes for common produce. In review, Read packet labels runs English OCR on the device and suggests matching pantry ingredients. Its first use needs an internet connection to fetch Tesseract.js and English language data. Photo data is discarded when you close the scanner. Recognition can miss hidden food, packaging or unfamiliar items. Review ingredient names and supply weights or counts before saving. Saving updates only the listed ingredients and sets their current totals. Existing pantry amounts are offered for review. If a scan fails, add ingredients manually. Oil, seasoning and water in recipe methods are assumed pantry staples.
+The bundled TensorFlow.js MobileNet model runs on your device when you scan. The app checks overlapping shelf regions at two sizes for common produce. Photo data is discarded when you close the scanner. Recognition can miss hidden food, packaging or unfamiliar items. Review ingredient names and supply weights or counts before saving. Saving updates only the listed ingredients and sets their current totals. Existing pantry amounts are offered for review. If a scan fails, add ingredients manually. Oil, seasoning and water in recipe methods are assumed pantry staples.
 
 The catalogue and date-based dinner planner work without an account, backend, paid API or installation. Data is local to each browser and site address. A real supermarket checkout is outside this prototype.
 
@@ -58,7 +58,7 @@ The app caches its recipes, images and produce scanner on this device. Pantry an
 
 ## Connect the free cloud scanner
 
-The standard scan runs on the device. For uploaded photos it also attempts to read packet labels after the produce pass. You can review and save while it reads.
+The standard scan runs on the device.
 
 1. An adult account holder can [deploy the included scanner to Cloudflare](https://deploy.workers.cloudflare.com/?url=https://github.com/alexhackerman67/fridge-to-fork) on **Workers Free**. Keep the free plan. The repository config supplies the AI binding, so there is no API key to create or paste into GitHub.
 2. Open the deployed Worker's public workers.dev address. Tap **Connect this scanner to Fridge to Fork**, then **Connect scanner**. Repeat on each device that needs cloud scanning.

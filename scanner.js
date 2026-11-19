@@ -240,8 +240,6 @@ function review(message) {
       message +
       ' Confirm an amount for every ingredient you keep.</p><form id="reviewForm"><datalist id="scanNames">' + options + '</datalist><div id="rows"></div><div class="actions">' +
       btn("Add item", "addrow") +
-      btn("View packet text", "labels") +
-      '<span role="status" id="labelStatus"></span>' +
       '<button class="primary" id="confirmScan">Save to pantry</button></div></form>',
   );
   function append(s) {
@@ -249,9 +247,19 @@ function review(message) {
     const el = $("#rows").lastElementChild;
     const nameInput = el.querySelector(".ingredient-name");
     function unit() {
-      el.querySelector("small").textContent =
-        foods[canonical(nameInput.value)] || "each";
+      const name = scanName(nameInput.value);
+      const field = el.querySelector("small");
+      if (Object.hasOwn(foods, name)) {
+        field.textContent = displayUnit(foods[name]);
+      } else {
+        field.innerHTML = '<select aria-label="Quantity unit">' + ["each","g","ml","slices"].map(u =>
+          '<option value="' + u + '"' + (u === pantryUnit(name, name === s.n ? s.unit : undefined) ? ' selected' : '') + '>' + displayUnit(u) + '</option>').join("") + '</select>';
+      }
     }
+    el.querySelector("small").onchange = () => {
+      el.querySelector('input[type="number"]').value = "";
+      el.querySelector(".scan-amount-hint").textContent = "Enter the amount in the selected unit.";
+    };
     nameInput.oninput = () => {
       el.querySelector('input[type="number"]').value = "";
       el.querySelector(".scan-amount-hint").textContent = "Enter the amount manually.";
@@ -265,7 +273,6 @@ function review(message) {
   $("#reviewForm").onclick = (e) => {
     const b = e.target.closest("[data-do]");
     if (!b) return;
-    if (b.dataset.do === "labels") readPacketLabels(b);
     if (b.dataset.do === "addrow") append({ n: "", q: "" });
     if (b.dataset.do === "drop") {
       b.closest(".line").remove();
@@ -275,6 +282,7 @@ function review(message) {
   $("#reviewForm").onsubmit = (e) => {
     e.preventDefault();
     let items = {};
+    const units = {};
     const seen = new Set();
     for (const el of $("#rows").children) {
       const n = scanName(el.querySelector(".ingredient-name").value);
@@ -285,9 +293,12 @@ function review(message) {
       }
       const value = el.querySelector('input[type="number"]').value;
       if (!value || !el.querySelector('input[type="number"]').reportValidity()) return;
+      const selectedUnit = el.querySelector("small select");
+      if (selectedUnit) units[n] = selectedUnit.value;
       seen.add(scanKey(n));
       items[n] = Number(value);
     }
+    Object.assign(state.pantryUnits, units);
     setPantryAmounts(items);
     save();
     modal.close();
@@ -307,40 +318,4 @@ function review(message) {
 }
 function demoScan() {
   startRecognition("assets/sample.jpg");
-}
-
-async function readPacketLabels(button) {
-  const token = scanToken;
-  const status = $("#labelStatus");
-  button.disabled = true;
-  status.textContent = "Loading the on-device label reader…";
-  let worker, stopped = false, timeout;
-  async function read() {
-    await loadScript("https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js");
-    if (stopped || token !== scanToken) return;
-    worker = await Tesseract.createWorker("eng", 1, {
-      workerPath: "https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/worker.min.js",
-      corePath: "https://cdn.jsdelivr.net/npm/tesseract.js-core@5.1.1",
-    });
-    if (stopped || token !== scanToken) { await worker.terminate(); worker = null; return; }
-    status.textContent = "Reading packet labels…";
-    await worker.setParameters({ tessedit_pageseg_mode: "11" });
-    const { data } = await worker.recognize(imageUrl);
-    if (stopped || token !== scanToken) return;
-    const words = data.text.trim();
-    status.textContent = words ? "Packet text: " + words + " — use Add item for a product you can confirm." :
-      "No readable packet text found.";
-  }
-  try {
-    await Promise.race([read(), new Promise((_, reject) => {
-      timeout = setTimeout(() => reject(new Error("timeout")), 60000);
-    })]);
-  } catch {
-    if (token === scanToken) status.textContent = "Label reader unavailable. You can still add items.";
-  } finally {
-    stopped = true;
-    clearTimeout(timeout);
-    if (worker) await worker.terminate();
-    button.disabled = false;
-  }
 }

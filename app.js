@@ -52,6 +52,16 @@ try {
 } catch {}
 // Older pantries mix sample quantities with the user's entries.
 state.confirmedFoods ??= Object.keys(state.pantry).filter(n => state.pantry[n] !== starter[n]);
+state.pantryUnits ??= {};
+// Pantry quantities are current totals. Prefer a confirmed canonical entry over an old alias.
+for (const old of Object.keys(state.pantry)) {
+  const name = pantryProduct(old);
+  if (!name || old === name) continue;
+  if (!Object.hasOwn(state.pantry, name) || !state.confirmedFoods.includes(name)) state.pantry[name] = state.pantry[old];
+  if (state.confirmedFoods.includes(old)) state.confirmedFoods.push(name);
+  delete state.pantry[old];
+}
+state.confirmedFoods = [...new Set(state.confirmedFoods.filter(n => Object.hasOwn(state.pantry, n)))];
 function setPantryAmounts(items) {
   Object.assign(state.pantry, items);
   state.confirmedFoods = [...new Set([...state.confirmedFoods, ...Object.keys(items)])];
@@ -69,7 +79,13 @@ function toast(msg) {
   clearTimeout(timer);
   timer = setTimeout(() => ($("#notice").textContent = ""), 2600);
 }
-const amount = (n, q) => q == null ? "" : Number(q.toFixed(2)) + " " + (foods[n] || "each");
+function pantryUnit(name, suggested = "each") {
+  return foods[name] || state.pantryUnits[name] || suggested;
+}
+function displayUnit(unit) {
+  return unit === "ml" ? "mL" : unit;
+}
+const amount = (n, q) => q == null ? "" : Number(q.toFixed(2)) + " " + displayUnit(pantryUnit(n));
 function servings() {
   const count = state.preferences?.servings;
   return Number.isSafeInteger(count) && count > 0 ? count : 2;
@@ -152,7 +168,8 @@ function detail(i, plannedDay = "", inventory = state.pantry) {
             "</span></div>",
         )
         .join("") +
-      '</div>' + swapForm(d) + (d.swaps ? '<p class="hint">' + esc(d.swaps) + '</p>' : '') + '<h4>Method</h4><ol>' +
+      '</div>' + (inventory !== state.pantry && pantryMatch(d, inventory).swaps.length ?
+        '<h4>Possible pantry swaps</h4><ul>' + swapList(pantryMatch(d, inventory).swaps) + '</ul>' : '') + swapForm(d) + (d.swaps ? '<p class="hint">' + esc(d.swaps) + '</p>' : '') + '<h4>Method</h4><ol>' +
       methodFor(d).map((s) => "<li>" + s + "</li>").join("") +
       '</ol><div class="actions">' +
       btn("Add to planner", "schedule:" + i, "primary") +
@@ -165,30 +182,53 @@ function detail(i, plannedDay = "", inventory = state.pantry) {
 function confirmedPantry() {
   return Object.fromEntries(state.confirmedFoods.map(n => [n, state.pantry[n]]));
 }
+// Use like-for-like units and keep culinary alternatives separate from exact matches.
+const pantrySwaps = {
+  "Noodles": ["Rice noodles", "Soba noodles"], "Soy sauce": ["Light soy sauce"],
+  "Lime": ["Lemon"], "Lemon": ["Lime"], "Spaghetti": ["Pasta"], "Pasta": ["Spaghetti"]
+};
+function pantryMatch(d, inventory) {
+  const available = { ...inventory }, gaps = [], swaps = [];
+  let overlap = false;
+  // Allocate exact ingredients first so a substitute cannot be spent twice.
+  for (const [name, needed] of ingredientsFor(d)) {
+    const used = Math.min(available[name] || 0, needed);
+    available[name] = (available[name] || 0) - used;
+    if (used > 0) overlap = true;
+    if (needed > used) gaps.push({ name, needed, short: needed - used });
+  }
+  for (const gap of gaps) {
+    for (const alt of pantrySwaps[gap.name] || []) {
+      if (!available[alt] || pantryUnit(alt) !== pantryUnit(gap.name) ||
+          !fitsPreferences({ needs: { [alt]: 1 } }, state.preferences || {})) continue;
+      const used = Math.min(available[alt], gap.short);
+      swaps.push({ name: gap.name, alt, used });
+      available[alt] -= used;
+      gap.short -= used;
+      overlap = true;
+      if (!gap.short) break;
+    }
+  }
+  return { overlap, swaps, gaps: gaps.filter(gap => gap.short > 0) };
+}
+function swapList(swaps) {
+  return swaps.map(({ name, alt, used }) => '<li>Use ' + esc(amount(alt, used)) + ' ' + esc(alt.toLowerCase()) +
+    ' in place of ' + esc(name.toLowerCase()) + '.</li>').join("");
+}
 function readyRecipesMenu() {
   const inventory = confirmedPantry();
-  const matches = featuredRecipes().map(({ d, i }) => {
-    const gaps = missing(d, inventory).map(([name, needed]) => {
-      const short = needed - (inventory[name] || 0);
-      return { name, short, fraction: short / needed };
-    });
-    return { d, i, gaps, distance: gaps.reduce((sum, gap) => sum + gap.fraction, 0) };
-  });
-  const ready = matches.filter(match => !match.gaps.length);
-  const link = ({ d, i }) => btn(esc(d.name), "pantryRecipe:" + i, "light");
-  let body;
-  if (ready.length) {
-    body = '<p>Enough in your pantry for ' + servingLabel() + '.</p>' + ready.map(link).join("");
-  } else {
-    const closest = matches.filter(({ d }) => Object.keys(d.needs).some(n => inventory[n] > 0))
-      .sort((a, b) => a.gaps.length - b.gaps.length || a.distance - b.distance)[0];
-    body = closest ? '<p>Closest recipe for ' + servingLabel() + '</p>' + link(closest) +
-      '<p>Still needed</p><ul>' + closest.gaps.map(({ name, short }) =>
-        '<li>' + esc(name) + ' · ' + esc(amount(name, short)) + '</li>').join("") + '</ul>' :
-      '<p>No matching recipe yet. Scan or enter more ingredients and their quantities.</p>';
-  }
-  return '<details class="pantry-ready"><summary>Recipes you can make (' + ready.length +
-    ')</summary>' + body + '</details>';
+  const matches = featuredRecipes().map(({ d, i }) => ({ d, i, ...pantryMatch(d, inventory) }));
+  const ready = matches.filter(m => !m.gaps.length && !m.swaps.length);
+  const close = matches.filter(m => m.overlap && (m.gaps.length || m.swaps.length));
+  const distance = m => m.gaps.reduce((sum, g) => sum + g.short / g.needed, 0);
+  close.sort((a,b) => a.gaps.length - b.gaps.length || distance(a) - distance(b) || a.swaps.length - b.swaps.length);
+  const link = m => btn(esc(m.d.name), "pantryRecipe:" + m.i, "light");
+  let body = ready.length ? '<p>Enough for ' + servingLabel() + '.</p>' + ready.map(link).join("") : "";
+  if (close.length) body += '<h4>Closest recipes for ' + servingLabel() + '</h4>' + close.slice(0,3).map(m =>
+    link(m) + '<ul>' + swapList(m.swaps) + m.gaps.map(g => '<li>Still needed: ' + esc(g.name) + ' · ' +
+      esc(amount(g.name, g.short)) + '</li>').join("") + '</ul>').join("");
+  return '<details class="pantry-ready"><summary>Recipes you can make (' + ready.length + ')</summary>' +
+    (body || '<p>No matching recipe yet. Scan or enter more ingredients and their quantities.</p>') + '</details>';
 }
 function pantry() {
   main.innerHTML =
@@ -229,7 +269,7 @@ function foodForm(n = "") {
   );
   const update = () =>
     ($("#unit").textContent =
-      "Unit: " + (foods[canonical($("#food").value)] || "each"));
+      "Unit: " + displayUnit(pantryUnit(canonical($("#food").value))));
   $("#food").oninput = update;
   update();
   $("#foodForm").onsubmit = (e) => {
@@ -249,12 +289,25 @@ function foodForm(n = "") {
 function ingredientKey(s) {
   return s.toLowerCase().replace(/[’‘]/g, "'").replace(/[‐‑–]/g, "-");
 }
+function pantryProduct(s) {
+  const words = ingredientKey(s).replace(/[^\p{L}\p{N}]+/gu, " ").trim();
+  if (/\brice\b/.test(words) && /\b(?:vermicelli|noodles?)\b/.test(words) &&
+      !/\b(?:soup|kit|meal|cooked|instant|sauce)\b/.test(words)) return "Rice noodles";
+  if (/\b(?:kecap|ketjap) manis\b/.test(words)) return "Sweet soy sauce";
+  if (/\bsoy(?:a)? sauce$/.test(words)) {
+    for (const type of ["sweet", "dark", "light"]) {
+      if (words.split(" ").includes(type)) return type[0].toUpperCase() + type.slice(1) + " soy sauce";
+    }
+    if (words === "soy sauce" || words === "soya sauce" || words === "all purpose soy sauce") return "Soy sauce";
+  }
+  return "";
+}
 function canonical(s) {
   s = s.normalize("NFC").trim().replace(/\s+/g, " ");
   if (!s || s.length > 100 || /[<>\p{Cc}]/u.test(s) || !/\p{L}/u.test(s) ||
       s.toLowerCase() === "prototype" || Object.hasOwn(Object.prototype, s)) return "";
   return (
-    [...Object.keys(foods), ...Object.keys(state.pantry)].find(
+    pantryProduct(s) || [...Object.keys(foods), ...Object.keys(state.pantry)].find(
       (k) => ingredientKey(k) === ingredientKey(s),
     ) || s
   );
