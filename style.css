@@ -712,14 +712,20 @@ label.field select,
 #resultCount { margin: .45rem 0; }
 #cookbookSearch { margin-top: .4rem; }
 .discovery-head { margin-top: 1.5rem; }
-.bite-intro { position: fixed; inset: 0; margin: 0; border: 0; padding: 0; width: 100%; height: 100%; max-width: none; max-height: none; background: #fcf6e7; pointer-events: none; z-index: 1000; color: #213b26; animation: bite-fade 1.45s both; }
+.bite-intro { position: fixed; inset: 0; margin: 0; border: 0; padding: 0; width: 100%; height: 100%; max-width: none; max-height: none; background: #fcf6e7; pointer-events: none; z-index: 1000; color: #213b26; animation: bite-fade 1.25s both; }
 .bite-intro:popover-open { display: grid; place-content: center; justify-items: center; }
 .bite-intro strong { font: 600 1.8rem Georgia, serif; }
-.bite-boy { position: relative; width: 192px; height: 192px; background-color: #fcf6e7; }
-.bite-face, .bite-fork { position: absolute; inset: 0; background: url("assets/fork-mascot-192.png") center/contain no-repeat; }
-.bite-face { clip-path: polygon(evenodd, 0 0,100% 0,100% 100%,0 100%,0 0, 13% 68%,14% 61%,24% 54%,35% 54%,40% 49%,45% 50%,48% 54%,44% 65%,33% 68%,24% 76%,15% 78%,13% 68%,0 0); animation: bite-nod 1.25s both; }
-.bite-fork { clip-path: polygon(13% 68%,14% 61%,24% 54%,35% 54%,40% 49%,45% 50%,48% 54%,44% 65%,33% 68%,24% 76%,15% 78%); transform-origin: 18% 76%; animation: fork-bite 1.25s both; }
-@keyframes fork-bite { 0%,100% { transform: none; } 20% { transform: translate(-2px,3px) rotate(3deg); } 48%,60% { transform: translate(6px,-2px) rotate(-8deg); } }
-@keyframes bite-nod { 0%,35%,100% { transform: none; } 52% { transform: translate(-1px,2px) rotate(-1.5deg); } 75% { transform: translateY(1px); } }
-@keyframes bite-fade { 0%,82% { opacity: 1; } 100% { opacity: 0; } }
+.bite-boy { width: min(44vw, 175px); aspect-ratio: 1; overflow: hidden; border-radius: 50%; animation: mascot-nod 1s ease-in-out both; }
+.bite-boy img { display: block; width: 100%; height: 100%; }
+@keyframes mascot-nod { 0% { opacity: 0; transform: translateY(5px) scale(.96); } 30% { opacity: 1; } 58% { transform: rotate(-3deg) scale(1.015); } 100% { transform: none; } }
+@keyframes bite-fade { 0%,80% { opacity: 1; } 100% { opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .bite-intro { display: none !important; } }
+.featured-photo { margin: 0; position: relative; overflow: hidden; }
+.featured-photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.featured-photo figcaption { position: absolute; right: .5rem; bottom: .4rem; }
+.featured-photo a { display: block; color: white; background: #203025d9; padding: .25rem .45rem; font-size: .7rem; border-radius: .35rem; }
+.hero .featured-photo { min-height: 220px; }
+.hero:has(.featured-photo[hidden]) { display: block; min-height: 0; }
+.featured-card { border: 1px solid #d7dfd1; border-radius: 14px; overflow: hidden; background: white; }
+.featured-card .featured-photo { aspect-ratio: 16/8; }
+.featured-card .feature-link { border: 0; width: 100%; }
