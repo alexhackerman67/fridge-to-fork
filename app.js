@@ -69,7 +69,7 @@ const missing = (d) =>
 const stock = (d) =>
   missing(d).length ? missing(d).length + " to buy" : "Ready to cook";
 const meta = (d) =>
-  '<div class="meta">' + icon("clock") + d.time + " min" + (d.gear ? " · " + d.gear : "") + "</div>";
+  '<div class="meta">' + icon("clock") + d.time + " min" + (d.gear ? " · " + d.gear : "") + " · " + forkRating(d) + "</div>";
 function pop(title, body) {
   inside.innerHTML =
     '<div class="modalhead"><h2>' +
@@ -109,7 +109,7 @@ function detail(i, plannedDay = "") {
   const d = dishes[i];
   pop(
     d.name,
-    meta(d) +
+    meta(d) + (fitsPreferences(d, state.preferences || {}) ? "" : '<p class="hint">This planned recipe falls outside your current dietary preferences.</p>') +
       "<p>" +
       d.note +
       '</p><h4>Ingredients · serves 2</h4><div class="ingredients">' +
