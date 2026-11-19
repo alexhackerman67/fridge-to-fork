@@ -50,7 +50,9 @@ function reviewedCounts(views) {
     const low = Math.min(...visible.map(item => item.low));
     const high = Math.max(...visible.map(item => item.high));
     if (low === high) {
-      if (views.length > 1 && (visible.length < 2 || visible.length !== observations.length)) return manual;
+      // A close-up may cut a long item in half or miss it altogether.
+      const clearSingle = whole.evidence === "loose_food" && whole.low === 1 && whole.high === 1;
+      if (!clearSingle && views.length > 1 && (visible.length < 2 || visible.length !== observations.length)) return manual;
       return { n, q: low, hint: "Visible count: " + low };
     }
     return { n, q: "", hint: "Estimated count: " + low + "–" + high + ". Enter your total." };

@@ -1,5 +1,5 @@
 const prefix = 'fridge-to-fork:' + self.registration.scope + ':';
-const cacheName = prefix + 'package-scanner-v18';
+const cacheName = prefix + 'loose-produce-v19';
 const files = [
   './', 'index.html', 'style.css', 'app.js', 'recipes.js', 'scanner.js',
   'assets/napkin-maskable-512.png', 'cloud-scan.js', 'events.js', 'discovery.js', 'install.js', 'app.webmanifest',
